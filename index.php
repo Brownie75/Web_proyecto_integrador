@@ -1,6 +1,5 @@
 <?php
     include ("V.01-formulario/index.html");
-    include "php/register.php";
 ?>
 <style>
     <?php include ("V.01-formulario/Styles/stylesheet.css");?>
