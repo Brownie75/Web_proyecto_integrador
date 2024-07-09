@@ -55,5 +55,27 @@ server.get("/user/:id", (req, res) =>{
     }
   });
 })
-
-server.post()
+server.get("/recipe/:id", (req, res) => {
+    const id = req.params.id;
+    conn.query("SELECT * FROM posts WHERE id_post = ?",[id],(error, results) => {
+        if(error){
+            console.log("Error fetching data", error);
+            res.send("Error fetching data", 500);
+          } else {
+            console.log("data fetch successfully");
+            res.send(results);
+          }
+    });
+})
+server.get("/user/:id/posts", (req,res) =>{
+    const id = req.params.id;
+    conn.query("SELECT * FROM posts WHERE fk_user = ?",[id],(error, results) => {
+        if(error){
+            console.log("Error fetching data", error);
+            res.send("Error fetching data", 500);
+          } else {
+            console.log("data fetch successfully");
+            res.send(results);
+          }
+    });
+})
