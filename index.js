@@ -31,8 +31,7 @@ server.listen(3000, () =>{
 server.get("/", (req,res) => {
   console.log("GET /");
   console.log(res.query);
-  //res.send("Bienvenido a Chef en Casa");
-  res.sendFile("./V.01-formulario/index.html");
+  res.send("Bienvenido a Chef en Casa");
 })
 
 server.get("/user", (req, res) => {
@@ -93,9 +92,7 @@ conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
     }
   });
 });
-server.post("/user",(req,res)=> {
 
-})
 /* server.get("/support",(req,res) => {
 res.sendFile("./Support-form/index.html")
 }) */
