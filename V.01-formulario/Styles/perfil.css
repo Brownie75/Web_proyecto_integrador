@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+body{
+    margin: 0%;
+    padding: 0%;
+    background-color: #ffffff;
+}
+
+.about{
+    display: flex;
+    margin-top: 7%;
+    flex-direction: column;
+    padding: 10px;
+    
+}
+.about_usr{
+    font-family: outfit;
+    font-weight: 500;
+}
+h5{
+    font-size: 1.5em;
+    font-family: outfit;
+    font-weight: 400;
+}
+.info{
+    margin-right: 20%;
+    display: flex;
+    justify-content: center;
+    margin-top: -5%;
+}
+.usr_img{
+    height: 18em;
+    margin-right: 3%;
+    margin-top: 7%;
+}
+ul li.about_usr{
+    margin-top: 10%;
+    font-size: 1.5em;
+}
+.name_usr{
+    font-family: outfit;
+    font-weight: 800;
+    font-size: 4em;
+}
+h2{
+    font-family: outfit;
+    font-size: 3em;
+    margin-left: 20%;
+    margin-top: -1%;
+}
+h3{
+    font-family: outfit;
+    font-size: 1.8em;
+    margin-top: 3%;
+    font-weight: 500;
+    text-align: center;
+    color: black;
+}
+
+.btn_create_post{
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, .25);
+    border-radius: 10px;
+    border-style: none;
+    background-color: #5096FF;
+    color: #FFFFFF;
+    font-family: outfit;
+    width: 12em;
+    font-size: 2em;
+    font-weight: 500;
+    text-align: center;
+    display: block;
+    margin: auto;
+    transition: .2s ease-in;
+}
+.btn_create_post:hover {
+    background-color: #FFFFFF;
+    color: #5096FF;
+    transform: scale(1.2);
+    border-radius: #5096FF 2px;
+    
+}
+
+
+

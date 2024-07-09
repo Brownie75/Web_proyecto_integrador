@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+    <title>Perfil</title>
+    <link rel="stylesheet" href="/Styles/banner.css">
+    <link rel="stylesheet" href="/Styles/perfil.css">
+    <link rel="stylesheet" href="/Styles/search_bar.css">
+    <link rel="stylesheet" href="/Styles/post_profile/post.css">
+    <link rel="stylesheet" href="/Styles/stylesheet.css">
+</head>
+
+
+<html>
+    <body>
+        <header class="banner">
+            <h1>Chef en Casa</h1>
+            <nav class="btn_banner">
+                <ul>
+                    <a class="about_us">Acerca de nosotros</a>
+                    <li>
+                        <a href="#" class="menu">Opciones</a>
+                        <ul class="dropdown">
+                            <li><a href="/index.html">Inicio</a></li>
+                            <li><a href="/profile.html">Perfil</a></li>
+                            <li><a href="#">Contacto</a></li>
+                            <li><a href="/signup.html">Registro/Inicio de sesión</a></li>
+                            <li><a href="#">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <br>
+
+        <form>
+            <input type="text" class="search_bar" placeholder="¿Qué vamos a cocinar hoy?"> 
+            <img src="../V.01-formulario/pictures/buscar.png" class="search_icon">
+        </form>
+
+        <div class="info">
+            <img class = "usr_img" src="../V.01-formulario/pictures/usuario (1).png">
+            <ul class="about">
+                <li class="name_usr">John Doe</li>
+                <li class="about_usr">Nivel:</li>
+                <li class="about_usr">20 recetas</li>
+                <li class="about_usr">Rating:</li>
+            </ul>
+        </div>
+        <br>
+        
+        <h2>Tus publicaciones</h2>
+        <div class="create_posts">
+            <h3 class="banner_posts">¡Luces, cámara y a cocinar!</h3>
+            <div class="create_post_div">
+                <button class="btn_create_post">Publicar nueva receta</button>
+            </div>
+        </div>
+
+        <div class="post">
+            <!--Estructura de posts, borrar o comentar despues-->
+            <div>
+                <img src="/pictures/example_pic.jpg" class="miniatura_post">
+            </div>
+            
+            <div class="info_post">
+                <div>
+                    <div style="display: flex; justify-content: space-around;">
+                        
+                        <h4 class="title_post">Chop Suey</h4>
+                        <span class="fecha_post">12 abril 2024 </span>
+                    </div>
+                    
+                    <ul class="about_post">
+                        <li class="post_info"> X Visualizaciones</li>
+                        <li class="post_info"> X Favoritos</li>
+                        <li class="post_info">Categoria:</li>
+                    </ul>
+                    <button class="bttn_verReceta">Ver receta</button>
+                </div>
+
+            </div>
+            
+        </div>
+
+        <footer>
+            <div class="contact">
+                <h5>Copyright© Chef en Casa 2024</h5>
+                <p>Todos los derechos reservados a sus respectivos creadores</p>
+                <p>Avisos de privacidad</p>
+            </div>
+        </footer>
+        
+    </body>
+</html>
