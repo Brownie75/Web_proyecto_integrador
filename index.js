@@ -7,8 +7,7 @@ const bodyParser = require("body-parser");
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use(cors());
-server.use(express.static(__dirname + '/V.01-formulario'));
-server.use(express.static(__dirname + '/Support-form'));
+server.use()
 
 const conn = db.createConnection({
     host: "localhost",
@@ -92,7 +91,3 @@ conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
     }
   });
 });
-
-/* server.get("/support",(req,res) => {
-res.sendFile("./Support-form/index.html")
-}) */
