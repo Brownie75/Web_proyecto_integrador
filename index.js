@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use(cors());
-server.use()
 
 const conn = db.createConnection({
     host: "localhost",

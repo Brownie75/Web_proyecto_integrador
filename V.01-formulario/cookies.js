@@ -1,6 +1,7 @@
 function login(){
-    var correo = document.getElementById("u_mail").inputValue;
-    var pass = document.getElementById("u_pswd").inputValue;
+    var correo = document.getElementById("u_mail").value;
+    var pass = document.getElementById("u_pswd").value;
 
-    document.cookie("correo=? password=?",[correo,pass]);
+    document.cookie = "correo ="+correo;
+    document.cookie = "password_ ="+pass;
 }
