@@ -30,7 +30,7 @@
 }
 
 ul li.post_info{
-    margin-top: 10%;
+    margin-top: 7%;
     font-size: 1.5em;
 }
 .miniatura_post{
@@ -66,7 +66,20 @@ ul li.post_info{
 
 .fecha_post{
     font-family: outfit;
-    font-size: 1.8em;
+    font-size: 1.6em;
     text-align: justify;
-    
+    align-content: center;
+    padding-left: 50px;
+    font-weight: 300;
+    color: #4f4f4f;
+}
+.more_post{
+    align-content: center;
+    padding-left: 60px;
+    height: 2.8em;
+}
+.span_more{
+    text-align: justify;
+    align-content: center;
+    padding-left: 60px;
 }
