@@ -25,6 +25,7 @@ h1{
     text-shadow: 0px 4px 4px rgba(0, 0, 15, .25);
     font-size: 1.2em;
     transition: .3s ease;
+    text-decoration: none;
 }
 .about_us:hover{
     transform: scale(1.2);
