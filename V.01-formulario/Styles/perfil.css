@@ -91,7 +91,7 @@ h3{
 .logout{
     font-family: sans-serif;
     font-weight: 600;
-    width: 20%;
+    width: 15%;
     font-size: 1.3em;
     background-color: #FFFFFF;
     border-color: red;
@@ -102,21 +102,23 @@ h3{
 .logout:hover{
     color: #FFFFFF;
     background-color: red;
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 .edit_profile{
-    color: black;
+    color: #333333;
     border-color: #6f6f6f;
     border-radius: 20px;
     font-family: sans-serif;
     font-size: 1.3em;
-    font-weight: 600;
-    width: 20%;
+    font-weight: 700;
+    width: 15%;
     background-color: #FFFFFF;
     transition: ease .3s;
 }
 .edit_profile:hover{
-    transform: scale(1.1);
+    transform: scale(1.15);
+    background-color: #6f6f6f;
+    color: #FFFFFF;
 }
 .ul_botones{
     display: flex;
