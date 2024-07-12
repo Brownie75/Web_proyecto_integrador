@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEF EN CASA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <div class="contenedor_todo">
+
+            <div class="caja_trasera">
+
+                <div class="caja_trasera-login">
+                    <h3>¿Ya tienes una cuenta?</h3>
+                    <p>Inicia sesion para entar en la pagina</p>
+                    <button id="btn_iniciar-sesion">Iniciar Sesión</button>
+                </div>
+                <div class="caja_trasera-register">
+                    <h3>¿Aun no tienes una cuenta?</h3>
+                    <p>Registrate para entrar a la pagina</p>
+                    <button id="btn_registrarse">Registrarse</button>
+                </div>
+            </div>
+
+            <div class="contenedor_login-register">
+
+                <form action="" class="formulario-login" onsubmit="return validateForm(event, 'formulario-login')">
+
+                    <h2>Iniciar Sesión</h2>
+                    <input type="text" placeholder="Correo Electronico" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <button type="submit">Entrar</button>
+
+                </form>
+                <form action="" class="formulario-registro" onsubmit="return validateForm(event, 'formulario-registro')">
+
+                    <h2>Registrarse</h2>
+                    <input type="text" placeholder="Nombre Completo" required>
+                    <input type="text" placeholder="Correo Electronico" required>
+                    <input type="text" placeholder="Usuario" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <button type="submit">Registrarse</button>
+
+                </form>
+            </div>
+
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 CHEF EN CASA</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
