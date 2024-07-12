@@ -1,23 +1,25 @@
-function login(){
+const form = document.getElementById("login_form");
 
-    const data = document.getElementById("login_form");
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-    const formData = JSON.stringify(data);
-    console.log(formData);
+  const formData_ = new FormData(form);
+  const data = Object.fromEntries(formData_);
 
-    data.addEventListener("submit", async ()=>{
-        await fetch("http://localhost:3000/login",{
-            method: "POST",
-            body: formData
-        }).then((res) => res.json())
-        .then((results) => {
-            console.log(results);
-            if(results.Validacion === 'Sesion iniciada'){
-                document.cookie = 'username = '+results.username;
-                document.cookie = 'password_ ='+results.password_;
-            }
-        })
-    })
-
-    
-}
+  await fetch("http://localhost:3000/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((results) => {
+      console.log(results);
+      if (results[0][0].Validacion === "Sesion iniciada") {
+        window.location.href = "index.html"
+        document.cookie = "username = " + data.username;
+        document.cookie = "password_ =" + data.password_;
+      }
+    });
+});
