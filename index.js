@@ -79,6 +79,28 @@ server.get("/user/:id/posts", (req,res) =>{
         }
   });
 })
+
+// Motor de busqueda
+server.get("/search", (req,res) => {
+  console.log(req.query.term);
+  const searchTerm = req.query.term;
+
+  if(!searchTerm){
+    return res.status(400).json({ error: "Search term is required"});
+  }
+
+  const searchValue = "%"+searchTerm+"%";
+
+  conn.query("SELECT * FROM posts WHERE titulo LIKE ? OR contenido LIKE ?",[searchValue,searchValue],(error, results) => {
+    if (error) {
+      console.error("Error executing search query:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+    console.log(results);
+    res.send(results);
+  })
+})
+
 server.post("/user", (req, res) => {
 const {username, password_, correo} = req.body;
 conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
@@ -90,3 +112,16 @@ conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
     }
   });
 });
+
+server.post("/login", (req, res) =>{
+  const {username, password_} = req.body;
+  conn.query(`CALL validar_usuario('${username}', '${password_}')`,(error, results) => {
+    if(error){
+      console.log("Error validating data");
+      res.status(400).send(body);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  })
+})

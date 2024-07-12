@@ -31,15 +31,14 @@
         <div class="contenedor">
             <div class="registro">
                 <h3>Iniciar sesion:</h3>
-                <form onclick="login()" action="profile.html">
+                <form id="login_form" action="http://localhost:3000/login" method="post">
                     <div>
                     <label for="u_mail">Correo:</label> <br>
-                    <input type=" text" id= "u_mail" name= "correo" placeholder="Ingresa tu correo electrónico"><br>
+                    <input type=" text" id= "u_mail" name= "username" placeholder="Ingresa tu correo electrónico"><br>
                     <label>Contraseña:</label> <br>
                     <input type=" text" id = "u_pswd" name="password_" placeholder="Escribe una contraseña">
->
-        <div class="send_div">
-                        <button type="submit" class="send" >¡A cocinar!</button>
+                     <div class="send_div">
+                        <button type="submit" class="send">¡A cocinar!</button>
                     </div>
                 </form>
                 
