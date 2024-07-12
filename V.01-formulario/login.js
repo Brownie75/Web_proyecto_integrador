@@ -20,6 +20,8 @@ form.addEventListener("submit", async (event) => {
         window.location.href = "index.html"
         document.cookie = "username = " + data.username;
         document.cookie = "password_ =" + data.password_;
+      } else {
+        // Codigo para datos erroneos pendiente
       }
     });
 });
