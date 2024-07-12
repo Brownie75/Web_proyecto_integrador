@@ -22,10 +22,11 @@ h5{
     font-weight: 400;
 }
 .info{
-    margin-right: 20%;
+    margin: auto;
     display: flex;
     justify-content: center;
     margin-top: -5%;
+    
 }
 .usr_img{
     height: 18em;
@@ -79,5 +80,47 @@ h3{
     
 }
 
+.botones_perfil{
+    margin-top: 5%;
+    display:flex;
+    gap: 10%;
+    justify-content: center;
+    align-content: center;
+}
 
-
+.logout{
+    font-family: sans-serif;
+    font-weight: 600;
+    width: 15%;
+    font-size: 1.3em;
+    background-color: #FFFFFF;
+    border-color: red;
+    border-radius: 20px;
+    color: red;
+    transition: ease .3s;
+}
+.logout:hover{
+    color: #FFFFFF;
+    background-color: red;
+    transform: scale(1.15);
+}
+.edit_profile{
+    color: #333333;
+    border-color: #6f6f6f;
+    border-radius: 20px;
+    font-family: sans-serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    width: 15%;
+    background-color: #FFFFFF;
+    transition: ease .3s;
+}
+.edit_profile:hover{
+    transform: scale(1.15);
+    background-color: #6f6f6f;
+    color: #FFFFFF;
+}
+.ul_botones{
+    display: flex;
+    
+}
