@@ -86,6 +86,7 @@ function registerUser(data) {
     .then(response => response.json())
     .then(data => {
         alert('Registro exitoso');
+        window.location.href = "../profile.html";
     })
     .catch((error) => {
         console.error('Error:', error);
