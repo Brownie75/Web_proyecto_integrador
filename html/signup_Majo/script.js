@@ -67,7 +67,7 @@ function loginUser(data) {
     .then(response => response.json())
     .then(data => {
         alert('Inicio de sesión exitoso');
-        window.location.href = "../index.html"
+        window.location.href = "../home_page.html"
     })
     .catch((error) => {
         console.error('Error:', error);
