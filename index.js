@@ -15,6 +15,7 @@ const conn = db.createConnection({
     port: 3306,
     database: "db_chefencasa"
 });
+const ola = "ola";
 conn.connect((err) => {
     if(err){
       console.log("Error connecting to database", err);
