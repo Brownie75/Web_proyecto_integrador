@@ -67,7 +67,9 @@ function loginUser(data) {
     .then(response => response.json())
     .then(data => {
         alert('Inicio de sesión exitoso');
-        window.location.href = "../home_page.html"
+        document.cookie = "username = " + data.username  + "; path=/";
+        document.cookie = "password_ =" + data.password_  + "; path=/";
+        window.location.href = "../profile.html"
     })
     .catch((error) => {
         console.error('Error:', error);

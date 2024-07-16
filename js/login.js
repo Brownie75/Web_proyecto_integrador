@@ -1,5 +1,4 @@
 const form = document.getElementById("login_form");
-
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -15,7 +14,7 @@ form.addEventListener("submit", async (event) => {
   })
     .then((res) => res.json())
     .then((results) => {
-      console.log(results);
+      
       if (results[0][0].Validacion === "Sesion iniciada") {
         window.location.href = "index.html"
         document.cookie = "username = " + data.username;

@@ -12,7 +12,7 @@ server.use(cors());
 const conn = db.createConnection({
     host: "localhost",
     user: "root",
-    password: "EseKuEle",
+    password: "gato261261",
     port: 3306,
     database: "db_chefencasa"
 });
@@ -120,7 +120,7 @@ server.post("/login", (req, res) =>{
   conn.query(`CALL validar_usuario('${username}', '${password_}')`,(error, results) => {
     if(error){
       console.log("Error validating data");
-      res.status(400).send(body);
+      res.status(400).send(req.body);
     } else {
       console.log(results);
       res.send(results);
@@ -151,4 +151,18 @@ server.get("/post/:id/images",(req,res) =>{
       res.send(results);
     }
   })
+})
+
+server.get("/get_user_by_name/:username", (req, res) =>{
+  const id = req.params.id;
+  conn.query("SELECT * FROM usuarios WHERE username = ?",[id], (error, results) =>{
+  if(error){
+    console.log("Error fetching data", error);
+    res.send("Error fetching data", 500);
+  } else {
+    console.log("data fetch successfully");
+    console.log(results);
+    res.send(results);
+  }
+});
 })
