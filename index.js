@@ -3,6 +3,7 @@ const db = require("mysql2");
 const server = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
@@ -76,7 +77,7 @@ server.get("/user/:id/posts", (req,res) =>{
           res.send("Error fetching data", 500);
         } else {
           console.log("data fetch successfully");
-          res.send(results);
+          res.send("Imagen subida");
         }
   });
 })
@@ -120,6 +121,31 @@ server.post("/login", (req, res) =>{
     if(error){
       console.log("Error validating data");
       res.status(400).send(body);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  })
+})
+
+server.get("/image/:img_name", (req,res) =>{
+  const direc = req.params.img_name;
+  conn.query(`SELECT * FROM images WHERE img_name = '${direc}'`, (error, results) => {
+    if(error){
+      console.log("Error fetching image");
+      res.status(400);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  })
+})
+server.get("/post/:id/images",(req,res) =>{
+  id = req.params.id;
+  conn.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
+    if(error){
+      console.log("Error fetching images");
+      res.status(400);
     } else {
       console.log(results);
       res.send(results);
