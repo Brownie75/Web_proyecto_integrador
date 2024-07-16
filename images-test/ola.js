@@ -1,18 +1,18 @@
 const imagen = document.getElementById("file_input");
         
-        imagen.addEventListener("change", (event) =>{
+        imagen.addEventListener("submit", (event) =>{
             event.preventDefault();
             
-            console.log(imagen.files[0]);
+            console.log(imagen.image.files[0]);
+
+            var form = new FormData();
+            form.append('id_post',3);
+            form.append('image',imagen.image.files[0])
 
             fetch("http://localhost:3000/image",{
                 method: "POST",
-                headers:{
-                    "Content-Type": "application/json"
-                },
-                body: imagen.files[0],
-                id_post: 1
+                body: form
             }).then(response => {
                 console.log(response);
             })
-        })
+        }) 

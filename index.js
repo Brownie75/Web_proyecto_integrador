@@ -4,6 +4,33 @@ const server = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
+const multer = require('multer');
+const fs = require("fs");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+
+    //Verifica si el directorio del post existe, sino lo crea
+    direc_path = path.join(__dirname, 'assets/'+req.body.id_post)
+
+    if(!fs.existsSync(direc_path)) {
+
+      fs.mkdir((direc_path), (err) => {
+        if(err){
+          return console.log(err)
+        } else {
+          console.log("Directorio creado con exito");
+        }
+      })
+    } else console.log("directory already exists")
+    cb(null, 'assets/'+req.body.id_post+"/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
@@ -125,6 +152,25 @@ server.post("/login", (req, res) =>{
       res.status(400).send(req.body);
     } else {
       console.log(results);
+      res.send(results);
+    }
+  })
+})
+
+server.post("/image", upload.single('image'), (req,res) => {
+  if (!req.file) {
+    console.log('No file uploaded');
+    return res.status(400).send('No file uploaded.');
+    
+  }
+  const direc = req.file.path
+  console.log(req.body.id_post);
+  conn.query("INSERT INTO images (direc,id_post) VALUES (?,?)", [direc,req.body.id_post], (error, results) => {
+    if(error){
+      console.log("Error inserting data");
+      res.status(400).send(req.body);
+    } else {
+      console.log("Imagen subida exitosamente");
       res.send(results);
     }
   })
