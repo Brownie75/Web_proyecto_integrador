@@ -1,8 +1,8 @@
 
 console.log("entre al perfil");
 // Función para obtener el valor de una cookie específica por su nombre
-function getCookie(name) {
-  let nameEQ = name + "=";
+function getCookie(username) {
+  let nameEQ = username + "=";
   let ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
@@ -14,3 +14,4 @@ function getCookie(name) {
 // Ejemplo de uso
 let miCookie = getCookie('username');
 console.log(miCookie); // Imprime 'valorDeMiCookie' si la cookie existe
+document.getElementById("username-id").innerText = miCookie;

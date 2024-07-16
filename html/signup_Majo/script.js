@@ -22,13 +22,13 @@ function register() {
     caja_trasera_register.style.opacity = "0";
     caja_trasera_login.style.opacity = "1";
 }
+var formData = {};
 
 function validateForm(event, formClass) {
     event.preventDefault();
     var form = document.querySelector(`.${formClass}`);
     var inputs = form.querySelectorAll('input');
     var allFilled = true;
-    var formData = {};
 
     inputs.forEach(function(input) {
         if (input.value.trim() === '') {
@@ -67,8 +67,8 @@ function loginUser(data) {
     .then(response => response.json())
     .then(data => {
         alert('Inicio de sesión exitoso');
-        document.cookie = "username = " + data.username  + "; path=/";
-        document.cookie = "password_ =" + data.password_  + "; path=/";
+        document.cookie = "username = " + formData.username  + "; path=/";
+        document.cookie = "password_ =" + formData.password_  + "; path=/";
         window.location.href = "../profile.html"
     })
     .catch((error) => {

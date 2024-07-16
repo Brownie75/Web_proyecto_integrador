@@ -9,10 +9,12 @@ server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use(cors());
 
+const passwords = ["EseKuEle","gato261261"]
+
 const conn = db.createConnection({
     host: "localhost",
     user: "root",
-    password: "gato261261",
+    password: passwords[0],
     port: 3306,
     database: "db_chefencasa"
 });
