@@ -6,10 +6,10 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const multer = require('multer');
 const fs = require("fs");
+const { id } = require("choco");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-
     //Verifica si el directorio del post existe, sino lo crea
     direc_path = path.join(__dirname, 'assets/'+req.body.id_post)
 
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
     cb(null, 'assets/'+req.body.id_post+"/");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, req.body.id_user + '-' + "pfp" + path.extname(file.originalname));
   }
 });
 
@@ -202,8 +202,8 @@ server.get("/post/:id/images",(req,res) =>{
 })
 
 server.get("/get_user_by_name/:username", (req, res) =>{
-  const id = req.params.id;
-  conn.query("SELECT * FROM usuarios WHERE username = ?",[id], (error, results) =>{
+  const username = req.params.username;
+  conn.query("SELECT * FROM usuarios WHERE username = ?",[username], (error, results) =>{
   if(error){
     console.log("Error fetching data", error);
     res.send("Error fetching data", 500);
@@ -213,4 +213,20 @@ server.get("/get_user_by_name/:username", (req, res) =>{
     res.send(results);
   }
 });
+})
+
+server.put("/profile", upload.single('pfp'), (req, res) => {
+  const {descripcion, u_experiencia, id_user} = req.body;
+  conn.query("UPDATE usuarios SET pfp = ?, descripcion = ?, nivel_cocina = ? where id_user = ?",
+    [req.file.path, descripcion, u_experiencia, id_user], (error, results) => {
+      if(error){
+        console.log("Error updating data", error);
+        res.send("Error updating data", 500);
+      } else {
+        console.log("data updated successfully");
+        console.log(results);
+        res.send(results);
+      }
+    }
+  )
 })

@@ -13,11 +13,11 @@
         </div>
         <br>
         
-        <div class="edit_usr">
+        <form class="edit_usr">
             
                 <div class="upload_pic">
                     <h3>Escoge tu foto de perfil</h3>
-                    <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in">
+                    <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in" name="pfp">
                     
                 </div>
             
@@ -27,7 +27,7 @@
                 <h3>Cuéntanos brevemente sobre ti</h3>
                 <textarea class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256"></textarea>
                 <h3>¿Cuál es tu nivel de cocina?</h3>
-                <form class="info">
+                <div class="info">
                     <input type="radio" id="u_prin" value="Principiante" name="u_experiencia">
                     <label for="u_prin" class="radio">Principiante</label><br>
                     <input type="radio" id="u_med" value="Medio" name="u_experiencia">
@@ -36,14 +36,14 @@
                     <label for="u_exp" class="radio">Experimentado</label><br>
                     <input type="radio" id="u_pro" value="Profesional" name="u_experiencia">
                     <label for="u_pro" class="radio">Chef profesional</label><br>
-                </form>
+                </div>
                 
                 
             </div>
             
-        </div>
+            <button class="bttn_confirm" type="submit">Confirmar</button>
+        </form>
         
-        <button class="bttn_confirm">Confirmar</button>
-
+        <script src="/js/updating_profile.js"></script>
     </body>
 </html>

@@ -29,7 +29,9 @@ h5{
     
 }
 .usr_img{
+    border-radius: 100%;
     height: 18em;
+    width: 18em;
     margin-right: 3%;
     margin-top: 7%;
 }
