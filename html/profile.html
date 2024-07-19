@@ -5,12 +5,42 @@
     <link rel="stylesheet" href="/css/perfil.css">
     <link rel="stylesheet" href="/css/search_bar.css">
     <link rel="stylesheet" href="/css/post_profile/post.css">
-    <link rel="stylesheet" href="/css/stylesheet.css">
+    <script defer src="/js/popup_profile.js"></script>
 </head>
 
 
 <html>
     <body>
+        <div class="popup_container" id="popup">
+            <div class="popup_box">
+                <h3>Editar perfil</h3>
+                <ul style="background: none;display: flex; flex-direction: column;" class="popup_ins">
+                    <li>
+                        <label for="id_name" class="popup_label">Cambiar nombre</label><br>
+                        <input type="text" placeholder="Nombre" class="popup_input" id="name_in">
+                    </li>
+                    <li>
+                        <label for="last_in" class="popup_label">Cambiar apellido</label><br>
+                        <input type="text" placeholder="Apellido" class="popup_input" id="last_in">
+                    </li>
+                    <li>
+                        <label for="last_in" class="popup_label">Nivel de cocina</label><br>
+                        <select id="nivel-cocina">
+                            <option value="principiante">Principiante</option>
+                            <option value="medio">Medio</option>
+                            <option value="experimentado">Experimentado</option>
+                            <option value="pro">Profesional</option>
+                        </select>
+                    </li>
+                   
+                </ul>
+                <div class="popup_bttns">
+                    <button class="close_popup" onclick="closePopup()">Cancelar</button>
+                    <button class="save_changes">Guardar cambios</button>
+                </div>
+               
+            </div>
+        </div>
         <header class="banner">
             <h1>Chef en Casa</h1>
             <nav class="btn_banner">
@@ -47,11 +77,15 @@
                 <li class="about_usr" id="usr_level">Nivel:</li>
                 <li class="about_usr" id="usr_pubs">X recetas</li>
                 <li class="about_usr" id="usr_rating">Rating:</li>
-                
+                <li class="about_usr">Descripción:
+                    <div class="usr_desc">
+                        <p>Descripcion</p>
+                    </div>
+                </li>
             </ul> 
         </div>
         <div class="botones_perfil">
-            <button class="edit_profile">Editar perfil</button>
+            <button class="edit_profile" onclick="openPopup()">Editar perfil</button>
             <button class="logout">Cerrar sesión</button>
         </div>
         <br>
