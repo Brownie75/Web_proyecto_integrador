@@ -7,6 +7,7 @@
 </head>
 <html>
     <body>
+        <div class="bg_img"></div>
         <!--Aqui poner lo que sea necesario-->
         <div class="mini_banner">
             <h2>Termina de crear tu perfil!</h2>
@@ -14,15 +15,15 @@
         <br>
         
         <div class="edit_usr">
-            
+            <h3>Escoge tu foto de perfil</h3>
+            <p class="lil_info">Esta foto se mostrará en tus interacciones y en tu perfil. ¡Muestra tu gran sonrisa chef! </p>
                 <div class="upload_pic">
-                    <h3>Escoge tu foto de perfil</h3>
-                    <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in">
                     
+                    <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in">
                 </div>
-            <div class="span_info">
                 <h3>Cuéntanos brevemente sobre ti</h3>
-                <textarea class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256"></textarea>
+                <p class="lil_info">¡Queremos saber de ti! Tus logros y experiencias, úsalo para que todos te conozcan</p>
+                <textarea class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
                 <h3>¿Cuál es tu nivel de cocina?</h3>
                 <select id="nivel-cocina">
                     <option value="principiante">Principiante</option>
@@ -31,12 +32,14 @@
                     <option value="pro">Profesional</option>
                 </select>
                 
-                
+            <h3>Agrega tu cumpleaños</h3>
+            <div>
+                <input type="date" class="bday">
             </div>
             
         </div>
         
-        <button class="bttn_confirm">Listo! <a href=""></a></button>
+        <button class="bttn_confirm">Listo! <a href="/index.html"></a></button>
 
     </body>
 </html>
