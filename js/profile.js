@@ -1,5 +1,3 @@
-const { get } = require("http");
-
 console.log("entre al perfil");
 // Función para obtener el valor de una cookie específica por su nombre
 function getCookie(username) {
