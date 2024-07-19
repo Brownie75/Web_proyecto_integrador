@@ -7,6 +7,7 @@ const path = require("path");
 const multer = require('multer');
 const fs = require("fs");
 const { id } = require("choco");
+const {authUser, authDeletePost} = require("./js/auth.js")
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -35,6 +36,7 @@ const upload = multer({ storage: storage });
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use(cors());
+// server.use(setUser);
 
 const passwords = ["EseKuEle","gato261261"]
 
@@ -57,9 +59,8 @@ server.listen(3000, () =>{
 
 // API (Pendiente de cambiar a otro archivo)
 
-server.get("/", (req,res) => {
+server.get("/", setUser, authUser, (req,res) => {
   console.log("GET /");
-  console.log(res.query);
   res.send("Bienvenido a Chef en Casa");
 })
 
@@ -111,6 +112,45 @@ server.get("/user/:id/posts", (req,res) =>{
   });
 })
 
+server.get("/image/:img_name", (req,res) =>{
+  const direc = req.params.img_name;
+  conn.query(`SELECT * FROM images WHERE img_name = '${direc}'`, (error, results) => {
+    if(error){
+      console.log("Error fetching image");
+      res.status(400);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  })
+})
+server.get("/post/:id/images",(req,res) =>{
+  id = req.params.id;
+  conn.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
+    if(error){
+      console.log("Error fetching images");
+      res.status(400);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  })
+})
+
+server.get("/get_user_by_name/:username", (req, res) =>{
+  const username = req.params.username;
+  conn.query("SELECT * FROM usuarios WHERE username = ?",[username], (error, results) =>{
+  if(error){
+    console.log("Error fetching data", error);
+    res.send("Error fetching data", 500);
+  } else {
+    console.log("data fetch successfully");
+    console.log(results);
+    res.send(results);
+  }
+});
+})
+
 // Motor de busqueda
 server.get("/search", (req,res) => {
   console.log(req.query.term);
@@ -153,6 +193,7 @@ server.post("/login", (req, res) =>{
     } else {
       console.log(results);
       res.send(results);
+
     }
   })
 })
@@ -176,46 +217,7 @@ server.post("/image", upload.single('image'), (req,res) => {
   })
 })
 
-server.get("/image/:img_name", (req,res) =>{
-  const direc = req.params.img_name;
-  conn.query(`SELECT * FROM images WHERE img_name = '${direc}'`, (error, results) => {
-    if(error){
-      console.log("Error fetching image");
-      res.status(400);
-    } else {
-      console.log(results);
-      res.send(results);
-    }
-  })
-})
-server.get("/post/:id/images",(req,res) =>{
-  id = req.params.id;
-  conn.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
-    if(error){
-      console.log("Error fetching images");
-      res.status(400);
-    } else {
-      console.log(results);
-      res.send(results);
-    }
-  })
-})
-
-server.get("/get_user_by_name/:username", (req, res) =>{
-  const username = req.params.username;
-  conn.query("SELECT * FROM usuarios WHERE username = ?",[username], (error, results) =>{
-  if(error){
-    console.log("Error fetching data", error);
-    res.send("Error fetching data", 500);
-  } else {
-    console.log("data fetch successfully");
-    console.log(results);
-    res.send(results);
-  }
-});
-})
-
-server.put("/profile", upload.single('pfp'), (req, res) => {
+server.put("/profile", authUser, upload.single('pfp'), (req, res) => {
   const {descripcion, u_experiencia, id_user} = req.body;
   conn.query("UPDATE usuarios SET pfp = ?, descripcion = ?, nivel_cocina = ? where id_user = ?",
     [req.file.path, descripcion, u_experiencia, id_user], (error, results) => {
@@ -229,4 +231,43 @@ server.put("/profile", upload.single('pfp'), (req, res) => {
       }
     }
   )
+})
+
+server.delete("/recipe/:id", setUser, authUser, authDeletePost, (req, res) => {
+  const id = req.params.id;
+  conn.query("CALL delete_post(?)", [id], (error, results) => {
+    if (error){
+      console.log("Error deleting data");
+      res.send("Error deleting data");
+    } else {
+      res.send(results);
+    }
+  })
+})
+
+// set user
+function setUser(req, res, next){
+  const id_user = req.body.id_user;
+  if(id_user){
+      conn.query("SELECT id_user, username, correo, rol FROM usuarios WHERE id_user = ?", [id_user], (error, results) => {
+        if(error){
+          throw error;
+        } else {
+          req.user = results;
+          next();
+        }
+      }
+    )
+  } else {
+    next();
+  }
+}
+
+// temporal
+server.get("/recipe/:id/content", (req, res) => {
+  const id_post = req.params.id;
+  conn.query("SELECT url FROM posts WHERE id_post = ?",[id_post], (error, results) => {
+      const file = fs.readFileSync("./"+results[0].url);
+      res.send(file.toString());
+  })
 })

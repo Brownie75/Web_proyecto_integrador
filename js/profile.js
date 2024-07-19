@@ -1,3 +1,4 @@
+const { get } = require("http");
 
 console.log("entre al perfil");
 // Función para obtener el valor de una cookie específica por su nombre
@@ -28,3 +29,5 @@ const lvl = document.getElementById("usr_level")
     lvl.innerText = data[0].nivel_cocina;
   })
 
+
+module.exports = getCookie
