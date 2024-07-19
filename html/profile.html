@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<head>
+    <title>Perfil</title>
+    <link rel="stylesheet" href="/css/banner.css">
+    <link rel="stylesheet" href="/css/perfil.css">
+    <link rel="stylesheet" href="/css/search_bar.css">
+    <link rel="stylesheet" href="/css/post_profile/post.css">
+    <script defer src="/js/popup_profile.js"></script>
+</head>
+
+
+<html>
+    <body>
+        <div class="popup_container" id="popup">
+            <div class="popup_box">
+                <h3>Editar perfil</h3>
+                <ul style="background: none;display: flex; flex-direction: column;" class="popup_ins">
+                    <li>
+                        <label for="id_name" class="popup_label">Cambiar nombre</label><br>
+                        <input type="text" placeholder="Nombre" class="popup_input" id="name_in">
+                    </li>
+                    <li>
+                        <label for="last_in" class="popup_label">Cambiar apellido</label><br>
+                        <input type="text" placeholder="Apellido" class="popup_input" id="last_in">
+                    </li>
+                    <li>
+                        <label for="last_in" class="popup_label">Nivel de cocina</label><br>
+                        <select id="nivel-cocina">
+                            <option value="principiante">Principiante</option>
+                            <option value="medio">Medio</option>
+                            <option value="experimentado">Experimentado</option>
+                            <option value="pro">Profesional</option>
+                        </select>
+                    </li>
+                   
+                </ul>
+                <div class="popup_bttns">
+                    <button class="close_popup" onclick="closePopup()">Cancelar</button>
+                    <button class="save_changes">Guardar cambios</button>
+                </div>
+               
+            </div>
+        </div>
+        <header class="banner">
+            <h1>Chef en Casa</h1>
+            <nav class="btn_banner">
+                <ul>
+                    <a class="about_us" href="about_us.html">Acerca de nosotros</a>
+                    <li>
+                        <a href="#" class="menu">Opciones</a>
+                        <ul class="dropdown">
+                            <li><a href="/index.html">Inicio</a></li>
+                            <li><a href="profile.html">Perfil</a></li>
+                            <li><a href="Support-form/index.html">Contacto</a></li>
+                            <li><a href="signup_Majo/index.html">Registro/Inicio de sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <br>
+        <div>
+            <form>
+                <input type="text" class="search_bar" placeholder="¿Qué vamos a cocinar hoy?"> 
+                <span>
+                    <img src="/assets/pictures/buscar.png" class="search_icon">
+                </span>
+                
+            </form>
+        </div>
+       
+
+        <div class="info">
+            <img class = "usr_img" src="">
+            <ul class="about">
+                <li class="name_usr" id="username-id"></li>
+                <li class="about_usr" id="usr_level">Nivel:</li>
+                <li class="about_usr" id="usr_pubs">X recetas</li>
+                <li class="about_usr" id="usr_rating">Rating:</li>
+                <li class="about_usr">Descripción:
+                    <div class="usr_desc">
+                        <p>Descripcion</p>
+                    </div>
+                </li>
+            </ul> 
+        </div>
+        <div class="botones_perfil">
+            <button class="edit_profile" onclick="openPopup()">Editar perfil</button>
+            <button class="logout">Cerrar sesión</button>
+        </div>
+        <br>
+        
+        <h2>Tus publicaciones</h2>
+        <div class="create_posts">
+            <h3 class="banner_posts">¡Luces, cámara y a cocinar!</h3>
+            <div class="create_post_div">
+                <button class="btn_create_post">Publicar nueva receta</button>
+            </div>
+        </div>
+
+        <div class="post">
+            <!--Estructura de posts, borrar o comentar despues-->
+            <div>
+                <img src="/assets/pictures/example_pic.jpg" class="miniatura_post">
+            </div>
+            <span>
+                <div class="info_post">
+                    <div>
+                        <div style="display: flex; justify-content: space-around; align-content: center;">
+                            <h4 class="title_post">Chop Suey</h4>
+                            <span class="fecha_post">12 abril 2024 </span>
+                            <span class="span_more"> <img class="more_post" src="/assets/pictures/mas.png" alt="Menu del post"></span>
+                        </div>
+                        
+                        <ul class="about_post">
+                            <li class="post_info"> X Visualizaciones</li>
+                            <li class="post_info"> X Favoritos</li>
+                            <li class="post_info">Categoria:</li>
+                        </ul>
+                        <button class="bttn_verReceta">Ver receta</button>
+                    </div>
+    
+                </div>
+            </span>
+            
+            
+        </div>
+
+        <footer>
+            <div class="contact">
+                <h5>Copyright© Chef en Casa 2024</h5>
+                <p>Todos los derechos reservados a sus respectivos creadores</p>
+                <p>Avisos de privacidad</p>
+            </div>
+        </footer>
+        <script src="/js/profile.js"></script>
+    </body>
+</html>

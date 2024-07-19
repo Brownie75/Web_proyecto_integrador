@@ -1,0 +1,33 @@
+{
+  "name": "web_proyecto_integrador",
+  "version": "1.0.0",
+  "description": "Espacio de desarrollo para proyecto integrador",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon index.js",
+    "test": "prueba"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brownie75/Web_proyecto_integrador.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Brownie75/Web_proyecto_integrador/issues"
+  },
+  "homepage": "https://github.com/Brownie75/Web_proyecto_integrador#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.10.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
