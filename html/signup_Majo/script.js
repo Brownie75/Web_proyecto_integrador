@@ -1,6 +1,10 @@
 document.getElementById("btn_iniciar-sesion").addEventListener("click", iniciarSesion);
 document.getElementById("btn_registrarse").addEventListener("click", register);
 
+document.getElementById("btn_principal").addEventListener("click", function() {
+    window.location.href = "pagina_principal.html"; //CAMBIAR AL LINK DE LA PAGINA PRINCIPAL DE CHEF EN CASA
+});
+
 var contenedor_login_register = document.querySelector(".contenedor_login-register");
 var formulario_login = document.querySelector(".formulario-login");
 var formulario_registro = document.querySelector(".formulario-registro");
@@ -22,20 +26,20 @@ function register() {
     caja_trasera_register.style.opacity = "0";
     caja_trasera_login.style.opacity = "1";
 }
-var formData = {};
 
 function validateForm(event, formClass) {
     event.preventDefault();
     var form = document.querySelector(`.${formClass}`);
     var inputs = form.querySelectorAll('input');
     var allFilled = true;
+    var formData = {};
 
     inputs.forEach(function(input) {
         if (input.value.trim() === '') {
             allFilled = false;
-            input.style.borderColor = 'red'; // Highlight the empty fields
+            input.style.borderColor = 'red'; 
         } else {
-            input.style.borderColor = ''; // Reset the border color if filled
+            input.style.borderColor = ''; 
             formData[input.name] = input.value.trim();
         }
     });
@@ -44,32 +48,27 @@ function validateForm(event, formClass) {
         alert('Por favor, rellene todos los campos.');
         return false;
     }
-    
-    // Si todos los campos están llenos, puedes enviar el formulario.
+
     if (formClass === 'formulario-login') {
         loginUser(formData);
     } else if (formClass === 'formulario-registro') {
         registerUser(formData);
-    } 
+    }
 
     return true;
 }
 
 function loginUser(data) {
-    fetch('http://localhost:3000/login', {
+    fetch('https://api.tu-dominio.com/login', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(data => {
         alert('Inicio de sesión exitoso');
-        document.cookie = "username = " + formData.username  + "; path=/";
-        document.cookie = "password_ =" + formData.password_  + "; path=/";
-        window.location.href = "../profile.html"
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -78,7 +77,7 @@ function loginUser(data) {
 }
 
 function registerUser(data) {
-    fetch('http://localhost:3000/user', { //modificar esto
+    fetch('https://api.tu-dominio.com/register', { //modificar esto
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -88,7 +87,6 @@ function registerUser(data) {
     .then(response => response.json())
     .then(data => {
         alert('Registro exitoso');
-        window.location.href = "../profile.html";
     })
     .catch((error) => {
         console.error('Error:', error);
