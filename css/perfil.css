@@ -44,7 +44,7 @@ ul li.about_usr{
 }
 h2{
     font-family: outfit;
-    font-size: 3em;
+    font-size: 2em;
     margin-left: 20%;
     margin-top: -1%;
 }
@@ -81,7 +81,6 @@ h3{
 }
 
 .botones_perfil{
-    margin-top: 5%;
     display:flex;
     gap: 10%;
     justify-content: center;
@@ -132,6 +131,9 @@ h3{
     border-radius: 20px;
     background-color: #f1f0f0;
     padding-left: 10px;
+    height: 7em;
+    width: 30em;
+    padding-top: 5px;
 }
 .popup_container{
     position: fixed;
@@ -142,18 +144,19 @@ h3{
     align-items: center;
     background: rgba(0, 0, 0, .7);
     z-index: 9;
-  visibility: hidden;  
+    visibility: hidden;  
+    justify-items: center;
   
 }
 .popup_box{
-    width: 70%;
+    width: 50%;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, .25);
-    border-radius: 5px;
-    padding-left: 10px;
+    border-radius: 15px;
+    padding-left: 20px;
     display: flex;
     flex-direction: column;
-    
+    text-align: center;
 }
 .popup_bttns{
     display: block;
@@ -206,6 +209,8 @@ h3{
     font-weight: 500;
     font-size: 1.4em;
     text-shadow: none;
+    display: block;
+    margin: auto;
 }
 .popup_ins li{
    margin-bottom: 5%; 
@@ -213,19 +218,35 @@ h3{
 }
 .popup_ins input{
     margin-top: 2%;
-    width: 80%;
-    font-size: 1.3em;
-    border-radius: 10px;
-    border-style: solid;
+    width: 50%;
+    font-size: 1em;
+    display: block;
+    margin: auto;
  }
  select{
     margin-top: 2%;
     background-color: #f1f1f1;
-    width: 80%;
+    width: 50%;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-family: sans-serif;
     font-size: 1.2em;
-    
+    display: block;
+    margin: auto;
  }
- 
+ input[type =file]{
+    display: none;
+ }
+.add_pic{
+    display: inline-block;
+    color: #ffffff;
+    padding: 10px 40px;
+    background:#5096FF ;
+    border-radius: 20px;
+    font-size: 1em;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+    font-family:sans-serif ;
+    font-weight: 600;
+ }

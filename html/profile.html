@@ -16,12 +16,9 @@
                 <h3>Editar perfil</h3>
                 <ul style="background: none;display: flex; flex-direction: column;" class="popup_ins">
                     <li>
-                        <label for="id_name" class="popup_label">Cambiar nombre</label><br>
-                        <input type="text" placeholder="Nombre" class="popup_input" id="name_in">
-                    </li>
-                    <li>
-                        <label for="last_in" class="popup_label">Cambiar apellido</label><br>
-                        <input type="text" placeholder="Apellido" class="popup_input" id="last_in">
+                        <p style="font-family: sans-serif; font-weight: 500;font-size: 1.4em;">Foto del perfil</p>
+                        <label for="id_pfp" class="add_pic">Agregar una foto</label><br>
+                        <input type="file" id="id_pfp">
                     </li>
                     <li>
                         <label for="last_in" class="popup_label">Nivel de cocina</label><br>
@@ -75,11 +72,19 @@
             <ul class="about">
                 <li class="name_usr" id="username-id"></li>
                 <li class="about_usr" id="usr_level">Nivel:</li>
-                <li class="about_usr" id="usr_pubs">X recetas</li>
-                <li class="about_usr" id="usr_rating">Rating:</li>
+                <li class="about_usr" id="usr_pubs">
+                    <span>X</span>
+                    recetas</li>
+                <li class="about_usr" id="usr_rating">Rating:
+                    
+                    <span>
+                        <img src="/assets/pictures/favorito (1).png" style="height: 1em; ">
+                    </span>
+                    <span id="prom_usr">X</span>
+                </li>
                 <li class="about_usr">Descripción:
                     <div class="usr_desc">
-                        <p>Descripcion</p>
+                        <p>Chef novato apasionado por la cocina. Amante de la gastronomía internacional, busca innovar combinando sabores únicos. Habilidades básicas en técnicas culinarias y presentación. Listo para aprender y crecer en un entorno de cocina profesional</p>
                     </div>
                 </li>
             </ul> 
@@ -107,7 +112,7 @@
                 <div class="info_post">
                     <div>
                         <div style="display: flex; justify-content: space-around; align-content: center;">
-                            <h4 class="title_post">Chop Suey</h4>
+                            <h4 class="title_post">Receta</h4>
                             <span class="fecha_post">12 abril 2024 </span>
                             <span class="span_more"> <img class="more_post" src="/assets/pictures/mas.png" alt="Menu del post"></span>
                         </div>

@@ -15,14 +15,13 @@
         <br>
         
         <div class="edit_usr">
-            <h3>Escoge tu foto de perfil</h3>
+            <form>
+                <h3>Escoge tu foto de perfil</h3>
             <p class="lil_info">Esta foto se mostrará en tus interacciones y en tu perfil. ¡Muestra tu gran sonrisa chef! </p>
                 <div class="upload_pic">
-                    
                     <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in">
                 </div>
                 <h3>Cuéntanos brevemente sobre ti</h3>
-                <p class="lil_info">¡Queremos saber de ti! Tus logros y experiencias, úsalo para que todos te conozcan</p>
                 <textarea class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
                 <h3>¿Cuál es tu nivel de cocina?</h3>
                 <select id="nivel-cocina">
@@ -33,13 +32,16 @@
                 </select>
                 
             <h3>Agrega tu cumpleaños</h3>
-            <div>
                 <input type="date" class="bday">
-            </div>
+                <a href="/index.html" class="bttn_confirm">
+                    Listo!
+                </a>
+                
+            </form>
             
         </div>
         
-        <button class="bttn_confirm">Listo! <a href="/index.html"></a></button>
+        
 
     </body>
 </html>
