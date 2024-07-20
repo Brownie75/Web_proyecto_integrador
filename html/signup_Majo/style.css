@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,7 +6,7 @@
     font-family: sans-serif;
 }
 
-body{
+body {
     background-image: url(https://www.bupasalud.com/sites/default/files/inline-images/bupa_598072389.jpg);
     background-size: cover;
     background-repeat: no-repeat;
@@ -14,21 +14,21 @@ body{
     background-attachment: fixed;
 }
 
-main{
+main {
     width: 100%;
     padding: 20px;
     margin: auto;
     margin-top: 100px;
 }
 
-.contenedor_todo{
+.contenedor_todo {
     width: 100%;
     max-width: 800px;
     margin: auto;
     position: relative;
 }
 
-.caja_trasera{
+.caja_trasera {
     width: 100%;
     padding: 10px 20px;
     display: flex;
@@ -37,23 +37,23 @@ main{
     background-color: #ff2c2ca7;
 }
 
-.caja_trasera div{
+.caja_trasera div {
     margin: 100px 40px;
     color: white;
     transition: all 500ms;
 }
 
 .caja_trasera div p,
-.caja_trasera div button{
+.caja_trasera div button {
     margin-top: 30px;
 }
 
-.caja_trasera div h3{
+.caja_trasera div h3 {
     font-weight: 400;
     font-size: 26px;
 }
 
-.caja_trasera button{
+.caja_trasera button {
     padding: 10px 40px;
     border: 2px solid #fff;
     background: transparent;
@@ -65,23 +65,23 @@ main{
     transform: all 300ms;
 }
 
-.caja_trasera button:hover{
+.caja_trasera button:hover {
     background: #fff;
     color: #ff2c2cdd;
 }
 
-.contenedor_login-register{
+.contenedor_login-register {
     display: flex;
     align-items: center;
     width: 100%;
     max-width: 380px;
     position: relative;
-    top: -185px;
+    top: -225px;
     left: 10px;
     transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
 }
 
-.contenedor_login-register form{
+.contenedor_login-register form {
     width: 100%;
     padding: 80px 20px;
     background: #fff;
@@ -89,14 +89,14 @@ main{
     border-radius: 20px;
 }
 
-.contenedor_login-register form h2{
+.contenedor_login-register form h2 {
     font-size: 30px;
     text-align: center;
     margin-bottom: 20px;
     color: #ff2c2c;
 }
 
-.contenedor_login-register form input{
+.contenedor_login-register form input {
     width: 100%;
     margin-top: 20px;
     padding: 10px;
@@ -106,7 +106,7 @@ main{
     outline: none;
 }
 
-.contenedor_login-register form button{
+.contenedor_login-register form button {
     padding: 10px 40px;
     margin-top: 40px;
     border: none;
@@ -117,12 +117,12 @@ main{
     outline: none;
 }
 
-.formulario-login{
+.formulario-login {
     opacity: 1;
     display: block;
 }
 
-.formulario-registro{
+.formulario-registro {
     display: none;
 }
 
@@ -137,29 +137,52 @@ footer {
 }
 
 @media screen and (max-width: 850px) {
-    main{
+    main {
         margin-top: 50px;
     }
 
-    .caja_trasera{
+    .caja_trasera {
         max-width: 350px;
         height: 300px;
         flex-direction: column;
         margin: auto;
     }
 
-    .caja_trasera div{
+    .caja_trasera div {
         margin: 0px;
         position: absolute;
     }
 
-    .contenedor_login-register{
-        top: -10px;
+    .contenedor_login-register {
+        top: -50px; 
         left: -5px;
         margin: auto;
     }
 
-    .contenedor_login-register form{
+    .contenedor_login-register form {
         position: relative;
     }
+
+    .contenedor_principal {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+}
+
+#btn_principal {
+    padding: 10px 40px;
+    border: 2px solid #fff;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    outline: none;
+    transform: all 300ms;
+}
+
+#btn_principal:hover {
+    background: #fff;
+    color: #ff2c2cc9;
 }
