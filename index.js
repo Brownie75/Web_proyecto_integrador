@@ -7,7 +7,7 @@ const path = require("path");
 const multer = require('multer');
 const fs = require("fs");
 const { id } = require("choco");
-const {authUser, authDeletePost} = require("./js/auth.js")
+// const {authUser, authDeletePost} = require("./js/auth.js")
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -27,7 +27,11 @@ const storage = multer.diskStorage({
     cb(null, 'assets/'+req.body.id_post+"/");
   },
   filename: (req, file, cb) => {
-    cb(null, req.body.id_user + '-' + "pfp" + path.extname(file.originalname));
+    if(req.body.username == undefined){
+      cb(null, req.body.id_post + '-' + Date.now() + path.extname(file.originalname))
+    } else {
+      cb(null, req.body.id_post + '-' + req.body.username + path.extname(file.originalname));
+    }
   }
 });
 
@@ -59,7 +63,7 @@ server.listen(3000, () =>{
 
 // API (Pendiente de cambiar a otro archivo)
 
-server.get("/", setUser, authUser, (req,res) => {
+server.get("/", (req,res) => {
   console.log("GET /");
   console.log(req.body);
   res.send("Bienvenido a Chef en Casa");
@@ -227,35 +231,26 @@ server.post("/image", upload.single('image'), (req,res) => {
     
   }
   const direc = req.file.path
-  console.log(req.body.id_post);
-  conn.query("INSERT INTO images (direc,id_post) VALUES (?,?)", [direc,req.body.id_post], (error, results) => {
-    if(error){
-      console.log("Error inserting data");
-      res.status(400).send(req.body);
-    } else {
-      console.log("Imagen subida exitosamente");
-      res.send(results);
-    }
-  })
-})
+  res.send(direc);
+});
 
-server.post("/upt_profile", setUser, authUser, upload.single('pfp'), (req, res) => {
-  const {descripcion, u_experiencia} = req.body;
+server.post("/upt_profile", setUser, (req, res) => {
+  const {descripcion, u_experiencia, pfp} = req.body;
+  console.log(req.body, req.user);
   conn.query("UPDATE usuarios SET pfp = ?, descripcion = ?, nivel_cocina = ? where id_user = ?",
-    [req.file.path, descripcion, u_experiencia, req.user.id_user], (error, results) => {
+    [pfp, descripcion, u_experiencia, req.user.id_user], (error, results) => {
       if(error){
         console.log("Error updating data", error);
         res.send("Error updating data", 500);
       } else {
         console.log("data updated successfully");
-        console.log(results);
-        res.send(results);
+        res.send("data updated successfully");
       }
     }
   )
 })
 
-server.delete("/recipe/:id", setUser, authUser, authDeletePost, (req, res) => {
+server.delete("/recipe/:id", (req, res) => {
   const id = req.params.id;
   conn.query("CALL delete_post(?)", [id], (error, results) => {
     if (error){
@@ -275,8 +270,7 @@ function setUser(req, res, next){
         if(error){
           throw error;
         } else {
-          req.user = results;
-          console.log(req.user)
+          req.user = results[0];
           next();
         }
       }
