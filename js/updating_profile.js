@@ -5,15 +5,17 @@ edit_form.addEventListener("submit", (event) => {
     event.preventDefault();
 
     var form = new FormData();
-    form.append("id_post", "pfp");
-    form.append("id_user", 1);
-    form.append("pfp", file_input.files[0]);
-    form.append("descripcion", edit_form.descripcion.value);
-    form.append("u_experiencia", edit_form.u_experiencia.value);
+    form.append('id_post', 'pfp');
+    form.append('username', getCookie('username'));
+    form.append('pfp', file_input.files[0]);
+    form.append('descripcion', edit_form.descripcion.value);
+    form.append('u_experiencia', edit_form.u_experiencia.value);
 
-    fetch("http://localhost:3000/profile", {
-        method: "PUT",
+    console.log(Object.fromEntries(form));
+
+    fetch("http://localhost:3000/upt_profile", {
+        method: "POST",
         body: form
-    })
+    }).then(response => response.json());
     
 })

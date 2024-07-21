@@ -13,7 +13,7 @@
         </div>
         <br>
         
-        <div class="edit_usr">
+        <form class="edit_usr">
             
                 <div class="upload_pic">
                     <h3>Escoge tu foto de perfil</h3>
@@ -24,7 +24,7 @@
                 <h3>Cuéntanos brevemente sobre ti</h3>
                 <textarea class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256"></textarea>
                 <h3>¿Cuál es tu nivel de cocina?</h3>
-                <select id="nivel-cocina">
+                <select id="nivel-cocina" name="u_experiencia">
                     <option value="principiante">Principiante</option>
                     <option value="medio">Medio</option>
                     <option value="experimentado">Experimentado</option>
@@ -34,9 +34,9 @@
                 
             </div>
             
-        </div>
-        
-        <button class="bttn_confirm">Listo! <a href=""></a></button>
-
+            <input type="submit" class="bttn_confirm">
+        </form>
+        <script src="/js/cookies.js"></script>
+        <script src="/js/updating_profile.js"></script>
     </body>
 </html>

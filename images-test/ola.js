@@ -12,7 +12,7 @@ const imagen = document.getElementById("file_input");
             fetch("http://localhost:3000/image",{
                 method: "POST",
                 body: form
-            }).then(response => {
+            }).then(response => {     
                 console.log(response);
             })
         }) 

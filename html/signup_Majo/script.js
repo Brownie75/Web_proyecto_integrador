@@ -2,7 +2,7 @@ document.getElementById("btn_iniciar-sesion").addEventListener("click", iniciarS
 document.getElementById("btn_registrarse").addEventListener("click", register);
 
 document.getElementById("btn_principal").addEventListener("click", function() {
-    window.location.href = "pagina_principal.html"; //CAMBIAR AL LINK DE LA PAGINA PRINCIPAL DE CHEF EN CASA
+    window.location.href = "/index.html"; //CAMBIAR AL LINK DE LA PAGINA PRINCIPAL DE CHEF EN CASA
 });
 
 var contenedor_login_register = document.querySelector(".contenedor_login-register");
@@ -58,17 +58,22 @@ function validateForm(event, formClass) {
     return true;
 }
 
-function loginUser(data) {
-    fetch('https://api.tu-dominio.com/login', {
+function loginUser(fdata) {
+    fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(fdata)
     })
     .then(response => response.json())
     .then(data => {
-        alert('Inicio de sesión exitoso');
+        alert(data[0][0].Validacion);
+        val =  data[0][0].Validacion;
+        if(val == 'Sesion iniciada') {
+            setCookie("username",fdata["username"],1);
+            window.location.href = "/index.html";
+        };
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -76,17 +81,28 @@ function loginUser(data) {
     });
 }
 
-function registerUser(data) {
-    fetch('https://api.tu-dominio.com/register', { //modificar esto
+function registerUser(fdata) {
+    console.log(fdata);
+    fetch('http://localhost:3000/register', { //modificar esto
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(fdata)
     })
     .then(response => response.json())
     .then(data => {
-        alert('Registro exitoso');
+
+        console.log(data);
+
+        if(data ==  'Usuario registrado'){
+            alert('Registro exitoso');
+            setCookie("username",fdata["username"],1);
+            window.location.href = "/html/edit_new_profile.html"
+        } else {
+            alert('Este usuario ya existe');
+        }
+
     })
     .catch((error) => {
         console.error('Error:', error);

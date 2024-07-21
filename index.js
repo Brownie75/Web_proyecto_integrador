@@ -36,7 +36,7 @@ const upload = multer({ storage: storage });
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use(cors());
-// server.use(setUser);
+server.use(setUser);
 
 const passwords = ["EseKuEle","gato261261"]
 
@@ -61,6 +61,7 @@ server.listen(3000, () =>{
 
 server.get("/", setUser, authUser, (req,res) => {
   console.log("GET /");
+  console.log(req.body);
   res.send("Bienvenido a Chef en Casa");
 })
 
@@ -99,6 +100,14 @@ server.get("/recipe/:id", (req, res) => {
         }
   });
 })
+server.get("/recipe/:id/content", (req, res) => {
+  const id_post = req.params.id;
+  conn.query("SELECT url FROM posts WHERE id_post = ?",[id_post], (error, results) => {
+      const file = fs.readFileSync("./"+results[0].url);
+
+      res.send(file.toString());
+  })
+})
 server.get("/user/:id/posts", (req,res) =>{
   const id = req.params.id;
   conn.query("SELECT * FROM posts WHERE fk_user = ?",[id],(error, results) => {
@@ -124,7 +133,7 @@ server.get("/image/:img_name", (req,res) =>{
     }
   })
 })
-server.get("/post/:id/images",(req,res) =>{
+server.get("/recipe/:id/images",(req,res) =>{
   id = req.params.id;
   conn.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
     if(error){
@@ -145,7 +154,6 @@ server.get("/get_user_by_name/:username", (req, res) =>{
     res.send("Error fetching data", 500);
   } else {
     console.log("data fetch successfully");
-    console.log(results);
     res.send(results);
   }
 });
@@ -172,17 +180,31 @@ server.get("/search", (req,res) => {
   })
 })
 
-server.post("/user", (req, res) => {
+server.post("/register", (req, res) => {
 const {username, password_, correo} = req.body;
-conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
-  +username+"', '"+password_+"','"+correo+"')", (error, results) =>{
-    if(error){
-      res.send("Error inserting data", 500);
+conn.query(`CALL registro('${username}', '${correo}')`,(error, results) => {
+
+  if(error){
+    console.log("Error inserting data");
+  } else {
+    if(results[0][0].Validacion_user === 'Registrado!'){
+
+      // Insercion de datos
+      conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
+        +username+"', '"+password_+"','"+correo+"')", (error, results) =>{
+          if(error){
+            res.send("Error inserting data", 500);
+          } else {
+            res.send(JSON.stringify('Usuario registrado'));
+          }
+        });
+
     } else {
-      res.send(results);
+      res.send(JSON.stringify('Este usuario ya existe'));
     }
-  });
-});
+  }
+})
+}); 
 
 server.post("/login", (req, res) =>{
   const {username, password_} = req.body;
@@ -217,10 +239,10 @@ server.post("/image", upload.single('image'), (req,res) => {
   })
 })
 
-server.put("/profile", authUser, upload.single('pfp'), (req, res) => {
-  const {descripcion, u_experiencia, id_user} = req.body;
+server.post("/upt_profile", setUser, authUser, upload.single('pfp'), (req, res) => {
+  const {descripcion, u_experiencia} = req.body;
   conn.query("UPDATE usuarios SET pfp = ?, descripcion = ?, nivel_cocina = ? where id_user = ?",
-    [req.file.path, descripcion, u_experiencia, id_user], (error, results) => {
+    [req.file.path, descripcion, u_experiencia, req.user.id_user], (error, results) => {
       if(error){
         console.log("Error updating data", error);
         res.send("Error updating data", 500);
@@ -247,13 +269,14 @@ server.delete("/recipe/:id", setUser, authUser, authDeletePost, (req, res) => {
 
 // set user
 function setUser(req, res, next){
-  const id_user = req.body.id_user;
-  if(id_user){
-      conn.query("SELECT id_user, username, correo, rol FROM usuarios WHERE id_user = ?", [id_user], (error, results) => {
+  const username = req.body.username;
+  if(username){
+      conn.query("SELECT id_user, username, correo, rol FROM usuarios WHERE username = ?", [username], (error, results) => {
         if(error){
           throw error;
         } else {
           req.user = results;
+          console.log(req.user)
           next();
         }
       }
@@ -262,12 +285,3 @@ function setUser(req, res, next){
     next();
   }
 }
-
-// temporal
-server.get("/recipe/:id/content", (req, res) => {
-  const id_post = req.params.id;
-  conn.query("SELECT url FROM posts WHERE id_post = ?",[id_post], (error, results) => {
-      const file = fs.readFileSync("./"+results[0].url);
-      res.send(file.toString());
-  })
-})
