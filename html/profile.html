@@ -17,8 +17,15 @@
                 <ul style="background: none;display: flex; flex-direction: column;" class="popup_ins">
                     <li>
                         <p style="font-family: sans-serif; font-weight: 500;font-size: 1.4em;">Foto del perfil</p>
-                        <label for="id_pfp" class="add_pic">Agregar una foto</label><br>
+                        <div class="add_pic_style">
+                            <label for="id_pfp" class="add_pic">Agregar una foto</label><br>
                         <input type="file" id="id_pfp">
+                        </div>
+                        
+                    </li>
+                    <li>
+                        <label for="edit_usr_desc" class="popup_label">Editar descripción</label>
+                        <textarea class="edit_desc" rows="2" cols="1" id="edit_usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
                     </li>
                     <li>
                         <label for="last_in" class="popup_label">Nivel de cocina</label><br>
@@ -114,7 +121,7 @@
                         <div style="display: flex; justify-content: space-around; align-content: center;">
                             <h4 class="title_post">Receta</h4>
                             <span class="fecha_post">12 abril 2024 </span>
-                            <span class="span_more"> <img class="more_post" src="/assets/pictures/mas.png" alt="Menu del post"></span>
+                            
                         </div>
                         
                         <ul class="about_post">
@@ -127,8 +134,6 @@
     
                 </div>
             </span>
-            
-            
         </div>
 
         <footer>
