@@ -134,6 +134,7 @@ h3{
     height: 7em;
     width: 30em;
     padding-top: 5px;
+    word-wrap: break-word;
 }
 .popup_container{
     position: fixed;
