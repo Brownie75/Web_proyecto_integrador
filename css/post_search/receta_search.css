@@ -1,7 +1,7 @@
 .receta_busqueda{
     box-sizing: content-box;
     width: 90%;
-    background-color: #e8e8e8;
+    background-color: #ffffff;
     margin: auto;
     height: 15em;
 }
@@ -30,7 +30,7 @@
 .desc{
     width: 54em;
     box-sizing: content-box;
-    background-color: #c0c0c0;
+    background-color: #eaeaea;
     padding-left: 10px;
     padding-top: 5px;
     word-wrap: break-word;
