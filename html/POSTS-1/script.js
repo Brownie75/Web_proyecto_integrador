@@ -1,7 +1,10 @@
 document.getElementById('add-title').addEventListener('click', function() {
     let title = prompt('Ingrese el título de la receta:');
     if (title) {
-        document.getElementById('recipe-title').textContent = title;
+        let extra_title = document.createElement("h2");
+        extra_title.innerText = title;
+        document.getElementById("recipe").appendChild(extra_title);
+        //document.getElementById('recipe-title').textContent = title;
     }
 });
 
@@ -15,12 +18,12 @@ document.getElementById('add-ingredients').addEventListener('click', function() 
 });
 
 document.getElementById('add-paragraph').addEventListener('click', function() {
-    let paragraph = prompt('Ingrese un párrafo:');
-    if (paragraph) {
+    //let paragraph = prompt('Ingrese un párrafo:');
+    // if (paragraph) {
         let p = document.createElement('p');
-        p.textContent = paragraph;
+        //p.textContent = paragraph;
         document.getElementById('paragraph-list').appendChild(p);
-    }
+    //}
 });
 
 document.getElementById('add-image').addEventListener('click', function() {

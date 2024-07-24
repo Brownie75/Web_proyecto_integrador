@@ -18,7 +18,7 @@ body {
     justify-content: space-between;
 }
 
-h1 {
+.logo-text {
     font-family: outfit;
     padding-left: 20px;
     color: white;
@@ -40,21 +40,21 @@ h1 {
     cursor: pointer;
 }
 
-h1:hover {
+.logo-text:hover {
     cursor: pointer;
 }
 
-ul {
+.nav_var {
     list-style: none;
     padding-inline-start: 0px;
 }
 
-ul li {
+.nav_bar li {
     display: inline-block;
     position: relative;
 }
 
-ul li a {
+.nav_bar li a {
     display: block;
     padding: 25px 50px;
     color: white;
@@ -66,11 +66,11 @@ ul li a {
     text-shadow: 0px 4px 4px rgba(0, 0, 15, .25);
 }
 
-ul li ul.dropdown li {
+.nav_bar li ul.dropdown li {
     display: block;
 }
 
-ul li ul.dropdown {
+.nav_bar li ul.dropdown {
     width: 100%;
     background: #fd4242;
     position: absolute;
@@ -79,12 +79,12 @@ ul li ul.dropdown {
     box-shadow: 10px 10px 15px rgba(0, 0, 15, .25);
 }
 
-ul li a:hover {
+.nav_bar li a:hover {
     background: #ffffff;
     color: black;
 }
 
-ul li:hover ul.dropdown {
+.nav_bar li:hover ul.dropdown {
     display: block;
 }
 
@@ -122,6 +122,8 @@ ul li:hover ul.dropdown {
 }
 
 .subheader {
+    position: fixed;
+    width: 90%;
     background-color: #ebe5e5;
     color: rgb(0, 0, 0);
     padding: 6rem;
@@ -158,18 +160,20 @@ main {
 }
 
 #content {
+    margin-top: 150px;
     background-color: #F0F0F0;
     padding: 2em;
     border-radius: 8px;
 }
 
 #recipe {
-    background-color: #E0E0E0;
+    background-color: #ffffff;
     padding: 2em;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     gap: 1em;
+    outline: none;
 }
 
 #recipe-title {
@@ -225,4 +229,51 @@ main {
 
 #ingredients-list ul li {
     margin-bottom: 0.5em;
+}
+/*New Additions by Omar */
+input[type="file"]{
+    display: none;
+}
+
+.file-input-format{
+    text-align: center;
+    background-color: #FFFFFF;
+    border: none;
+    padding: 0.5em 1em;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+font{
+    font-family: 'Outfit';
+}
+#post-recipe{
+    padding: 0 30px 0 30px;
+    background-color: #fd4242;
+    color: white;
+}
+.page-title{
+    margin-top: 0;
+    margin-bottom: 7px;
+    font-family: 'Outfit';
+}
+:-webkit-any(article, aside, nav, section) h1 {
+    font-size: 2em;
+}
+#recipe ul {
+    list-style-position: inside;
+}
+.inserted-image{
+    float: left;
+    margin-right: 10px;
+    width: 300px;
+}
+.subheader input{
+    font-size: 1.5em;
+    font-family: 'Outfit';
+    font-weight: bold;
+    padding-left: 15px;
+    background: none;
+    border:0
 }

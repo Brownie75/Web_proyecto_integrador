@@ -8,9 +8,9 @@
 </head>
 <body>
     <header class="banner">
-        <h1>Chef en Casa</h1>
+        <h1 class="logo-text">Chef en Casa</h1>
         <nav class="btn_banner">
-            <ul>
+            <ul class="nav_bar">
                 <li><a class="about_us" href="/V.01-formulario/about_us.html">Acerca de nosotros</a></li>
                 <li>
                     <a href="#" class="menu">Opciones</a>
@@ -26,34 +26,34 @@
     </header>
 
     <div class="subheader">
-        <h2>Publicar Nueva Receta</h2>
+        <input type="text" placeholder="Titulo de la receta">
         <nav>
-            <button id="add-title">Agregar título</button>
+           <select name="title" id="add-title" style="border: 0; padding: 0 10px 0 5px;">
+                <option value="" selected disabled hidden>Agregar titulo</option>
+                <option value="h1" style="font: 4em bold; font-family: 'Outfit';">Titulo 1</option>
+                <option value="h2" style="font: 3em bold; font-family: 'Outfit';">Titulo 2</option>
+                <option value="h3" style="font: 2.34em bold; font-family: 'Outfit';">Titulo 3</option>
+                <option value="h4" style="font: 2em bold; font-family: 'Outfit';">Titulo 4</option>
+                <option value="h5" style="font: 1.7em bold; font-family: 'Outfit';">Titulo 5</option>
+                <option value="h6" style="font: 1.5em bold; font-family: 'Outfit';">Titulo 6</option>
+            </select></button>
+
             <button id="add-ingredients">Agregar ingredientes</button>
-            <button id="add-paragraph">Agregar párrafo</button>
-            <button id="add-image">Agregar imagen</button>
-            <button id="post-recipe">POST</button>
+                <label for="insert-img" class="file-input-format">Agregar imagen</label>
+                <input id="insert-img" type="file" accept="image/*">
+                <label for="insert-vid" id="vid-label" class="file-input-format">Agregar video</label>
+                <!--<input id="insert-vid" type="url">--> 
+            <button id="post-recipe">Publicar</button>
         </nav>
     </div>
     <main>
         <section id="content">
-            <div id="recipe">
-                <h2 id="recipe-title">TITULO</h2>
-                <div id="image-and-ingredients">
-                    <div id="image-container">img</div>
-                    <div id="ingredients-list">
-                        <h4>Ingredientes</h4>
-                        <ul id="ingredients">
-                            <li></li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="paragraph-list">
-                    <h4>Instrucciones</h4>
-                </div>
+            <div id="recipe" contenteditable="true" spellcheck="true">
+                
             </div>
         </section>
     </main>
-    <script src="script.js"></script>
+    <script type="text/javascript" src="/js/cookies.js"></script>
+    <script type="text/javascript" src="new_script.js"></script>
 </body>
 </html>

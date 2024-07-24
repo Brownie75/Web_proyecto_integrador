@@ -224,7 +224,7 @@ server.post("/login", (req, res) =>{
   })
 })
 
-server.post("/image", upload.single('image'), (req,res) => {
+server.patch("/image", upload.single('image'), (req,res) => {
   if (!req.file) {
     console.log('No file uploaded');
     return res.status(400).send('No file uploaded.');
