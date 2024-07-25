@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crea tu receta</title>
+    <title>Chef en casa</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -54,7 +54,23 @@
             <div id="recipe" contenteditable="true" spellcheck="true"></div>
         </section>
     </main>
+
+    <!-- API GOOGLE-->
+
+    <div id="google_translate_element" class="translate-widget"></div> 
+      
+    <script type="text/javascript"> 
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement(
+                {pageLanguage: 'es'}, 
+                'google_translate_element'
+            ); 
+        } 
+    </script> 
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="text/javascript" src="/js/cookies.js"></script>
     <script type="text/javascript" src="new_script.js"></script>
+
 </body>
 </html>
