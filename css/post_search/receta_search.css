@@ -1,0 +1,59 @@
+.receta_busqueda{
+    box-sizing: content-box;
+    width: 90%;
+    background-color: #ffffff;
+    margin: auto;
+    height: 15em;
+}
+.img_busqueda{
+    min-width: 150px;
+    max-width: 250px;
+    display: block;
+}
+.receta_busqueda{
+    display: flex;
+}
+.star_search{
+    height: 2em;
+    align-self: center;
+    margin-right: 10%;
+}
+.img{
+    margin-top: 2%;
+    margin-left: 2%;
+}
+.info_busqueda{
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+}
+.desc{
+    width: 54em;
+    box-sizing: content-box;
+    background-color: #eaeaea;
+    padding-left: 10px;
+    padding-top: 5px;
+    word-wrap: break-word;
+    position: relative;
+    height: 8em;
+}
+.search_rating{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin-left: -15%;
+    position: relative;
+    font-family: sans-serif;
+    font-size: 1.3em;
+    
+}
+.titulo_busqueda{
+    font-family: outfit;
+    font-weight: 500;
+    font-size: 1.5em;
+}
+.desc_search{
+    
+    font-family: sans-serif;
+    line-height: 1.5;
+}
