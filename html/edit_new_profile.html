@@ -19,12 +19,12 @@
                 <h3>Escoge tu foto de perfil</h3>
             <p class="lil_info">Esta foto se mostrará en tus interacciones y en tu perfil. ¡Muestra tu gran sonrisa chef! </p>
                 <div class="upload_pic">
-                    <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in">
+                    <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in" name="image">
                 </div>
                 <h3>Cuéntanos brevemente sobre ti</h3>
                 <textarea class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
                 <h3>¿Cuál es tu nivel de cocina?</h3>
-                <select id="nivel-cocina">
+                <select id="nivel-cocina" name="u_experiencia">
                     <option value="principiante">Principiante</option>
                     <option value="medio">Medio</option>
                     <option value="experimentado">Experimentado</option>
@@ -39,9 +39,9 @@
                 
             </form>
             
-        </div>
-        
-        
-
+            <input type="submit" class="bttn_confirm">
+        </form>
+        <script src="/js/cookies.js"></script>
+        <script src="/js/updating_profile.js"></script>
     </body>
 </html>

@@ -7,6 +7,8 @@ const path = require("path");
 const multer = require('multer');
 const fs = require("fs");
 const { id } = require("choco");
+const { error } = require("console");
+// const {authUser, authDeletePost} = require("./js/auth.js")
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -26,7 +28,11 @@ const storage = multer.diskStorage({
     cb(null, 'assets/'+req.body.id_post+"/");
   },
   filename: (req, file, cb) => {
-    cb(null, req.body.id_user + '-' + "pfp" + path.extname(file.originalname));
+    if(req.body.username == undefined){
+      cb(null, req.body.id_post + '-' + Date.now() + path.extname(file.originalname))
+    } else {
+      cb(null, req.body.id_post + '-' + req.body.username + path.extname(file.originalname));
+    }
   }
 });
 
@@ -35,6 +41,7 @@ const upload = multer({ storage: storage });
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use(cors());
+server.use(setUser);
 
 const passwords = ["EseKuEle","gato261261"]
 
@@ -59,7 +66,7 @@ server.listen(3000, () =>{
 
 server.get("/", (req,res) => {
   console.log("GET /");
-  console.log(res.query);
+  console.log(req.body);
   res.send("Bienvenido a Chef en Casa");
 })
 
@@ -98,6 +105,14 @@ server.get("/recipe/:id", (req, res) => {
         }
   });
 })
+server.get("/recipe/:id/content", (req, res) => {
+  const id_post = req.params.id;
+  conn.query("SELECT url FROM posts WHERE id_post = ?",[id_post], (error, results) => {
+      const file = fs.readFileSync("./"+results[0].url);
+
+      res.send(file.toString());
+  })
+})
 server.get("/user/:id/posts", (req,res) =>{
   const id = req.params.id;
   conn.query("SELECT * FROM posts WHERE fk_user = ?",[id],(error, results) => {
@@ -109,6 +124,44 @@ server.get("/user/:id/posts", (req,res) =>{
           res.send("Imagen subida");
         }
   });
+})
+
+server.get("/image/:img_name", (req,res) =>{
+  const direc = req.params.img_name;
+  conn.query(`SELECT * FROM images WHERE img_name = '${direc}'`, (error, results) => {
+    if(error){
+      console.log("Error fetching image");
+      res.status(400);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  })
+})
+server.get("/recipe/:id/images",(req,res) =>{
+  id = req.params.id;
+  conn.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
+    if(error){
+      console.log("Error fetching images");
+      res.status(400);
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  })
+})
+
+server.get("/get_user_by_name/:username", (req, res) =>{
+  const username = req.params.username;
+  conn.query("SELECT * FROM usuarios WHERE username = ?",[username], (error, results) =>{
+  if(error){
+    console.log("Error fetching data", error);
+    res.send("Error fetching data", 500);
+  } else {
+    console.log("data fetch successfully");
+    res.send(results);
+  }
+});
 })
 
 // Motor de busqueda
@@ -132,17 +185,71 @@ server.get("/search", (req,res) => {
   })
 })
 
-server.post("/user", (req, res) => {
+server.post("/register", (req, res) => {
 const {username, password_, correo} = req.body;
-conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
-  +username+"', '"+password_+"','"+correo+"')", (error, results) =>{
-    if(error){
-      res.send("Error inserting data", 500);
+conn.query(`CALL registro('${username}', '${correo}')`,(error, results) => {
+
+  if(error){
+    console.log("Error inserting data");
+  } else {
+    if(results[0][0].Validacion_user === 'Registrado!'){
+
+      // Insercion de datos
+      conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('"
+        +username+"', '"+password_+"','"+correo+"')", (error, results) =>{
+          if(error){
+            res.send("Error inserting data", 500);
+          } else {
+            res.send(JSON.stringify('Usuario registrado'));
+          }
+        });
+
+    } else {
+      res.send(JSON.stringify('Este usuario ya existe'));
+    }
+  }
+})
+}); 
+
+server.post("/recipe", setUser, (req, res) => {
+  conn.query("INSERT INTO posts (titulo, ingredientes, contenido, categoria, fk_user) VALUES ('', '', '', '', ?)", [req.user.id_user], (error, results) => {
+    if(error) {
+      res.status(400).send("Could not make post");
     } else {
       res.send(results);
     }
+  })
+})
+
+server.post("/post_recipe", (req, res) => {
+  const {id_post, username, page_title, ingredients, page_content, preview} = req.body;
+  
+  var direc = path.join(__dirname, `html/${id_post}`)
+  if(!fs.existsSync(direc)) fs.mkdir(direc, (err) => {
+    if(err){
+      return console.log(err)
+    } else {
+      console.log("Directorio creado con exito");
+    }
+  }); else console.log("Ya existe directorio");
+  fs.appendFileSync(direc + '/content.html', page_content, (err) => {
+    if(err){
+      return console.log(err)
+    } else {
+      console.log("Archivo creado con exito");
+    }
   });
-});
+
+  conn.query(`UPDATE posts SET titulo = '${page_title}', ingredientes = '${ingredients}', contenido = '/html/${id_post}/content.html', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
+    if(error){
+      console.log("could not publish post");
+      res.status(400).send("could not publish post");
+    } else {
+      console.log('Published!');
+      res.status(200).send(results);
+    }
+  })
+})
 
 server.post("/login", (req, res) =>{
   const {username, password_} = req.body;
@@ -153,80 +260,63 @@ server.post("/login", (req, res) =>{
     } else {
       console.log(results);
       res.send(results);
+
     }
   })
 })
 
-server.post("/image", upload.single('image'), (req,res) => {
+server.patch("/image", upload.single('image'), (req,res) => {
   if (!req.file) {
     console.log('No file uploaded');
     return res.status(400).send('No file uploaded.');
     
   }
   const direc = req.file.path
-  console.log(req.body.id_post);
-  conn.query("INSERT INTO images (direc,id_post) VALUES (?,?)", [direc,req.body.id_post], (error, results) => {
-    if(error){
-      console.log("Error inserting data");
-      res.status(400).send(req.body);
-    } else {
-      console.log("Imagen subida exitosamente");
-      res.send(results);
-    }
-  })
-})
-
-server.get("/image/:img_name", (req,res) =>{
-  const direc = req.params.img_name;
-  conn.query(`SELECT * FROM images WHERE img_name = '${direc}'`, (error, results) => {
-    if(error){
-      console.log("Error fetching image");
-      res.status(400);
-    } else {
-      console.log(results);
-      res.send(results);
-    }
-  })
-})
-server.get("/post/:id/images",(req,res) =>{
-  id = req.params.id;
-  conn.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
-    if(error){
-      console.log("Error fetching images");
-      res.status(400);
-    } else {
-      console.log(results);
-      res.send(results);
-    }
-  })
-})
-
-server.get("/get_user_by_name/:username", (req, res) =>{
-  const username = req.params.username;
-  conn.query("SELECT * FROM usuarios WHERE username = ?",[username], (error, results) =>{
-  if(error){
-    console.log("Error fetching data", error);
-    res.send("Error fetching data", 500);
-  } else {
-    console.log("data fetch successfully");
-    console.log(results);
-    res.send(results);
-  }
+  res.send(direc);
 });
-})
 
-server.put("/profile", upload.single('pfp'), (req, res) => {
-  const {descripcion, u_experiencia, id_user} = req.body;
+server.post("/upt_profile", setUser, (req, res) => {
+  const {descripcion, u_experiencia, pfp} = req.body;
+  console.log(req.body, req.user);
   conn.query("UPDATE usuarios SET pfp = ?, descripcion = ?, nivel_cocina = ? where id_user = ?",
-    [req.file.path, descripcion, u_experiencia, id_user], (error, results) => {
+    [pfp, descripcion, u_experiencia, req.user.id_user], (error, results) => {
       if(error){
         console.log("Error updating data", error);
         res.send("Error updating data", 500);
       } else {
         console.log("data updated successfully");
-        console.log(results);
-        res.send(results);
+        res.send("data updated successfully");
       }
     }
   )
 })
+
+server.delete("/recipe/:id", (req, res) => {
+  const id = req.params.id;
+  conn.query("CALL delete_post(?)", [id], (error, results) => {
+    if (error){
+      console.log("Error deleting data");
+      res.send("Error deleting data");
+    } else {
+      res.send(results);
+    }
+  })
+})
+
+// set user
+function setUser(req, res, next){
+  const username = req.body.username;
+  if(username){
+      conn.query("SELECT id_user, username, correo, rol FROM usuarios WHERE username = ?", [username], (error, results) => {
+        if(error){
+          throw error;
+        } else {
+          req.user = results[0];
+          next();
+        }
+      }
+    )
+  } else {
+    next();
+  }
+}
