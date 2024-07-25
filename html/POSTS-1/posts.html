@@ -25,8 +25,10 @@
         </nav>
     </header>
 
+    <form action="" id="submit_form" onsubmit="publish_post(event)">
     <div class="subheader">
-        <input type="text" placeholder="Titulo de la receta">
+        
+        <input type="text" name="recipe_title" placeholder="Titulo de la receta">
         <nav>
            <select name="title" id="add-title" style="border: 0; padding: 0 10px 0 5px;">
                 <option value="" selected disabled hidden>Agregar titulo</option>
@@ -38,22 +40,37 @@
                 <option value="h6" style="font: 1.5em bold; font-family: 'Outfit';">Titulo 6</option>
             </select></button>
 
-            <button id="add-ingredients">Agregar ingredientes</button>
+            <button type="button" id="add-ingredients">Agregar ingredientes</button>
                 <label for="insert-img" class="file-input-format">Agregar imagen</label>
                 <input id="insert-img" type="file" accept="image/*">
                 <label for="insert-vid" id="vid-label" class="file-input-format">Agregar video</label>
                 <!--<input id="insert-vid" type="url">--> 
-            <button id="post-recipe">Publicar</button>
+            <button type="submit" id="post-recipe">Publicar</button>
         </nav>
     </div>
+    </form>
     <main>
         <section id="content">
-            <div id="recipe" contenteditable="true" spellcheck="true">
-                
-            </div>
+            <div id="recipe" contenteditable="true" spellcheck="true"></div>
         </section>
     </main>
+
+    <!-- API GOOGLE-->
+
+    <div id="google_translate_element" class="translate-widget"></div> 
+      
+    <script type="text/javascript"> 
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement(
+                {pageLanguage: 'es'}, 
+                'google_translate_element'
+            ); 
+        } 
+    </script> 
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="text/javascript" src="/js/cookies.js"></script>
     <script type="text/javascript" src="new_script.js"></script>
+
 </body>
 </html>

@@ -4,6 +4,7 @@
         
         ".vscode/**",
         "assets/**",
+        "html/*/**",
         "**/*.scss",
         "**/*.sass",
         "**/*.ts"

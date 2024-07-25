@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/search_bar.css">
     <link rel ="stylesheet" href="/css/index/homepage.css">
     <link rel ="stylesheet" href="/css/index/gallery.css">
+    <link rel="stylesheet" href="/css/posts_all/posts_style.css">
 </head>
 <html>
     <body>
@@ -43,27 +44,59 @@
         <div class="galeria">
             <!--Aqui va el como se deben de ver las recetas, comentarlas o borrar despues-->
             <div class="receta">
-                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura">
-                <a></a>
+                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura" href="">
                 <h4 class="titulo">ejemplo</h4>
-                <h4 class="rating">5.0</h4>
+                <div class="rating">
+                    <img src="/assets/pictures/favorito (1).png" class="star">
+                    <h4 class="rating_num">5.0</h4>
+                </div>
             </div>
             <div class="receta">
-                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura">
+                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura" href="">
                 <h4 class="titulo">ejemplo</h4>
-                <h4 class="rating">5.0</h4>
+                <div class="rating">
+                    <img src="/assets/pictures/favorito (1).png" class="star">
+                    <h4 class="rating_num">5.0</h4>
+                </div>
             </div>
             <div class="receta">
-                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura">
+                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura" href="">
                 <h4 class="titulo">ejemplo</h4>
-                <h4 class="rating">5.0</h4>
+                <div class="rating">
+                    <img src="/assets/pictures/favorito (1).png" class="star">
+                    <h4 class="rating_num">5.0</h4>
+                </div>
             </div>
         </div>
 
 
         <!--Recetas aleatorias en base a categorias, comentar o borrar despues-->
         <div class="random_recipes">
-            
+            <div class="post">
+                <!--Estructura de posts, borrar o comentar despues-->
+                <div>
+                    <img src="/assets/pictures/example_pic.jpg" class="miniatura_post">
+                </div>
+                <span>
+                    <div class="info_post">
+                        <div>
+                            <div style="display: flex; justify-content: space-around; align-content: center;">
+                                <h4 class="title_post">Receta</h4>
+                                <span class="fecha_post">12 abril 2024 </span>
+                                
+                            </div>
+                            
+                            <ul class="about_post">
+                                <li class="post_info"> X Visualizaciones</li>
+                                <li class="post_info"> X Favoritos</li>
+                                <li class="post_info">Categoria:</li>
+                            </ul>
+                            <button class="bttn_verReceta">Ver receta</button>
+                        </div>
+        
+                    </div>
+                </span>
+            </div>
         </div>
 
 

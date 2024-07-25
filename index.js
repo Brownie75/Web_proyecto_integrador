@@ -226,14 +226,12 @@ server.post("/register", (req, res) => {
             res.send(JSON.stringify('Usuario registrado'));
           }
         });
-      } else {
-        res.send(JSON.stringify('Este usuario ya existe'));
-      }
+    } else {
+      res.send(JSON.stringify('Este usuario ya existe'));
     }
-  });
-});
-
-//login de pedro
+  }
+})
+}); 
 
 server.post("/login", (req, res) => {
   const { username, password_ } = req.body;

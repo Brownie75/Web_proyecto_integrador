@@ -21,12 +21,27 @@
 }
 .titulo{
     font-size: 1.7em;
-    
+    margin-bottom: -2%;
 }
 .rating{
-    font-size: 1.3em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 .miniatura:hover{
     transform: scale(1.2);
     cursor: pointer;
+}
+.rating_num{
+    font-size: 1.7em;
+    font-weight: 400;
+}
+.star{
+    height: 3em;
+    width: 3em;
+    align-self: center;
+}
+h4{
+    margin-left: 1em;
+    
 }
