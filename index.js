@@ -240,7 +240,7 @@ server.post("/post_recipe", (req, res) => {
     }
   });
 
-  conn.query(`UPDATE posts SET titulo = '${page_title}', ingredientes = '${ingredients}', contenido = '/html/${id_post}', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
+  conn.query(`UPDATE posts SET titulo = '${page_title}', ingredientes = '${ingredients}', contenido = '/html/${id_post}/content.html', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
     if(error){
       console.log("could not publish post");
       res.status(400).send("could not publish post");
