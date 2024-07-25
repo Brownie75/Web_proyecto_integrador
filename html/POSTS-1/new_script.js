@@ -19,15 +19,26 @@ vid_input.addEventListener("click", () => {
     document.getElementById("insert-vid").style.display = 'block';
 }) */
 
-title.addEventListener("change", () => {
+function handleKeyDown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+}
 
-    
+title.addEventListener("change", (event) => {
     let titulo = document.createElement(title.value);
     titulo.className = "page-title"
     titulo.innerText = "[inserta tu titulo]";
-    if (content.lastElementChild) content.removeChild(content.lastElementChild);
-    content.appendChild(titulo);
-    title.value=""
+    if(content.lastElementChild) {
+        console.log(content.lastElementChild.firstChild.tagName)
+        if(content.lastElementChild.firstChild.tagName == "BR") {
+            content.lastElementChild.innerHTML = "";
+        }
+        content.lastElementChild.appendChild(titulo);
+    } else {
+        content.appendChild(titulo);
+    }
+    content.focus();
+    title.value="";
 })
 
 image_imput.addEventListener("change", async (event) => {
@@ -45,6 +56,7 @@ image_imput.addEventListener("change", async (event) => {
     return false;
 })
 document.cookie = "id_post = 32; path=/";
+document.cookie = "username = jdoe; path=/";
 
 function putting_image(url){
     var divs = document.querySelectorAll("#recipe div")
@@ -62,4 +74,28 @@ function putting_image(url){
         div.appendChild(img);
         content.appendChild(div);
     }
+}
+
+function publish_post(event){
+    event.preventDefault();
+    var submit_content = document.getElementById("submit_form");
+    var prev_img = (content.querySelector("img")) ? content.querySelector("img").src : "";
+    var ingredients = (content.querySelector("ul")) ? content.querySelector("ul").innerHTML.trim() : "";
+
+    var formData = new FormData();
+    formData.append('id_post', getCookie('id_post'));
+    formData.append('username', getCookie('username'));
+    formData.append('page_title', submit_content.recipe_title.value);
+    if(ingredients) formData.append('ingredients',ingredients);
+    formData.append('page_content', content.innerHTML.trim());
+    formData.append('preview',prev_img);
+
+    console.log(Object.fromEntries(formData));
+    fetch("http://localhost:3000/post_recipe", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(Object.fromEntries(formData))
+    })
 }

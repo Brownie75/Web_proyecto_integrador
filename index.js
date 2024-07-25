@@ -7,6 +7,7 @@ const path = require("path");
 const multer = require('multer');
 const fs = require("fs");
 const { id } = require("choco");
+const { error } = require("console");
 // const {authUser, authDeletePost} = require("./js/auth.js")
 
 const storage = multer.diskStorage({
@@ -209,6 +210,46 @@ conn.query(`CALL registro('${username}', '${correo}')`,(error, results) => {
   }
 })
 }); 
+
+server.post("/recipe", setUser, (req, res) => {
+  conn.query("INSERT INTO posts (titulo, ingredientes, contenido, categoria, fk_user) VALUES ('', '', '', '', ?)", [req.user.id_user], (error, results) => {
+    if(error) {
+      res.status(400).send("Could not make post");
+    } else {
+      res.send(results);
+    }
+  })
+})
+
+server.post("/post_recipe", (req, res) => {
+  const {id_post, username, page_title, ingredients, page_content, preview} = req.body;
+  
+  var direc = path.join(__dirname, `html/${id_post}`)
+  if(!fs.existsSync(direc)) fs.mkdir(direc, (err) => {
+    if(err){
+      return console.log(err)
+    } else {
+      console.log("Directorio creado con exito");
+    }
+  }); else console.log("Ya existe directorio");
+  fs.appendFileSync(direc + '/content.html', page_content, (err) => {
+    if(err){
+      return console.log(err)
+    } else {
+      console.log("Archivo creado con exito");
+    }
+  });
+
+  conn.query(`UPDATE posts SET titulo = '${page_title}', ingredientes = '${ingredients}', contenido = '/html/${id_post}', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
+    if(error){
+      console.log("could not publish post");
+      res.status(400).send("could not publish post");
+    } else {
+      console.log('Published!');
+      res.status(200).send(results);
+    }
+  })
+})
 
 server.post("/login", (req, res) =>{
   const {username, password_} = req.body;
