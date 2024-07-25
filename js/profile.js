@@ -13,11 +13,10 @@ const dcp = document.querySelector(".usr_desc");
   .then(response => response.json())
   .then(data => {
     console.log(data);
-    pfp.src = "/"+data[0].pfp;
+    if(data.pfp != null) pfp.src = "/"+data[0].pfp; else pfp.src = "/assets/pfp/1-pfp.png"
     pubs.innerText = `${data[0].publicaciones} recetas`
-    lvl.innerText = data[0].nivel_cocina;
+    if(data.nivel_cocina != null) lvl.innerText += data[0].nivel_cocina; else lvl.innerText += " Desconocido";
     dcp.innerText = data[0].descripcion;
   })
 
-
-module.exports = getCookie
+//function

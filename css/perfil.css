@@ -32,6 +32,8 @@ h5{
     height: 18em;
     margin-right: 3%;
     margin-top: 7%;
+    border-radius: 100%;
+    width: 300px;
 }
 ul li.about_usr{
     margin-top: 6%;
