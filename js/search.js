@@ -1,6 +1,5 @@
 const term = getSearchTerm();
 document.querySelector(".search_bar").value = term.substring(5,term.length);
-console.log(term);
 function getSearchTerm(){
     var searchTerm = new URLSearchParams(window.location.search);
     return searchTerm.toString();
@@ -9,10 +8,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     fetch("http://localhost:3000/search?"+term)
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         if(data.length > 0){
             data.forEach(element => {
-                console.log(element);
                 loadSearchResult(element);
             })
         } else {
@@ -23,7 +20,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     })
 })
 function loadSearchResult(array){
-    //console.log(element);
     let img_div = document.createElement("div");
     img_div.className = "img";
     let info_span = document.createElement("span");
@@ -73,11 +69,4 @@ function loadSearchResult(array){
     result_div.appendChild(info_span);
     result_div.appendChild(rating_span);
     document.querySelector(".resultados_busqueda").appendChild(result_div);
-
-    img_div.addEventListener("click", ()=> {
-        window.location.href = "template.html?id_post="+array.id_post;
-    })
-    titulo_busqueda.addEventListener("click", ()=> {
-        window.location.href = "template.html?id_post="+array.id_post;
-    })
 }
