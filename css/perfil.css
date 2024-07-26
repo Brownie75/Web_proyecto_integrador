@@ -34,6 +34,7 @@ h5{
     margin-top: 7%;
     border-radius: 100%;
     width: 300px;
+    object-fit: cover;
 }
 ul li.about_usr{
     margin-top: 6%;

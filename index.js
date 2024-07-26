@@ -121,7 +121,7 @@ server.get("/user/:id/posts", (req,res) =>{
           res.send("Error fetching data", 500);
         } else {
           console.log("data fetch successfully");
-          res.send("Imagen subida");
+          res.send(results);
         }
   });
 })
@@ -265,7 +265,7 @@ server.post("/login", (req, res) =>{
   })
 })
 
-server.patch("/image", upload.single('image'), (req,res) => {
+server.post("/image", upload.single('image'), (req,res) => {
   if (!req.file) {
     console.log('No file uploaded');
     return res.status(400).send('No file uploaded.');

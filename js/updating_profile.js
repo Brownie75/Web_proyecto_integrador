@@ -1,4 +1,4 @@
-const edit_form = document.querySelector(".edit_usr");
+const edit_form = document.getElementById("edit_user");
 const file_input = document.getElementById("file_input");
 
 edit_form.addEventListener("submit", (event) => {
@@ -12,7 +12,7 @@ edit_form.addEventListener("submit", (event) => {
     var imageForm = new FormData();
     imageForm.append('id_post','pfp');
     imageForm.append('username', getCookie("username"));
-    imageForm.append('image',file_input.files[0]);
+    imageForm.append('image',edit_form.image.files[0]);
 
     fetch("http://localhost:3000/image",{
         method: "POST",
@@ -33,7 +33,8 @@ edit_form.addEventListener("submit", (event) => {
         .then(data => {
             console.log(data);
             if(data == 'data updated successfully'){
-                window.location.href = "/html/profile.html"
+                alert("Informacion actualizada");
+                //window.location.href = "/html/profile.html"
             }
         });
     })
