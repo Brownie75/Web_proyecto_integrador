@@ -23,6 +23,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
   showUserPosts();
 })
 
+function makeEditablePost(){
+  
+}
+
 function showUserPosts(){
   var user_post = document.getElementById("user_posts");
   fetch(`http://localhost:3000/user/1/posts`)
