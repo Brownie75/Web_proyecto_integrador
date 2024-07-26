@@ -128,3 +128,7 @@ h5{
     font-family: outfit;
     font-weight: 400;
 }
+a{
+    text-decoration: none;
+    color: black;
+}

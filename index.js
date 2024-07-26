@@ -191,22 +191,31 @@ server.get("/get_user_by_name/:username", (req, res) =>{
 
 // Motor de busqueda
 server.get("/search", (req,res) => {
-  console.log(req.query.term);
-  const searchTerm = req.query.term;
+  const searchTerm = req.query.term.split(" ");
 
   if(!searchTerm){
     return res.status(400).json({ error: "Search term is required"});
   }
+  var searchValue;
+  var searchQuery = "";
+  var arraylen;
 
-  const searchValue = "%"+searchTerm+"%";
+  searchTerm.forEach(term => {
+    searchValue = `%${term}%`;
+    searchQuery += `(titulo LIKE '${searchValue}' OR contenido LIKE '${searchValue}' OR ingredientes LIKE '${searchValue}') OR `;
+    arraylen = searchQuery.length;
+  })
+  searchQuery = searchQuery.substring(0, arraylen-3);
 
-  conn.query("SELECT * FROM posts WHERE titulo LIKE ? OR contenido LIKE ?",[searchValue,searchValue],(error, results) => {
+  const query = "SELECT * FROM posts WHERE "+searchQuery;
+
+  conn.query(query,(error, results) => {
     if (error) {
       console.error("Error executing search query:", error);
       return res.status(500).json({ error: "Internal server error" });
+    } else {
+      res.send(results);
     }
-    console.log(results);
-    res.send(results);
   })
 })
 

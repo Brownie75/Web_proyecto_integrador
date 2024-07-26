@@ -9,6 +9,7 @@
     min-width: 150px;
     max-width: 250px;
     display: block;
+    cursor: pointer;
 }
 .receta_busqueda{
     display: flex;
@@ -51,9 +52,14 @@
     font-family: outfit;
     font-weight: 500;
     font-size: 1.5em;
+    cursor: pointer;
 }
 .desc_search{
     
     font-family: sans-serif;
     line-height: 1.5;
+}
+a{
+    text-decoration: none;
+    color: black;
 }
