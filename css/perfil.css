@@ -223,6 +223,7 @@ h3{
     text-shadow: none;
     display: block;
     margin: auto;
+    margin-top: -2%;
 }
 .popup_ins li{
    margin-bottom: 5%; 
@@ -289,3 +290,4 @@ h3{
     justify-content: center;
     align-content: center;
  }
+ 
