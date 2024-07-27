@@ -1,27 +1,87 @@
-console.log("entre al perfil");
+document.addEventListener("DOMContentLoaded", async (event) => {
+    try {
+      const authResponse = await fetch("http://localhost:3000/autorizacion", {
+          method: "GET",
+          credentials: 'include',
+      });
+  
+      if (authResponse.ok) {
+          const authResult = await authResponse.json();
+          const navLoggedInItems = document.querySelectorAll(".nav-logged-in");
+          const navLoggedOutItems = document.querySelectorAll(".nav-logged-out");
+  
+          if (authResult.authenticated) {
+              navLoggedInItems.forEach(item => item.style.display = "block");
+              navLoggedOutItems.forEach(item => item.style.display = "none");
+  
+              const userResponse = await fetch("http://localhost:3000/user-info", {
+                  method: "GET",
+                  credentials: 'include',
+              });
+  
+              if (userResponse.ok) {
+                  const userResult = await userResponse.json();
+  
+                  const userNameElement = document.querySelector('.name_usr');
+                  const userLevelElement = document.querySelector('#usr_level');
+                  const userPubsElement = document.querySelector('#usr_pubs span');
+                  const userRatingElement = document.querySelector('#prom_usr');
+                  const userDescElement = document.querySelector('.usr_desc p');
+  
+                  if (userNameElement) {
+                      userNameElement.textContent = `${userResult.nombre} ${userResult.apellido}`;
+                  }
+                  if (userLevelElement) {
+                      userLevelElement.textContent = `Nivel: ${userResult.nivel_cocina}`;
+                  }
+                  if (userPubsElement) {
+                      userPubsElement.textContent = userResult.correo;
+                  }
+                  if (userRatingElement) {
+                      userRatingElement.textContent = "Rating Placeholder";  // Aquí se debería obtener el rating del usuario si está disponible
+                  }
+                  if (userDescElement) {
+                      userDescElement.textContent = userResult.descripcion;
+                  }
+              } else {
+                  console.error("Error al obtener la información del usuario");
+              }
+          } else {
+              navLoggedInItems.forEach(item => item.style.display = "none");
+              navLoggedOutItems.forEach(item => item.style.display = "block");
+          }
+      } else {
+          console.error("Error al verificar el estado de autenticación");
+      }
+    } catch (error) {
+      console.error("Se produjo un error al verificar el estado de autenticación:", error);
+    }
+    const logoutButton = document.querySelector('.logout');
+    
+    if (logoutButton) {
+        logoutButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+            try {
+                const response = await fetch('http://localhost:3000/logout', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
 
-// Ejemplo de uso
-let miCookie = getCookie('username');
-console.log(miCookie); // Imprime 'valorDeMiCookie' si la cookie existe
-document.getElementById("username-id").innerText = miCookie;
-
-const pfp = document.querySelector(".usr_img");
-const pubs = document.getElementById("usr_pubs")
-const lvl = document.getElementById("usr_level")
-const dcp = document.querySelector(".usr_desc");
-  fetch(`http://localhost:3000/get_user_by_name/${miCookie}`)
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    if(data[0].pfp != null) pfp.src = "/"+data[0].pfp; else pfp.src = "/assets/pfp/1-pfp.png"
-    pubs.innerText = `${data[0].publicaciones} recetas`
-    if(data.nivel_cocina != null) lvl.innerText += data[0].nivel_cocina; else lvl.innerText += " Desconocido";
-    dcp.innerText = data[0].descripcion;
-  })
-
-document.addEventListener("DOMContentLoaded", (event) => {
-  showUserPosts();
-})
+                if (response.ok) {
+                    // Redirigir al usuario a la página de inicio de sesión después de cerrar sesión
+                    window.location.href = 'http://localhost:5501/html/signup_Majo/index.html'; // Asegúrate de que esta URL es la correcta
+                } else {
+                    console.error('Error al cerrar sesión');
+                }
+            } catch (error) {
+                console.error('Se produjo un error al cerrar sesión:', error);
+            }
+        });
+    }
+    showUserPosts();
+  });
+  
+  
 
 function makeEditablePost(){
   

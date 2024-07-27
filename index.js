@@ -58,7 +58,7 @@ const passwords = ["EseKuEle","gato261261"]
 const conn = db.createConnection({
     host: "localhost",
     user: "root",
-    password: passwords[0],
+    password: passwords[1],
     port: 3306,
     database: "db_chefencasa"
 });
@@ -340,7 +340,6 @@ server.get('/autorizacion', (req, res) => {
   }
 });
 
-
 server.get('/info-token', (req, res) => {
   const token = req.cookies.access_token;
 
@@ -362,6 +361,33 @@ server.get('/info-token', (req, res) => {
       return res.status(500).json({ message: 'Error decoding token', error: error.message });
   }
 });
+
+server.get('/user-info', verifyToken, (req, res) => {
+  const userId = req.user.username;  // el del usuario desde el token decodificado
+  const sql = "SELECT nombre, apellido, correo, telefono, edad, nivel_cocina, descripcion FROM usuarios WHERE username = ?";
+  conn.query(sql, [userId], (error, results) => {
+      if (error) {
+          console.error("Error al obtener la información del usuario", error);
+          return res.status(500).json({ message: 'Error interno del servidor' });
+      }
+
+      if (results.length > 0) {
+          const user = results[0];
+          res.status(200).json({
+              nombre: user.nombre,
+              apellido: user.apellido,
+              correo: user.correo,
+              telefono: user.telefono,
+              edad: user.edad,
+              nivel_cocina: user.nivel_cocina,
+              descripcion: user.descripcion
+          });
+      } else {
+          res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+  });
+});
+
 
 server.get('/logout', (req, res) => {
   res.clearCookie('access_token', {
