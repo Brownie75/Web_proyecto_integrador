@@ -32,6 +32,9 @@ h5{
     height: 18em;
     margin-right: 3%;
     margin-top: 7%;
+    border-radius: 100%;
+    width: 300px;
+    object-fit: cover;
 }
 ul li.about_usr{
     margin-top: 6%;
@@ -290,4 +293,7 @@ h3{
     justify-content: center;
     align-content: center;
  }
- 
+ a{
+    text-decoration: none;
+    color: black;
+}

@@ -8,5 +8,13 @@
         "**/*.scss",
         "**/*.sass",
         "**/*.ts"
-    ]
+    ],
+    "files.autoSave": "afterDelay",
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveServer.settings.ChromeDebuggingAttachment": false,
+    "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+    "liveServer.settings.host": "localhost",
+    "liveServer.settings.root": "/",
+    "liveServer.settings.CustomBrowser": "chrome"
+
 }

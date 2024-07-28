@@ -55,8 +55,6 @@ image_imput.addEventListener("change", async (event) => {
     })
     return false;
 })
-document.cookie = "id_post = 32; path=/";
-document.cookie = "username = jdoe; path=/";
 
 function putting_image(url){
     var divs = document.querySelectorAll("#recipe div")

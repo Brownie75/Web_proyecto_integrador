@@ -58,55 +58,62 @@ function validateForm(event, formClass) {
     return true;
 }
 
-function loginUser(fdata) {
-    fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(fdata)
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data[0][0].Validacion);
-        val =  data[0][0].Validacion;
-        if(val == 'Sesion iniciada') {
-            setCookie("username",fdata["username"],1);
+async function loginUser(fdata) {
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fdata),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || "Correo o contraseña incorrectos, intentelo de nuevo");
+        }
+
+        const data = await response.json();
+
+        // Esperar 2 segundos antes de redirigir
+        setTimeout(() => {
             window.location.href = "/index.html";
-        };
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert('Error al iniciar sesión');
-    });
+        }, 1000);
+
+    } catch (error) {
+        console.error("Se produjo un error al iniciar sesión:", error);
+        alert(error.message);
+    }
 }
 
-function registerUser(fdata) {
-    console.log(fdata);
-    fetch('http://localhost:3000/register', { //modificar esto
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(fdata)
-    })
-    .then(response => response.json())
-    .then(data => {
+async function registerUser(fdata) {
+    try {
+        const response = await fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fdata)
+        });
 
-        console.log(data);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || "Error al registrarse");
+        }
 
-        if(data ==  'Usuario registrado'){
+        const data = await response.json();
+
+        if(data === 'Usuario registrado'){
             alert('Registro exitoso');
-            setCookie("username",fdata["username"],1);
-            window.location.href = "/html/edit_new_profile.html"
+            setCookie("username", fdata["username"], 1);
+            window.location.href = "/html/edit_new_profile.html";
         } else {
             alert('Este usuario ya existe');
         }
 
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert('Error al registrarse');
-    });
+    } catch (error) {
+        console.error("Error al registrar usuario:", error);
+        alert(error.message);
+    }
 }
-
