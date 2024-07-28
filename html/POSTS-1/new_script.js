@@ -55,6 +55,8 @@ image_imput.addEventListener("change", async (event) => {
     })
     return false;
 })
+document.cookie = "id_post = 32; path=/";
+document.cookie = "username = jdoe; path=/";
 
 function putting_image(url){
     var divs = document.querySelectorAll("#recipe div")
@@ -96,4 +98,40 @@ function publish_post(event){
         },
         body: JSON.stringify(Object.fromEntries(formData))
     })
+}
+
+// DESCRIPCIÓN DE LA RECETA
+var modal = document.getElementById("descriptionModal");
+var btn = document.getElementById("post-recipe");
+var span = document.getElementsByClassName("close")[0];
+var saveBtn = document.getElementById("save-description");
+
+btn.onclick = function(event) {
+    event.preventDefault(); 
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+saveBtn.onclick = function() {
+    var description = document.getElementById("post-description").value;
+    if (description) {
+        var hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "description";
+        hiddenInput.value = description;
+        document.getElementById("submit_form").appendChild(hiddenInput);
+
+        document.getElementById("submit_form").submit();
+    } else {
+        alert("Por favor, ingrese una descripción.");
+    }
 }
