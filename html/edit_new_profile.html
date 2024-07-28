@@ -15,7 +15,7 @@
         <br>
         
         <div class="edit_usr">
-            <form id="edit_user">
+            <form>
                 <h3>Escoge tu foto de perfil</h3>
             <p class="lil_info">Esta foto se mostrará en tus interacciones y en tu perfil. ¡Muestra tu gran sonrisa chef! </p>
                 <div class="upload_pic">
@@ -33,11 +33,29 @@
                 
             <h3>Agrega tu cumpleaños</h3>
                 <input type="date" class="bday">
-                <button type="submit" class="bttn_confirm">
+                <a href="/index.html" class="bttn_confirm">
                     Listo!
-                </button>
+                </a>
                 
             </form>
+
+            <!-- API GOOGLE-->
+
+    <div id="google_translate_element" class="translate-widget"></div> 
+      
+    <script type="text/javascript"> 
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement(
+                {pageLanguage: 'es'}, 
+                'google_translate_element'
+            ); 
+        } 
+    </script> 
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+            
+            <input type="submit" class="bttn_confirm">
+        </form>
         <script src="/js/cookies.js"></script>
         <script src="/js/updating_profile.js"></script>
     </body>
