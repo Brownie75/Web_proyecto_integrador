@@ -231,12 +231,11 @@ main {
     margin-bottom: 0.5em;
 }
 
-/*New Additions by Omar */
-input[type="file"]{
+input[type="file"] {
     display: none;
 }
 
-.file-input-format{
+.file-input-format {
     text-align: center;
     background-color: #FFFFFF;
     border: none;
@@ -247,17 +246,17 @@ input[type="file"]{
     align-items: center;
 }
 
-font{
+font {
     font-family: 'Outfit';
 }
 
-#post-recipe{
+#post-recipe {
     padding: 0 30px 0 30px;
     background-color: #fd4242;
     color: white;
 }
 
-.page-title{
+.page-title {
     margin-top: 0;
     margin-bottom: 7px;
     font-family: 'Outfit';
@@ -271,13 +270,13 @@ font{
     list-style-position: inside;
 }
 
-.inserted-image{
+.inserted-image {
     float: left;
     margin-right: 10px;
     width: 300px;
 }
 
-.subheader input{
+.subheader input {
     font-size: 1.5em;
     font-family: 'Outfit';
     font-weight: bold;
@@ -286,7 +285,6 @@ font{
     border:0;
 }
 
-/* Modal */
 .modal {
     display: none; 
     position: fixed;
@@ -352,11 +350,10 @@ font{
     background-color: #e03a3a;
 }
 
-#modal-content h2{
+#modal-content h2 {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Google Translate widget */
 .goog-te-banner-frame.skiptranslate {
     display: none !important;
 }
@@ -383,22 +380,5 @@ body {
     left: 20px;
     z-index: 1000; 
     background-color: #fd4242 !important;
-    color: rgb(255, 255, 255) !important; 
-    border: 1px solid #fd4242 !important;
-    border-radius: 4px;
-    padding: 5px;
-}
-
-#google_translate_element .goog-te-gadget-simple {
-    background-color: #fd4242 !important;
-    border: 1px solid #fd4242 !important;
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 13px;
-    color: rgb(0, 0, 0) !important;
-}
-
-#google_translate_element .goog-te-gadget-simple:hover {
-    background-color: rgb(0, 0, 0) !important;
-    color: #fd4242 !important;
+    color
 }
