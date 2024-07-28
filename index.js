@@ -58,7 +58,7 @@ const passwords = ["EseKuEle","gato261261"]
 const conn = db.createConnection({
     host: "localhost",
     user: "root",
-    password: passwords[1],
+    password: passwords[0],
     port: 3306,
     database: "db_chefencasa"
 });
@@ -230,7 +230,7 @@ server.post("/recipe", setUser, (req, res) => {
 })
 
 server.post("/post_recipe", (req, res) => {
-  const {id_post, username, page_title, ingredients, page_content, preview} = req.body;
+  const {id_post, username, page_title, ingredients, page_content, preview, description} = req.body;
   
   var direc = path.join(__dirname, `html/${id_post}`)
   if(!fs.existsSync(direc)) fs.mkdir(direc, (err) => {
@@ -248,7 +248,7 @@ server.post("/post_recipe", (req, res) => {
     }
   });
 
-  conn.query(`UPDATE posts SET titulo = '${page_title}', ingredientes = '${ingredients}', contenido = '/html/${id_post}/content.html', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
+  conn.query(`UPDATE posts SET titulo = '${page_title}', descripcion = '${description}', ingredientes = '${ingredients}', contenido = '/html/${id_post}/content.html', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
     if(error){
       console.log("could not publish post");
       res.status(400).send("could not publish post");
@@ -304,7 +304,7 @@ server.post("/login", (req, res) => {
           }
           
           try {
-              const token = jwt.sign({ username: results[0].username }, secret_jwt, { expiresIn: '1h' });
+              const token = jwt.sign({ username: results[0].username, id_user: results[0].id_user }, secret_jwt, { expiresIn: '1h' });
               res.cookie('access_token', token, {
                   httpOnly: true,
                   secure: false,

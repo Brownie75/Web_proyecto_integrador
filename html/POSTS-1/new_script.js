@@ -1,11 +1,5 @@
 const content = document.getElementById("recipe");
 
-document.getElementById("recipe").addEventListener('keypress', (event) => {
-    if(KeyboardEvent.key == '13' && KeyboardEvent.shiftKey == false){
-        event.preventDefault
-    }
-})
-
 document.getElementById("add-ingredients").addEventListener("click", () => {
     document.execCommand("insertUnorderedList", false,null);
 })
@@ -18,11 +12,6 @@ let image_imput = document.getElementById("insert-img");
 vid_input.addEventListener("click", () => {
     document.getElementById("insert-vid").style.display = 'block';
 }) */
-
-function handleKeyDown(event) {
-    event.preventDefault();
-    event.stopPropagation();
-}
 
 title.addEventListener("change", (event) => {
     let titulo = document.createElement(title.value);
@@ -47,7 +36,7 @@ image_imput.addEventListener("change", async (event) => {
     form.append('id_post', getCookie("id_post"));
     form.append('image',image_imput.files[0]);
     await fetch("http://localhost:3000/image",{
-        method: "PATCH",
+        method: "POST",
         body: form
     }).then(response => response.text())
     .then(data => {
@@ -76,11 +65,12 @@ function putting_image(url){
     }
 }
 
-function publish_post(event){
-    event.preventDefault();
+function publish_post(){
+    //event.preventDefault();
     var submit_content = document.getElementById("submit_form");
     var prev_img = (content.querySelector("img")) ? content.querySelector("img").src : "";
     var ingredients = (content.querySelector("ul")) ? content.querySelector("ul").innerHTML.trim() : "";
+    var hiddenInput = submit_content.description.value
 
     var formData = new FormData();
     formData.append('id_post', getCookie('id_post'));
@@ -89,6 +79,7 @@ function publish_post(event){
     if(ingredients) formData.append('ingredients',ingredients);
     formData.append('page_content', content.innerHTML.trim());
     formData.append('preview',prev_img);
+    formData.append('description', hiddenInput);
 
     console.log(Object.fromEntries(formData));
     fetch("http://localhost:3000/post_recipe", {
@@ -130,7 +121,7 @@ saveBtn.onclick = function() {
         hiddenInput.value = description;
         document.getElementById("submit_form").appendChild(hiddenInput);
 
-        document.getElementById("submit_form").submit();
+        publish_post();
     } else {
         alert("Por favor, ingrese una descripción.");
     }

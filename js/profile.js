@@ -50,7 +50,15 @@ document.addEventListener("DOMContentLoaded", async (event) => {
               navLoggedInItems.forEach(item => item.style.display = "none");
               navLoggedOutItems.forEach(item => item.style.display = "block");
           }
-      } else {
+          fetch("http://localhost:3000/info-token", {
+            method: "GET",
+            credentials: 'include'
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data.data);
+            showUserPosts(data.data.payload.id_user);
+        })
+        } else {
           console.error("Error al verificar el estado de autenticación");
       }
     } catch (error) {
@@ -78,7 +86,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             }
         });
     }
-    showUserPosts();
   });
   
   
@@ -87,32 +94,35 @@ function makeEditablePost(){
   
 }
 
-function showUserPosts(){
+function showUserPosts(id){
   var user_post = document.getElementById("user_posts");
-  fetch(`http://localhost:3000/user/1/posts`)
+  fetch(`http://localhost:3000/user/${id}/posts`)
   .then(response => response.json())
   .then(data => {
     console.log(data);
     if(data.length > 0){
       data.forEach(element => {
-        loadPost(element.titulo, element.fecha, element.vistas, 0, element.categoria, element.preview_image)
+        loadPost(element.id_post, element.titulo, element.fecha, element.visitas, 0, element.categoria, element.preview_image)
       });
     } else {
       user_post.innerHTML = "<h3>Este usuario no tiene recetas :(</h3>"
     }
   }) 
 }
-function loadPost(d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_img){
+function loadPost(d_id, d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_img){
   var user_post = document.getElementById("user_posts");
 
   var post_container = document.createElement("div");
   post_container.className = "post";
   var img_container = document.createElement("div");
   img_container.style = "display: flex; align-items: center";
+  var img_a = document.createElement("a");
+  img_a.href = `/html/template.html?id_post=${d_id}`;
   var post_img = document.createElement("img");
   post_img.className = "miniatura_post";
-  if(d_p_img != null) post_img.src = d_p_img; else post_img.src = "/assets/pictures/example_pic.jpg";
-  img_container.appendChild(post_img);
+  if(d_p_img != null && d_p_img != "") post_img.src = d_p_img; else post_img.src = "/assets/pictures/example_pic.jpg";
+  img_a.appendChild(post_img);
+  img_container.appendChild(img_a);
   
   var info_span = document.createElement("div");
   var post_info = document.createElement("div");
@@ -122,11 +132,14 @@ function loadPost(d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_img){
   
   var title_div = document.createElement("div");
   title_div.style = "display: flex; justify-content: space-around; align-content: center;";
+  var title_a = document.createElement("a");
+  title_a.href = `/html/template.html?id_post=${d_id}`
   var titulo = document.createElement("h4");
   titulo.className = "title_post"; titulo.innerText = d_titulo;
+  title_a.appendChild(titulo);
   var fecha = document.createElement("span");
   fecha.className = "fecha_post"; fecha.innerText = d_fecha.substring(0,10);
-  title_div.appendChild(titulo);
+  title_div.appendChild(title_a);
   title_div.appendChild(fecha);
   
   var about_post = document.createElement("ul");
