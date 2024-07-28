@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="banner">
-        <a href="/index.html" class="logo-text"><h1>Chef en Casa</h1></a>
+        <h1 class="logo-text">Chef en Casa</h1>
         <nav class="btn_banner">
             <ul class="nav_bar">
                 <li><a class="about_us" href="/V.01-formulario/about_us.html">Acerca de nosotros</a></li>
@@ -26,34 +26,44 @@
     </header>
 
     <form action="" id="submit_form" onsubmit="publish_post(event)">
-    <div class="subheader">
-        
-        <input type="text" name="recipe_title" placeholder="Titulo de la receta">
-        <nav>
-           <select name="title" id="add-title" style="border: 0; padding: 0 10px 0 5px;">
-                <option value="" selected disabled hidden>Agregar titulo</option>
-                <option value="h1" style="font: 4em bold; font-family: 'Outfit';">Titulo 1</option>
-                <option value="h2" style="font: 3em bold; font-family: 'Outfit';">Titulo 2</option>
-                <option value="h3" style="font: 2.34em bold; font-family: 'Outfit';">Titulo 3</option>
-                <option value="h4" style="font: 2em bold; font-family: 'Outfit';">Titulo 4</option>
-                <option value="h5" style="font: 1.7em bold; font-family: 'Outfit';">Titulo 5</option>
-                <option value="h6" style="font: 1.5em bold; font-family: 'Outfit';">Titulo 6</option>
-            </select></button>
-
-            <button type="button" id="add-ingredients">Agregar ingredientes</button>
-                <label for="insert-img" class="file-input-format">Agregar imagen</label>
-                <input id="insert-img" type="file" accept="image/*">
-                <label for="insert-vid" id="vid-label" class="file-input-format">Agregar video</label>
-                <!--<input id="insert-vid" type="url">--> 
-            <button type="submit" id="post-recipe">Publicar</button>
-        </nav>
-    </div>
+        <div class="subheader">
+            <input type="text" name="recipe_title" placeholder="Titulo de la receta">
+            <nav>
+                <select name="title" id="add-title" style="border: 0; padding: 0 10px 0 5px;">
+                    <option value="" selected disabled hidden>Agregar titulo</option>
+                    <option value="h1" style="font: 4em bold; font-family: 'Outfit';">Titulo 1</option>
+                    <option value="h2" style="font: 3em bold; font-family: 'Outfit';">Titulo 2</option>
+                    <option value="h3" style="font: 2.34em bold; font-family: 'Outfit';">Titulo 3</option>
+                    <option value="h4" style="font: 2em bold; font-family: 'Outfit';">Titulo 4</option>
+                    <option value="h5" style="font: 1.7em bold; font-family: 'Outfit';">Titulo 5</option>
+                    <option value="h6" style="font: 1.5em bold; font-family: 'Outfit';">Titulo 6</option>
+                </select></button>
+    
+                <button type="button" id="add-ingredients">Agregar ingredientes</button>
+                    <label for="insert-img" class="file-input-format">Agregar imagen</label>
+                    <input id="insert-img" type="file" accept="image/*">
+                    <label for="insert-vid" id="vid-label" class="file-input-format">Agregar video</label>
+                    <!--<input id="insert-vid" type="url">-->     
+                <button type="button" id="post-recipe">Publicar</button>
+            </nav>
+        </div>
     </form>
+    
+
     <main>
         <section id="content">
             <div id="recipe" contenteditable="true" spellcheck="true"></div>
         </section>
     </main>
+
+    <div id="descriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Agregar Descripción</h2>
+            <textarea id="post-description" rows="4" placeholder="Escribe la descripción aquí..."></textarea>
+            <button id="save-description">Guardar Descripción</button>
+        </div>
+    </div>
 
     <!-- API GOOGLE-->
 
@@ -74,3 +84,4 @@
 
 </body>
 </html>
+
