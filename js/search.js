@@ -1,8 +1,8 @@
 const term = getSearchTerm();
-document.querySelector(".search_bar").value = term.substring(5,term.length);
+document.querySelector(".search_bar").value = term.get('term');
 function getSearchTerm(){
     var searchTerm = new URLSearchParams(window.location.search);
-    return searchTerm.toString();
+    return searchTerm
 }
 document.addEventListener("DOMContentLoaded", (event) => {
     fetch("http://localhost:3000/search?"+term)
@@ -45,7 +45,7 @@ function loadSearchResult(array){
     desc.className = "desc";
     let desc_search = document.createElement("p");
     desc_search.className = "desc_search"
-    desc_search.innerText = array.descripcion;
+    desc_search.innerText = (array.descripcion) ? array.descripcion : "Sin descripción";
     desc.appendChild(desc_search);
     redirect_title.appendChild(titulo_busqueda)
     info_busqueda.appendChild(redirect_title);

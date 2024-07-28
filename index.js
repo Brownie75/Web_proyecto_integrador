@@ -12,8 +12,6 @@ const secret_jwt = "esta-es-la-clave-secreta"
 
 const multer = require('multer');
 const fs = require("fs");
-//const { id } = require("choco");
-// const {authUser, authDeletePost} = require("./js/auth.js")
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -220,11 +218,20 @@ server.get("/search", (req,res) => {
 })
 
 server.post("/recipe", setUser, (req, res) => {
+  var id_newpost;
+  conn.query("START TRANSACTION");
   conn.query("INSERT INTO posts (titulo, ingredientes, contenido, categoria, fk_user) VALUES ('', '', '', '', ?)", [req.user.id_user], (error, results) => {
     if(error) {
       res.status(400).send("Could not make post");
+    }
+  })
+  conn.query("SELECT LAST_INSERT_ID() as newid", (error, results) => {
+    if(error) {
+      res.status(400).send("Could not make post");
     } else {
-      res.send(results);
+      id_newpost = results[0].newid;
+      conn.query("COMMIT");
+      if (id_newpost != null) res.json({new_post: id_newpost});
     }
   })
 })
@@ -399,6 +406,30 @@ server.get('/logout', (req, res) => {
   return res.status(200).json({ message: 'Sesión cerrada correctamente' });
 });
 
+server.get("/posts/:theme", (req, res) => {
+  const theme = req.params.theme;
+  var query;
+  switch (theme) {
+    case "last_week":
+      query = "SELECT * FROM posts WHERE fecha BETWEEN date_sub(now(), interval 1 week) and now() LIMIT 3"
+      break;
+    case "daily":
+      query = "SELECT * FROM posts ORDER BY visitas LIMIT 1"
+      break;
+    case "recent":
+      query = "SELECT * FROM posts ORDER BY fecha LIMIT 3"
+    default:
+      break;
+  }
+  conn.query(query, (error, results) => {
+    if(error) {
+      res.status(500).send("Could not load posts");
+    } else {
+      res.status(200).send(results);
+    }
+  })
+})
+
 
 
 server.post("/image", upload.single('image'), (req,res) => {
@@ -453,6 +484,6 @@ function setUser(req, res, next){
       }
     )
   } else {
-    next();
+    res.status(401).send("Necesitas iniciar sesión, no se registra usuario")
   }
 }

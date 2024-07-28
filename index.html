@@ -34,45 +34,25 @@
             <span>
                 <img src="/assets/pictures/buscar.png" class="search_icon">
             </span>
-            
         </form>
         <!--No tocar, es solo decorativo--> <!-- lo toqué -->
         <div class="week_recom">
             <h2 class="week_banner">Las mejores recetas de la semana</h2>
         </div>
-
         <div class="galeria">
             <!--Aqui va el como se deben de ver las recetas, comentarlas o borrar despues-->
-            <div class="receta">
-                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura" href="">
-                <h4 class="titulo">ejemplo</h4>
-                <div class="rating">
-                    <img src="/assets/pictures/favorito (1).png" class="star">
-                    <h4 class="rating_num">5.0</h4>
-                </div>
-            </div>
-            <div class="receta">
-                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura" href="">
-                <h4 class="titulo">ejemplo</h4>
-                <div class="rating">
-                    <img src="/assets/pictures/favorito (1).png" class="star">
-                    <h4 class="rating_num">5.0</h4>
-                </div>
-            </div>
-            <div class="receta">
-                <img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura" href="">
-                <h4 class="titulo">ejemplo</h4>
+            <div class="receta" style="display: none;">
+                <a id="i_red"><img src="/assets/pictures/example_pic.jpg" alt="una rica receta :3 " class="miniatura"></a>
+                <a id="t_red"><h4 class="titulo">ejemplo</h4></a>
                 <div class="rating">
                     <img src="/assets/pictures/favorito (1).png" class="star">
                     <h4 class="rating_num">5.0</h4>
                 </div>
             </div>
         </div>
-
-
-        <!--Recetas aleatorias en base a categorias, comentar o borrar despues-->
+        <h2 class="week_banner" style="padding-top: 2%;">Lo más visto de hoy</h2>
         <div class="random_recipes">
-            <div class="post">
+            <div class="post" style="display: none;">
                 <!--Estructura de posts, borrar o comentar despues-->
                 <div>
                     <img src="/assets/pictures/example_pic.jpg" class="miniatura_post">
@@ -91,7 +71,7 @@
                                 <li class="post_info"> X Favoritos</li>
                                 <li class="post_info">Categoria:</li>
                             </ul>
-                            <button class="bttn_verReceta">Ver receta</button>
+                            <a id="redirect"><button class="bttn_verReceta">Ver receta</button></a>
                         </div>
         
                     </div>
@@ -99,13 +79,11 @@
             </div>
         </div>
 
-
-
-
         <div class="contact">
             <h5>Copyright© Chef en Casa 2024</h5>
             <p>Todos los derechos reservados a sus respectivos creadores</p>
             <p>Avisos de privacidad</p>
         </div>
+        <script src="js/home_page_script.js"></script>
     </body>
 </html>

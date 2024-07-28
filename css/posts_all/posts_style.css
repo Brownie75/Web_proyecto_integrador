@@ -56,6 +56,7 @@ ul li.post_info{
     display: block;
     margin: auto;
     transition: .2s ease-in;
+    cursor: pointer;
 }
 .bttn_verReceta:hover{
     background-color: #FFFFFF;
@@ -84,6 +85,6 @@ ul li.post_info{
     padding-left: 60px;
 }
 .post{
-    margin-top: 20%;
+    margin-top: 0;
     margin-bottom: 2%;
 }
