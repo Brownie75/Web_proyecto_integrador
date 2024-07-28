@@ -1,25 +1,18 @@
 const content = document.getElementById("recipe");
 
 document.getElementById("add-ingredients").addEventListener("click", () => {
-    document.execCommand("insertUnorderedList", false,null);
-})
+    document.execCommand("insertUnorderedList", false, null);
+});
 
 let title = document.getElementById("add-title");
-let parap = document.getElementById("add-paragraph");
-let image_imput = document.getElementById("insert-img");
-/* let vid_input = document.getElementById("vid-label");
-
-vid_input.addEventListener("click", () => {
-    document.getElementById("insert-vid").style.display = 'block';
-}) */
+let image_input = document.getElementById("insert-img");
 
 title.addEventListener("change", (event) => {
     let titulo = document.createElement(title.value);
-    titulo.className = "page-title"
+    titulo.className = "page-title";
     titulo.innerText = "[inserta tu titulo]";
     if(content.lastElementChild) {
-        console.log(content.lastElementChild.firstChild.tagName)
-        if(content.lastElementChild.firstChild.tagName == "BR") {
+        if(content.lastElementChild.firstChild.tagName === "BR") {
             content.lastElementChild.innerHTML = "";
         }
         content.lastElementChild.appendChild(titulo);
@@ -27,35 +20,35 @@ title.addEventListener("change", (event) => {
         content.appendChild(titulo);
     }
     content.focus();
-    title.value="";
-})
+    title.value = "";
+});
 
-image_imput.addEventListener("change", async (event) => {
+image_input.addEventListener("change", async (event) => {
     event.preventDefault();
     var form = new FormData();
     form.append('id_post', getCookie("id_post"));
-    form.append('image',image_imput.files[0]);
-    await fetch("http://localhost:3000/image",{
+    form.append('image', image_input.files[0]);
+    await fetch("http://localhost:3000/image", {
         method: "POST",
         body: form
     }).then(response => response.text())
-    .then(data => {
+      .then(data => {
         putting_image(data);
-    })
+    });
     return false;
-})
-document.cookie = "id_post = 32; path=/";
-document.cookie = "username = jdoe; path=/";
+});
 
-function putting_image(url){
-    var divs = document.querySelectorAll("#recipe div")
+document.cookie = "id_post=32; path=/";
+document.cookie = "username=jdoe; path=/";
+
+function putting_image(url) {
+    var divs = document.querySelectorAll("#recipe div");
     var last_div = divs[divs.length - 1];
-    // console.log(last_div.innerHTML);
 
     var img = document.createElement("img");
-    img.src = "/"+url;
+    img.src = "/" + url;
     img.className = "inserted-image";
-    if(last_div != null){
+    if(last_div != null) {
         last_div.innerHTML = "";
         last_div.appendChild(img);
     } else {
@@ -65,30 +58,36 @@ function putting_image(url){
     }
 }
 
-function publish_post(){
-    //event.preventDefault();
+function publish_post() {
     var submit_content = document.getElementById("submit_form");
     var prev_img = (content.querySelector("img")) ? content.querySelector("img").src : "";
     var ingredients = (content.querySelector("ul")) ? content.querySelector("ul").innerHTML.trim() : "";
-    var hiddenInput = submit_content.description.value
+    var hiddenInput = submit_content.querySelector("input[name='description']").value;
 
-    var formData = new FormData();
-    formData.append('id_post', getCookie('id_post'));
-    formData.append('username', getCookie('username'));
-    formData.append('page_title', submit_content.recipe_title.value);
-    if(ingredients) formData.append('ingredients',ingredients);
-    formData.append('page_content', content.innerHTML.trim());
-    formData.append('preview',prev_img);
-    formData.append('description', hiddenInput);
+    var formData = {
+        id_post: getCookie('id_post'),
+        username: getCookie('username'),
+        page_title: submit_content.recipe_title.value,
+        ingredients: ingredients,
+        page_content: content.innerHTML.trim(),
+        preview: prev_img,
+        description: hiddenInput
+    };
 
-    console.log(Object.fromEntries(formData));
     fetch("http://localhost:3000/post_recipe", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(Object.fromEntries(formData))
-    })
+        body: JSON.stringify(formData)
+    }).then(response => response.json())
+      .then(data => {
+        if (data.success) {
+            alert('Receta publicada!');
+        } else {
+            alert('Hubo un error al publicar la receta.');
+        }
+    });
 }
 
 // DESCRIPCIÓN DE LA RECETA
@@ -107,7 +106,7 @@ span.onclick = function() {
 }
 
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target === modal) {
         modal.style.display = "none";
     }
 }
@@ -122,6 +121,7 @@ saveBtn.onclick = function() {
         document.getElementById("submit_form").appendChild(hiddenInput);
 
         publish_post();
+        modal.style.display = "none"; 
     } else {
         alert("Por favor, ingrese una descripción.");
     }
