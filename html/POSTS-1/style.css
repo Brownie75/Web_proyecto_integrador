@@ -273,7 +273,7 @@ font {
 .inserted-image {
     float: left;
     margin-right: 10px;
-    width: 300px;
+    max-width: 300px;
 }
 
 .subheader input {
@@ -380,5 +380,4 @@ body {
     left: 20px;
     z-index: 1000; 
     background-color: #fd4242 !important;
-    color
 }

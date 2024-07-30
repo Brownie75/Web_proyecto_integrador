@@ -15,14 +15,14 @@
         <br>
         
         <div class="edit_usr">
-            <form>
+            <form id="edit_user">
                 <h3>Escoge tu foto de perfil</h3>
             <p class="lil_info">Esta foto se mostrará en tus interacciones y en tu perfil. ¡Muestra tu gran sonrisa chef! </p>
                 <div class="upload_pic">
-                    <input type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in" name="image">
+                    <input required type="file" id="file_input" accept="image/png, image/jpg, image/jpeg" class="file_in" name="image">
                 </div>
                 <h3>Cuéntanos brevemente sobre ti</h3>
-                <textarea class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
+                <textarea required class="usr_desc" rows="2" cols="1" id="usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
                 <h3>¿Cuál es tu nivel de cocina?</h3>
                 <select id="nivel-cocina" name="u_experiencia">
                     <option value="principiante">Principiante</option>
@@ -31,11 +31,9 @@
                     <option value="pro">Profesional</option>
                 </select>
                 
-            <h3>Agrega tu cumpleaños</h3>
+                <h3>Agrega tu cumpleaños</h3>
                 <input type="date" class="bday">
-                <a href="/index.html" class="bttn_confirm">
-                    Listo!
-                </a>
+                <button class="bttn_confirm" type="submit">Listo!</button>
                 
             </form>
 
@@ -52,10 +50,6 @@
         } 
     </script> 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-            
-            <input type="submit" class="bttn_confirm">
-        </form>
         <script src="/js/cookies.js"></script>
         <script src="/js/updating_profile.js"></script>
     </body>

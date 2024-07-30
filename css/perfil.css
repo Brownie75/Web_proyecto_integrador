@@ -35,6 +35,7 @@ h5{
     border-radius: 100%;
     width: 300px;
     object-fit: cover;
+    background-color: rgb(255, 169, 169);
 }
 ul li.about_usr{
     margin-top: 6%;
@@ -157,7 +158,7 @@ h3{
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, .25);
     border-radius: 15px;
-    padding-left: 20px;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -285,11 +286,10 @@ h3{
     display: block;
     margin: auto;
     margin-bottom: 3%;
-    margin-top: 3%;
     box-sizing: content-box;
     border: dotted #a0a0a0 3px;
     height: 7em;
-    width: 40em;
+    width: 90%;
     justify-content: center;
     align-content: center;
  }

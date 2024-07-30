@@ -104,7 +104,7 @@ async function registerUser(fdata) {
 
         const data = await response.json();
 
-        if(data === 'Usuario registrado'){
+        if(data.message === 'Usuario registrado'){
             alert('Registro exitoso');
             setCookie("username", fdata["username"], 1);
             window.location.href = "/html/edit_new_profile.html";

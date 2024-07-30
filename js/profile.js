@@ -27,9 +27,12 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                   const userPubsElement = document.querySelector('#usr_pubs span');
                   const userRatingElement = document.querySelector('#prom_usr');
                   const userDescElement = document.querySelector('.usr_desc p');
+                  const userPfpElement = document.querySelector(".usr_img")
+
+                  userPfpElement.src = (userResult.pfp != "") ? "/"+userResult.pfp : "/assets/pfp/generic-pfp.png"
   
                   if (userNameElement) {
-                      userNameElement.textContent = `${userResult.nombre} ${userResult.apellido}`;
+                      userNameElement.textContent = `${userResult.username}`;
                   }
                   if (userLevelElement) {
                       userLevelElement.textContent = `Nivel: ${userResult.nivel_cocina}`;
@@ -57,6 +60,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         .then(data => {
             console.log(data.data);
             showUserPosts(data.data.payload.id_user);
+            document.querySelector(".btn_create_post").addEventListener("click", (event) => {
+                makeEditablePost(data.data.payload.username)
+            })
         })
         } else {
           console.error("Error al verificar el estado de autenticación");
@@ -88,10 +94,24 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     }
   });
   
-  
+document.getElementById("id_pfp").addEventListener("change", (event) => {
+    document.querySelector(".add_pic").innerText = "Foto agregada!"
+});
 
-function makeEditablePost(){
-  
+function makeEditablePost(username){
+  fetch("http://localhost:3000/recipe",{
+    method: "POST",
+    headers:{
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        "username": username
+    })
+  }).then(response => response.json())
+  .then(data => {
+    console.log(data)
+    window.location.href = "/html/POSTS-1/posts.html?id_post="+data.new_post
+  })
 }
 
 function showUserPosts(id){
@@ -135,7 +155,7 @@ function loadPost(d_id, d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_i
   var title_a = document.createElement("a");
   title_a.href = `/html/template.html?id_post=${d_id}`
   var titulo = document.createElement("h4");
-  titulo.className = "title_post"; titulo.innerText = d_titulo;
+  titulo.className = "title_post"; titulo.innerText = (d_titulo != "") ? d_titulo : "Receta sin titulo";
   title_a.appendChild(titulo);
   var fecha = document.createElement("span");
   fecha.className = "fecha_post"; fecha.innerText = d_fecha.substring(0,10);

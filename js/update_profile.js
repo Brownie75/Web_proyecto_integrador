@@ -1,18 +1,22 @@
-const edit_form = document.getElementById("edit_user");
-const file_input = document.getElementById("file_input");
+const update_form = document.getElementById("update_form");
+const file_input = update_form.pfp
 
-edit_form.addEventListener("submit", (event) => {
+update_form.addEventListener("submit", (event) => {
     event.preventDefault();
 
     var form = new FormData();
     form.append('username', getCookie("username"));
-    form.append('descripcion', edit_form.descripcion.value);
-    form.append('u_experiencia', edit_form.u_experiencia.value);
+    form.append('descripcion', update_form.descripcion.value);
+    form.append('u_experiencia', update_form.u_experiencia.value);
+
+    console.log(Object.fromEntries(form));
 
     var imageForm = new FormData();
     imageForm.append('id_post','pfp');
     imageForm.append('username', getCookie("username"));
-    imageForm.append('image',edit_form.image.files[0]);
+    imageForm.append('image',file_input.files[0]);
+
+    console.log(Object.fromEntries(imageForm));
 
     fetch("http://localhost:3000/image",{
         method: "POST",
@@ -34,7 +38,7 @@ edit_form.addEventListener("submit", (event) => {
             console.log(data);
             if(data == 'data updated successfully'){
                 alert("Informacion actualizada");
-                window.location.href = "/html/profile.html"
+                window.location.reload();
             }
         });
     })

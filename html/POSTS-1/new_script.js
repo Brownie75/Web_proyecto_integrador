@@ -38,8 +38,9 @@ image_input.addEventListener("change", async (event) => {
     return false;
 });
 
-document.cookie = "id_post=32; path=/";
-document.cookie = "username=jdoe; path=/";
+var id_post = new URLSearchParams(window.location.search).get("id_post")
+document.cookie = `id_post=`+id_post+`; path=/`;
+document.cookie = `username=`+getCookie("username")+`; path=/`;
 
 function putting_image(url) {
     var divs = document.querySelectorAll("#recipe div");
@@ -82,8 +83,10 @@ function publish_post() {
         body: JSON.stringify(formData)
     }).then(response => response.json())
       .then(data => {
-        if (data.success) {
+        console.log(data)
+        if (data) {
             alert('Receta publicada!');
+            window.location.href = "/html/page_view_test/post_view_temp.html?id_post="+getCookie('id_post');
         } else {
             alert('Hubo un error al publicar la receta.');
         }

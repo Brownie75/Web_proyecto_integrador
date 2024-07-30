@@ -3,9 +3,6 @@ var random_post = document.querySelector(".random_recipes .post")
 var galeria = document.getElementsByClassName("galeria")[0];
 var random_recipes = document.getElementsByClassName("random_recipes")[0];
 
-
-document.addEventListener("DOMContentLoaded", (event) => {
-    event.preventDefault();
     fetch("http://localhost:3000/posts/recent")
     .then(response => response.json())
     .then(data => {
@@ -22,7 +19,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
             loadLongPost(element);
         })
     })
-})
 
 function loadThumbnail(element){
     var clon = gallery_recipe.cloneNode(true);

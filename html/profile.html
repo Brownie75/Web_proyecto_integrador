@@ -13,35 +13,37 @@
 <html>
     <body>
         <div class="popup_container" id="popup">
-            <div class="popup_box">
-                <h3 class="edit_tittle">Editar perfil</h3>
-                <ul style="background: none;display: flex; flex-direction: column;" class="popup_ins">
-                    <li>
-                        <p style="font-family: sans-serif; font-weight: 500;font-size: 1.4em; margin-top: -2%;">Foto del perfil</p>
-                        <div class="add_pic_style">
-                            <label for="id_pfp" class="add_pic">Agregar una foto</label><br>
-                        <input type="file" id="id_pfp">
+            <form id="update_form" class="popup_box" action="">
+                <div>  
+                        <h3 class="edit_tittle">Editar perfil</h3>
+                        <ul style="background: none;display: flex; flex-direction: column;" class="popup_ins">
+                            <li>
+                                <p style="font-family: sans-serif; font-weight: 500;font-size: 1.4em; margin-top: -2%;">Foto del perfil</p>
+                                <div class="add_pic_style">
+                                    <label for="id_pfp" class="add_pic">Agregar una foto</label><br>
+                                    <input type="file" accept="image/*" id="id_pfp" name="pfp">
+                                </div>
+                            </li>
+                        <li>
+                            <label for="edit_usr_desc" class="popup_label">Editar descripción</label>
+                            <textarea class="edit_desc" rows="2" cols="1" id="edit_usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
+                        </li>
+                        <li>
+                            <label for="user_level" class="popup_label">Nivel de cocina</label><br>
+                            <select name="u_experiencia" id="user_level">
+                                <option value="principiante">Principiante</option>
+                                <option value="medio">Medio</option>
+                                <option value="experimentado">Experimentado</option>
+                                <option value="pro">Profesional</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <div class="popup_bttns">
+                        <button class="close_popup" onclick="closePopup()">Cancelar</button>
+                        <button type="submit" class="save_changes">Guardar cambios</button>
                     </div>
-                </li>
-                <li>
-                    <label for="edit_usr_desc" class="popup_label">Editar descripción</label>
-                    <textarea class="edit_desc" rows="2" cols="1" id="edit_usr_desc" name="descripcion" maxlength="256" placeholder="Escribe sobre ti aquí."></textarea>
-                </li>
-                <li>
-                    <label for="last_in" class="popup_label">Nivel de cocina</label><br>
-                    <select id="nivel-cocina">
-                        <option value="principiante">Principiante</option>
-                        <option value="medio">Medio</option>
-                        <option value="experimentado">Experimentado</option>
-                        <option value="pro">Profesional</option>
-                    </select>
-                </li>
-            </ul>
-            <div class="popup_bttns">
-                <button class="close_popup" onclick="closePopup()">Cancelar</button>
-                <button class="save_changes">Guardar cambios</button>
+                </form>
             </div>
-        </div>
     </div>
     <header class="banner">
         <a href="/index.html"><h1>Chef en Casa</h1></a>
@@ -61,7 +63,7 @@
         </nav>
     </header>
     <br>
-    <div>
+    <div style="margin-bottom: 30px;">
         <form action="search.html" method="get">
             <input type="text" name="term" class="search_bar" placeholder="¿Qué vamos a cocinar hoy?">
             <span>
@@ -99,7 +101,7 @@
     <div class="create_posts">
         <h3 class="banner_posts">¡Luces, cámara y a cocinar!</h3>
         <div class="create_post_div">
-            <button class="btn_create_post" onclick="makeEditablePost()">Publicar nueva receta</button>
+            <button class="btn_create_post">Publicar nueva receta</button>
         </div>
     </div>
     <div id="user_posts"></div>
@@ -110,6 +112,7 @@
             <p>Avisos de privacidad</p>
         </div>
     </footer>
+    <script src="/js/update_profile.js"></script>
     <script src="/js/cookies.js"></script>
     <script src="/js/profile.js"></script>
 </body>

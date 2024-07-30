@@ -207,7 +207,7 @@ server.get("/search", (req,res) => {
 
   const query = "SELECT * FROM posts WHERE "+searchQuery;
 
-  conn.query(query,(error, results) => {
+  conn.query(query + "ORDER BY fecha",(error, results) => {
     if (error) {
       console.error("Error executing search query:", error);
       return res.status(500).json({ error: "Internal server error" });
@@ -247,7 +247,7 @@ server.post("/post_recipe", (req, res) => {
       console.log("Directorio creado con exito");
     }
   }); else console.log("Ya existe directorio");
-  fs.appendFileSync(direc + '/content.html', page_content, (err) => {
+  fs.writeFileSync(direc + '/content.html', page_content, (err) => {
     if(err){
       return console.log(err)
     } else {
@@ -261,6 +261,7 @@ server.post("/post_recipe", (req, res) => {
       res.status(400).send("could not publish post");
     } else {
       console.log('Published!');
+      console.log(results)
       res.status(200).send(results);
     }
   })
@@ -277,14 +278,33 @@ server.post("/register", (req, res) => {
         conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('" 
                     + username + "', '" + password_ + "', '" + correo + "')", (error, results) => {
           if (error) {
-            res.send("Error inserting data", 500);
+            res.status(500).send("Error inserting data");
           } else {
-            res.send(JSON.stringify('Usuario registrado'));
+            conn.query("SELECT LAST_INSERT_ID() as id_newuser", (error, results) => {
+              if(error) {
+                res.status(500).send("Error inserting data");
+              } else {
+                try {
+                  const token = jwt.sign({ username: username, id_user: results[0].id_newuser }, secret_jwt, { expiresIn: '1h' });
+                  res.cookie('access_token', token, {
+                      httpOnly: true,
+                      secure: false,
+                      sameSite: 'lax',
+                      maxAge: 3600000, // 1 hora
+                      path: '/'
+                  });
+                  return res.status(200).json({message: "Usuario registrado", token});
+                  } catch (tokenError) {
+                      console.log("Error al generar el token", tokenError);
+                      return res.status(500).send("Error al procesar la solicitud");
+                  }
+              }
+            })
           }
         });
-    } else {
-      res.send(JSON.stringify('Este usuario ya existe'));
-    }
+        } else {
+          res.send(JSON.stringify('Este usuario ya existe'));
+        }
   }
 })
 }); 
@@ -371,7 +391,7 @@ server.get('/info-token', (req, res) => {
 
 server.get('/user-info', verifyToken, (req, res) => {
   const userId = req.user.username;  // el del usuario desde el token decodificado
-  const sql = "SELECT nombre, apellido, correo, telefono, edad, nivel_cocina, descripcion FROM usuarios WHERE username = ?";
+  const sql = "SELECT nombre, apellido, correo, telefono, edad, nivel_cocina, descripcion, pfp FROM usuarios WHERE username = ?";
   conn.query(sql, [userId], (error, results) => {
       if (error) {
           console.error("Error al obtener la información del usuario", error);
@@ -387,7 +407,8 @@ server.get('/user-info', verifyToken, (req, res) => {
               telefono: user.telefono,
               edad: user.edad,
               nivel_cocina: user.nivel_cocina,
-              descripcion: user.descripcion
+              descripcion: user.descripcion,
+              pfp: user.pfp
           });
       } else {
           res.status(404).json({ message: 'Usuario no encontrado' });
@@ -473,6 +494,7 @@ server.delete("/recipe/:id", (req, res) => {
 // set user
 function setUser(req, res, next){
   const username = req.body.username;
+  console.log(username);
   if(username){
       conn.query("SELECT id_user, username, correo FROM usuarios WHERE username = ?", [username], (error, results) => {
         if(error){
