@@ -4,7 +4,7 @@ console.log(id);
 loadContent()
 
 function loadContent(){
-    fetch("http://localhost:3000/recipe/"+id.get('id_post'))
+    fetch("https://web-proyecto-integrador.onrender.com/recipe/"+id.get('id_post'))
     .then(response => response.json())
     .then(data => {
         console.log(data);

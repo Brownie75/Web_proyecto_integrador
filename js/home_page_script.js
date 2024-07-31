@@ -3,7 +3,7 @@ var random_post = document.querySelector(".random_recipes .post")
 var galeria = document.getElementsByClassName("galeria")[0];
 var random_recipes = document.getElementsByClassName("random_recipes")[0];
 
-    fetch("http://localhost:3000/posts/recent")
+    fetch("https://web-proyecto-integrador.onrender.com/posts/recent")
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -11,7 +11,7 @@ var random_recipes = document.getElementsByClassName("random_recipes")[0];
             loadThumbnail(element)
         });
     }) 
-    fetch("http://localhost:3000/posts/daily")
+    fetch("https://web-proyecto-integrador.onrender.com/posts/daily")
     .then(response => response.json())
     .then(data => {
         console.log(data);

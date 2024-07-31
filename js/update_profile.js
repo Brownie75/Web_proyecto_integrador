@@ -18,7 +18,7 @@ update_form.addEventListener("submit", (event) => {
 
     console.log(Object.fromEntries(imageForm));
 
-    fetch("http://localhost:3000/image",{
+    fetch("https://web-proyecto-integrador.onrender.com/image",{
         method: "POST",
         body: imageForm
     })
@@ -27,7 +27,7 @@ update_form.addEventListener("submit", (event) => {
         console.log(data)
         form.append('pfp', data);
         data = Object.fromEntries(form)
-        fetch("http://localhost:3000/upt_profile", {
+        fetch("https://web-proyecto-integrador.onrender.com/upt_profile", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async (event) => {
     try {
-      const authResponse = await fetch("http://localhost:3000/autorizacion", {
+      const authResponse = await fetch("https://web-proyecto-integrador.onrender.com/autorizacion", {
           method: "GET",
           credentials: 'include',
       });
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
               navLoggedInItems.forEach(item => item.style.display = "block");
               navLoggedOutItems.forEach(item => item.style.display = "none");
   
-              const userResponse = await fetch("http://localhost:3000/user-info", {
+              const userResponse = await fetch("https://web-proyecto-integrador.onrender.com/user-info", {
                   method: "GET",
                   credentials: 'include',
               });
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
               navLoggedInItems.forEach(item => item.style.display = "none");
               navLoggedOutItems.forEach(item => item.style.display = "block");
           }
-          fetch("http://localhost:3000/info-token", {
+          fetch("https://web-proyecto-integrador.onrender.com/info-token", {
             method: "GET",
             credentials: 'include'
         }).then(response => response.json())
@@ -76,14 +76,14 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         logoutButton.addEventListener('click', async (event) => {
             event.preventDefault();
             try {
-                const response = await fetch('http://localhost:3000/logout', {
+                const response = await fetch('https://web-proyecto-integrador.onrender.com/logout', {
                     method: 'GET',
                     credentials: 'include',
                 });
 
                 if (response.ok) {
                     // Redirigir al usuario a la página de inicio de sesión después de cerrar sesión
-                    window.location.href = 'http://localhost:5501/html/signup_Majo/index.html'; // Asegúrate de que esta URL es la correcta
+                    window.location.href = 'https://chefsencasa.com/html/signup_Majo/index.html'; // Asegúrate de que esta URL es la correcta
                 } else {
                     console.error('Error al cerrar sesión');
                 }

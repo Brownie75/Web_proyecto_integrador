@@ -5,7 +5,7 @@ function getSearchTerm(){
     return searchTerm
 }
 document.addEventListener("DOMContentLoaded", (event) => {
-    fetch("http://localhost:3000/search?"+term)
+    fetch("https://web-proyecto-integrador.onrender.com/search?"+term)
     .then(response => response.json())
     .then(data => {
         if(data.length > 0){
