@@ -58,7 +58,7 @@ const conn = db.createConnection({
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || passwords[0],
     port: process.env.DB_PORT || 3306,
-    database: process.env.DB_DATABASE || "db_chefencasa"
+    database: process.env.DB_NAME || "db_chefencasa"
 });
 const ola = "ola";
 conn.connect((err) => {
