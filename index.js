@@ -54,11 +54,11 @@ server.use(cors({
 const passwords = ["EseKuEle","gato261261"]
 
 const conn = db.createConnection({
-    host: "localhost",
-    user: "root",
-    password: passwords[0],
-    port: 3306,
-    database: "db_chefencasa"
+    host: process.env.DB_HOST || "localhost",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASSWORD || passwords[0],
+    port: process.env.DB_PORT || 3306,
+    database: process.env.DB_DATABASE || "db_chefencasa"
 });
 const ola = "ola";
 conn.connect((err) => {
@@ -67,7 +67,7 @@ conn.connect((err) => {
     } else console.log("Connected to database");
   });
 server.listen(3000, () =>{
-    console.log("Server is running on http://localhost:3000");
+    console.log("Server is running on https://web-proyecto-integrador.onrender.com");
 });
 
 // Middleware para verificar el token
