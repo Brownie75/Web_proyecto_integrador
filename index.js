@@ -53,13 +53,17 @@ server.use(cors({
 
 const passwords = ["EseKuEle","gato261261"]
 
-const conn = db.createConnection({
+const pool = db.createPool({
     host: process.env.DB_HOST || "localhost",
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || passwords[0],
     port: process.env.DB_PORT || 3306,
-    database: process.env.DB_NAME || "db_chefencasa"
+    database: process.env.DB_NAME || "db_chefencasa",
+    keepAliveInitialDelay: 10000, // 0 by default.
+    enableKeepAlive: true, // false by default.
 });
+
+const conn = db.promise();
 const ola = "ola";
 conn.connect((err) => {
     if(err){
