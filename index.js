@@ -67,7 +67,7 @@ conn.connect((err) => {
     } else console.log("Connected to database");
   });
 server.listen(3000, () =>{
-    console.log("Server is running on https://web-proyecto-integrador.onrender.com");
+    console.log("Server is running on http://localhost:5501");
 });
 
 // Middleware para verificar el token
@@ -275,8 +275,7 @@ server.post("/register", (req, res) => {
     } else {
       if (results[0][0].Validacion_user === 'Registrado!') {
         // Insercion de datos
-        conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('" 
-                    + username + "', '" + password_ + "', '" + correo + "')", (error, results) => {
+        conn.query(`INSERT INTO usuarios (username, password_, correo) VALUES ('${username}', aes_encrypt('${password_}', ?), '${correo}')`, [process.env.AES_SECRET || "claveclave"], (error, results) => {
           if (error) {
             res.status(500).send("Error inserting data");
           } else {
@@ -317,19 +316,13 @@ server.post("/login", (req, res) => {
       return res.status(400).send("Username y contraseña son requeridos");
   }
 
-  conn.query("SELECT * FROM usuarios WHERE username = ?", [username], async (error, results) => {
+  conn.query("CALL validar_usuario(?, ?)", [username, password_], async (error, results) => {
       if (error) {
           console.log("Error al consultar la base de datos", error);
           return res.status(500).send("Error al consultar la base de datos");
       } 
-      
-      if (results.length > 0) {
-          const storedPassword = results[0]['password_'];  // Usar el campo correcto para la contraseña
-          if (storedPassword !== password_) {  // Comparar contraseñas en texto plano
-              console.log("Contraseña incorrecta");
-              return res.status(401).json({ message: "Datos incorrectos" });
-          }
-          
+      console.log(results[0][0].Validacion);
+      if (results[0][0].Validacion == "Sesion iniciada") {
           try {
               const token = jwt.sign({ username: results[0].username, id_user: results[0].id_user }, secret_jwt, { expiresIn: '1h' });
               res.cookie('access_token', token, {
