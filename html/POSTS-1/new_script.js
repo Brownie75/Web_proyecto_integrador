@@ -59,40 +59,6 @@ function putting_image(url) {
     }
 }
 
-function publish_post() {
-    var submit_content = document.getElementById("submit_form");
-    var prev_img = (content.querySelector("img")) ? content.querySelector("img").src : "";
-    var ingredients = (content.querySelector("ul")) ? content.querySelector("ul").innerHTML.trim() : "";
-    var hiddenInput = submit_content.querySelector("input[name='description']").value;
-
-    var formData = {
-        id_post: getCookie('id_post'),
-        username: getCookie('username'),
-        page_title: submit_content.recipe_title.value,
-        ingredients: ingredients,
-        page_content: content.innerHTML.trim(),
-        preview: prev_img,
-        description: hiddenInput
-    };
-
-    fetch("http://localhost:3000/post_recipe", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-    }).then(response => response.json())
-      .then(data => {
-        console.log(data)
-        if (data) {
-            alert('Receta publicada!');
-            window.location.href = "/html/page_view_test/post_view_temp.html?id_post="+getCookie('id_post');
-        } else {
-            alert('Hubo un error al publicar la receta.');
-        }
-    });
-}
-
 // DESCRIPCIÓN DE LA RECETA
 var modal = document.getElementById("descriptionModal");
 var btn = document.getElementById("post-recipe");
@@ -129,3 +95,16 @@ saveBtn.onclick = function() {
         alert("Por favor, ingrese una descripción.");
     }
 }
+
+document.getElementById("save-description").addEventListener("click", function() {
+    var description = document.getElementById("post-description").value;
+    if (description) {
+        localStorage.setItem('recipeTitle', document.querySelector("input[name='recipe_title']").value);
+        localStorage.setItem('recipeContent', document.getElementById("recipe").innerHTML);
+        localStorage.setItem('recipeDescription', description);
+        window.location.href = "publicado.html";
+    } else {
+        alert("Por favor, ingrese una descripción.");
+    }
+});
+
