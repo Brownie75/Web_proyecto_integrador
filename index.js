@@ -61,7 +61,7 @@ const passwords = ["EseKuEle","gato261261"]
     database: process.env.DB_NAME || "db_chefencasa"
 });*/
 
-const connPool = createPool({
+const connPool = db.createPool({
   host                  : process.env.DB_HOST || 'localhost',
   user                  : process.env.DB_USER || 'root',
   password              : process.env.DB_PASSWORD || passwords[0],
