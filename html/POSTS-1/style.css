@@ -354,6 +354,11 @@ font {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.disabled-content {
+    border: none; /* Opcional: quitar el borde para que no parezca editable */
+    background-color: #f0f0f0; /* Opcional: cambiar el color de fondo para indicar que no está editable */
+}
+
 .goog-te-banner-frame.skiptranslate {
     display: none !important;
 }
