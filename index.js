@@ -53,19 +53,34 @@ server.use(cors({
 
 const passwords = ["EseKuEle","gato261261"]
 
-const conn = db.createConnection({
+/*const conn = db.createConnection({
     host: process.env.DB_HOST || "localhost",
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || passwords[0],
     port: process.env.DB_PORT || 3306,
     database: process.env.DB_NAME || "db_chefencasa"
+});*/
+
+const connPool = createPool({
+  host                  : process.env.DB_HOST || 'localhost',
+  user                  : process.env.DB_USER || 'root',
+  password              : process.env.DB_PASSWORD || passwords[0],
+  database              : process.env.DB_NAME || 'db_chefencasa',
+  waitForConnections    : true,
+  connectionLimit       : 3,
+  maxIdle               : 3, // max idle connections, the default value is the same as `connectionLimit`
+  idleTimeout           : 60000, // idle connections timeout, in milliseconds, the default value 60000
+  queueLimit            : 0,
+  enableKeepAlive       : true,
+  keepAliveInitialDelay : 0,
 });
 
-conn.connect((err) => {
+ 
+/*conn.connect((err) => {
     if(err){
       console.log("Error connecting to database", err);
     } else console.log("Connected to database");
-});
+});*/
 
 server.listen(3000, () =>{
     console.log("Server is running on https://web-proyecto-integrador.onrender.com");
@@ -95,7 +110,8 @@ server.get("/", (req,res) => {
 })
 
 server.get("/user", (req, res) => {
-  conn.query("SELECT * FROM usuarios", (error, results) => {
+
+  connPool.query("SELECT * FROM usuarios", (error, results) => {
       if(error){
           console.log("Error fetching data",error);
           res.send("Error fetching data",500);
@@ -107,7 +123,7 @@ server.get("/user", (req, res) => {
 })
 server.get("/user/:id", (req, res) =>{
   const id = req.params.id;
-  conn.query("SELECT * FROM usuarios WHERE id_user = ?",[id], (error, results) =>{
+  connPool.query("SELECT * FROM usuarios WHERE id_user = ?",[id], (error, results) =>{
   if(error){
     console.log("Error fetching data", error);
     res.send("Error fetching data", 500);
@@ -119,7 +135,7 @@ server.get("/user/:id", (req, res) =>{
 })
 server.get("/recipe/:id", (req, res) => {
   const id = req.params.id;
-  conn.query("SELECT * FROM posts WHERE id_post = ?",[id],(error, results) => {
+  connPool.query("SELECT * FROM posts WHERE id_post = ?",[id],(error, results) => {
       if(error){
           console.log("Error fetching data", error);
           res.send("Error fetching data", 500);
@@ -131,7 +147,7 @@ server.get("/recipe/:id", (req, res) => {
 })
 server.get("/recipe/:id/content", (req, res) => {
   const id_post = req.params.id;
-  conn.query("SELECT url FROM posts WHERE id_post = ?",[id_post], (error, results) => {
+  connPool.query("SELECT url FROM posts WHERE id_post = ?",[id_post], (error, results) => {
       const file = fs.readFileSync("./"+results[0].url);
 
       res.send(file.toString());
@@ -139,7 +155,7 @@ server.get("/recipe/:id/content", (req, res) => {
 })
 server.get("/user/:id/posts", (req,res) =>{
   const id = req.params.id;
-  conn.query("SELECT * FROM posts WHERE fk_user = ?",[id],(error, results) => {
+  connPool.query("SELECT * FROM posts WHERE fk_user = ?",[id],(error, results) => {
       if(error){
           console.log("Error fetching data", error);
           res.send("Error fetching data", 500);
@@ -152,7 +168,7 @@ server.get("/user/:id/posts", (req,res) =>{
 
 server.get("/image/:img_name", (req,res) =>{
   const direc = req.params.img_name;
-  conn.query(`SELECT * FROM images WHERE img_name = '${direc}'`, (error, results) => {
+  connPool.query(`SELECT * FROM images WHERE img_name = '${direc}'`, (error, results) => {
     if(error){
       console.log("Error fetching image");
       res.status(400);
@@ -164,7 +180,7 @@ server.get("/image/:img_name", (req,res) =>{
 })
 server.get("/recipe/:id/images",(req,res) =>{
   id = req.params.id;
-  conn.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
+  connPool.query(`SELECT * FROM images WHERE id_post = ${id}`,(error, results) => {
     if(error){
       console.log("Error fetching images");
       res.status(400);
@@ -177,7 +193,7 @@ server.get("/recipe/:id/images",(req,res) =>{
 
 server.get("/get_user_by_name/:username", (req, res) =>{
   const username = req.params.username;
-  conn.query("SELECT * FROM usuarios WHERE username = ?",[username], (error, results) =>{
+  connPool.query("SELECT * FROM usuarios WHERE username = ?",[username], (error, results) =>{
   if(error){
     console.log("Error fetching data", error);
     res.send("Error fetching data", 500);
@@ -208,7 +224,7 @@ server.get("/search", (req,res) => {
 
   const query = "SELECT * FROM posts WHERE "+searchQuery;
 
-  conn.query(query + "ORDER BY fecha",(error, results) => {
+  connPool.query(query + "ORDER BY fecha",(error, results) => {
     if (error) {
       console.error("Error executing search query:", error);
       return res.status(500).json({ error: "Internal server error" });
@@ -220,21 +236,27 @@ server.get("/search", (req,res) => {
 
 server.post("/recipe", setUser, (req, res) => {
   var id_newpost;
-  conn.query("START TRANSACTION");
-  conn.query("INSERT INTO posts (titulo, ingredientes, contenido, categoria, fk_user) VALUES ('', '', '', '', ?)", [req.user.id_user], (error, results) => {
-    if(error) {
-      res.status(400).send("Could not make post");
-    }
-  })
-  conn.query("SELECT LAST_INSERT_ID() as newid", (error, results) => {
-    if(error) {
-      res.status(400).send("Could not make post");
-    } else {
-      id_newpost = results[0].newid;
-      conn.query("COMMIT");
-      if (id_newpost != null) res.json({new_post: id_newpost});
-    }
-  })
+  connPool.getConnection(function (err, conn) {
+    // Do something with the connection
+    conn.query("START TRANSACTION");
+    conn.query("INSERT INTO posts (titulo, ingredientes, contenido, categoria, fk_user) VALUES ('', '', '', '', ?)", [req.user.id_user], (error, results) => {
+      if(error) {
+        res.status(400).send("Could not make post");
+      }
+    })
+    conn.query("SELECT LAST_INSERT_ID() as newid", (error, results) => {
+      if(error) {
+        res.status(400).send("Could not make post");
+      } else {
+        id_newpost = results[0].newid;
+        conn.query("COMMIT");
+        if (id_newpost != null) res.json({new_post: id_newpost});
+      }
+    })
+    // Don't forget to release the connection when finished!
+    pool.releaseConnection(conn);
+  });
+  
 })
 
 server.post("/post_recipe", (req, res) => {
@@ -256,7 +278,7 @@ server.post("/post_recipe", (req, res) => {
     }
   });
 
-  conn.query(`UPDATE posts SET titulo = '${page_title}', descripcion = '${description}', ingredientes = '${ingredients}', contenido = '/html/${id_post}/content.html', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
+  connPool.query(`UPDATE posts SET titulo = '${page_title}', descripcion = '${description}', ingredientes = '${ingredients}', contenido = '/html/${id_post}/content.html', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
     if(error){
       console.log("could not publish post");
       res.status(400).send("could not publish post");
@@ -270,18 +292,18 @@ server.post("/post_recipe", (req, res) => {
 
 server.post("/register", (req, res) => {
   const {username, password_, correo} = req.body;
-  conn.query(`CALL registro('${username}', '${correo}')`, (error, results) => {
+  connPool.query(`CALL registro('${username}', '${correo}')`, (error, results) => {
     if (error) {
       console.log("Error inserting data");
     } else {
       if (results[0][0].Validacion_user === 'Registrado!') {
         // Insercion de datos
-        conn.query("INSERT INTO usuarios (username, password_, correo) VALUES ('" 
+        connPool.query("INSERT INTO usuarios (username, password_, correo) VALUES ('" 
                     + username + "', '" + password_ + "', '" + correo + "')", (error, results) => {
           if (error) {
             res.status(500).send("Error inserting data");
           } else {
-            conn.query("SELECT LAST_INSERT_ID() as id_newuser", (error, results) => {
+            connPool.query("SELECT LAST_INSERT_ID() as id_newuser", (error, results) => {
               if(error) {
                 res.status(500).send("Error inserting data");
               } else {
@@ -318,7 +340,7 @@ server.post("/login", (req, res) => {
       return res.status(400).send("Username y contraseña son requeridos");
   }
 
-  conn.query("SELECT * FROM usuarios WHERE username = ?", [username], async (error, results) => {
+  connPool.query("SELECT * FROM usuarios WHERE username = ?", [username], async (error, results) => {
       if (error) {
           console.log("Error al consultar la base de datos", error);
           return res.status(500).send("Error al consultar la base de datos");
@@ -393,7 +415,7 @@ server.get('/info-token', (req, res) => {
 server.get('/user-info', verifyToken, (req, res) => {
   const userId = req.user.username;  // el del usuario desde el token decodificado
   const sql = "SELECT nombre, apellido, correo, telefono, edad, nivel_cocina, descripcion, pfp FROM usuarios WHERE username = ?";
-  conn.query(sql, [userId], (error, results) => {
+  connPool.query(sql, [userId], (error, results) => {
       if (error) {
           console.error("Error al obtener la información del usuario", error);
           return res.status(500).json({ message: 'Error interno del servidor' });
@@ -443,7 +465,7 @@ server.get("/posts/:theme", (req, res) => {
     default:
       break;
   }
-  conn.query(query, (error, results) => {
+  connPool.query(query, (error, results) => {
     if(error) {
       res.status(500).send("Could not load posts");
     } else {
@@ -467,7 +489,7 @@ server.post("/image", upload.single('image'), (req,res) => {
 server.post("/upt_profile", setUser, (req, res) => {
   const {descripcion, u_experiencia, pfp} = req.body;
   console.log(req.body, req.user);
-  conn.query("UPDATE usuarios SET pfp = ?, descripcion = ?, nivel_cocina = ? where id_user = ?",
+  connPool.query("UPDATE usuarios SET pfp = ?, descripcion = ?, nivel_cocina = ? where id_user = ?",
     [pfp, descripcion, u_experiencia, req.user.id_user], (error, results) => {
       if(error){
         console.log("Error updating data", error);
@@ -482,7 +504,7 @@ server.post("/upt_profile", setUser, (req, res) => {
 
 server.delete("/recipe/:id", (req, res) => {
   const id = req.params.id;
-  conn.query("CALL delete_post(?)", [id], (error, results) => {
+  connPool.query("CALL delete_post(?)", [id], (error, results) => {
     if (error){
       console.log("Error deleting data");
       res.send("Error deleting data");
@@ -497,7 +519,7 @@ function setUser(req, res, next){
   const username = req.body.username;
   console.log(username);
   if(username){
-      conn.query("SELECT id_user, username, correo FROM usuarios WHERE username = ?", [username], (error, results) => {
+      connPool.query("SELECT id_user, username, correo FROM usuarios WHERE username = ?", [username], (error, results) => {
         if(error){
           throw error;
         } else {
