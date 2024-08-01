@@ -63,7 +63,7 @@ const pool = db.createPool({
     enableKeepAlive: true, // false by default.
 });
 
-const conn = db.promise();
+const conn = pool.promise();
 const ola = "ola";
 conn.connect((err) => {
     if(err){
