@@ -342,7 +342,7 @@ server.post("/login", (req, res) => {
           console.log("Error al consultar la base de datos", error);
           return res.status(500).send("Error al consultar la base de datos");
       } 
-      
+      console.log(results);
       if (results.length > 0) {
           const storedPassword = results[0]['password_'];  // Usar el campo correcto para la contraseña
           if (storedPassword !== password_) {  // Comparar contraseñas en texto plano
