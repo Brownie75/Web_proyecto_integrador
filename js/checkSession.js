@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    await fetch("http://localhost:3000/check-session", {
+    await fetch("https://web-proyecto-integrador.onrender.com/check-session", {
       method: 'GET',
       credentials: "include" // Incluye las cookies con la solicitud
     })

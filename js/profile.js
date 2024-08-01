@@ -99,7 +99,7 @@ document.getElementById("id_pfp").addEventListener("change", (event) => {
 });
 
 function makeEditablePost(username){
-  fetch("http://localhost:3000/recipe",{
+  fetch("https://web-proyecto-integrador.onrender.com/recipe",{
     method: "POST",
     headers:{
         "Content-Type": "application/json"
@@ -116,7 +116,7 @@ function makeEditablePost(username){
 
 function showUserPosts(id){
   var user_post = document.getElementById("user_posts");
-  fetch(`http://localhost:3000/user/${id}/posts`)
+  fetch(`https://web-proyecto-integrador.onrender.com/user/${id}/posts`)
   .then(response => response.json())
   .then(data => {
     console.log(data);
