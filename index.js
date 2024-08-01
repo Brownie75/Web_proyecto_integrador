@@ -45,10 +45,7 @@ server.use(cookieParser());
 
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
-server.use(cors({
-  origin: 'http://localhost:5501', 
-  credentials: true 
-}));
+server.use(cors());
 //server.use(setUser);
 
 const passwords = ["EseKuEle","gato261261"]
