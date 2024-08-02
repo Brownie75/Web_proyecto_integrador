@@ -336,7 +336,7 @@ server.post("/login", (req, res) => {
       return res.status(400).send("Username y contraseña son requeridos");
   }
 
-  connPool.query("CALL validar_usuario('?', '?')", [username, password_], async (error, results) => {
+  connPool.query("CALL validar_usuario(?, ?)", [username, password_], async (error, results) => {
       if (error) {
           console.log("Error al consultar la base de datos", error);
           return res.status(500).send("Error al consultar la base de datos");
