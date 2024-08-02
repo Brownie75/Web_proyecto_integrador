@@ -46,6 +46,6 @@ function loadLongPost(element){
     ultimo_nodo.querySelector(".fecha_post").innerText = element.fecha;
     ultimo_nodo.querySelectorAll(".about_post .post_info")[0].innerText = element.visitas + " visualizaciones";
     ultimo_nodo.querySelectorAll(".about_post .post_info")[1].innerText = "???" + " favoritos";
-    ultimo_nodo.querySelectorAll(".about_post .post_info")[2].innerText = "Categoria: ???";
+    // ultimo_nodo.querySelectorAll(".about_post .post_info")[2].innerText = "Categoria: ???";
     ultimo_nodo.querySelector("a").href = "/html/template.html?id_post="+element.id_post
 }

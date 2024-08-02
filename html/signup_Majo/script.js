@@ -89,6 +89,10 @@ async function loginUser(fdata) {
 
 async function registerUser(fdata) {
     try {
+        await fetch("http://localhost:3000/logout",{
+            method: "GET",
+            credentials: "include"
+        })
         const response = await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: {

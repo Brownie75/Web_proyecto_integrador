@@ -27,25 +27,38 @@
     </header>
 
     <main>
-        <section id="content">
-            <div id="recipe-title"></div>
+        <div id="content">
+            <div id="recipe-title">
+                <img src="">
+            </div>
             <div id="recipe-description"></div>
             <div id="recipe-ingredients"></div>
             <div id="recipe-steps"></div>
-        </section>
+        </div>
     </main>
 
     <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function() {
-            var title = localStorage.getItem('recipeTitle');
-            var description = localStorage.getItem('recipeDescription');
-            var content = localStorage.getItem('recipeContent');
+        document.addEventListener("DOMContentLoaded", async function() {
 
-            document.getElementById('recipe-title').innerHTML = `<h1>${title}</h1>`;
+            var id_post = new URLSearchParams(window.location.search).get('id_post');
+            var post_content = await fetch("http://localhost:3000/recipe/"+id_post)
+            .then(response => response.json())
+            .then(data => data[0]);
+
+            console.log(post_content)
+            var title = post_content.titulo
+            var description = post_content.descripcion;
+            var content = await fetch(post_content.contenido).then(response => response.text());
+            console.log(content);
+
+            var recipe_title = document.getElementById('recipe-title');
+            recipe_title.innerHTML += `<h1>${title}</h1>`;
+            recipe_title.querySelector("img").src = post_content.preview_image;
             document.getElementById('recipe-description').innerHTML = `<h2>Descripción:</h2><p>${description}</p>`;
 
             var parser = new DOMParser();
             var doc = parser.parseFromString(content, 'text/html');
+
 
             var ingredients = doc.querySelector('ul');
             var ingredientsHTML = ingredients ? ingredients.outerHTML : '';

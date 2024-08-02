@@ -67,7 +67,7 @@ conn.connect((err) => {
     } else console.log("Connected to database");
   });
 server.listen(3000, () =>{
-    console.log("Server is running on http://localhost:5501");
+    console.log("Server is running on http://localhost:3000");
 });
 
 // Middleware para verificar el token
@@ -237,8 +237,8 @@ server.post("/recipe", setUser, (req, res) => {
 })
 
 server.post("/post_recipe", (req, res) => {
-  const {id_post, username, page_title, ingredients, page_content, preview, description} = req.body;
-  
+  const {id_post, page_title, ingredients, page_content, preview, description} = req.body;
+  console.log(req.body);
   var direc = path.join(__dirname, `html/${id_post}`)
   if(!fs.existsSync(direc)) fs.mkdir(direc, (err) => {
     if(err){
@@ -258,11 +258,11 @@ server.post("/post_recipe", (req, res) => {
   conn.query(`UPDATE posts SET titulo = '${page_title}', descripcion = '${description}', ingredientes = '${ingredients}', contenido = '/html/${id_post}/content.html', preview_image = '${preview}', borrador = 1 WHERE id_post = ${id_post}`, (error, results) => {
     if(error){
       console.log("could not publish post");
-      res.status(400).send("could not publish post");
+      res.status(400).send(error);
     } else {
       console.log('Published!');
       console.log(results)
-      res.status(200).send(results);
+      res.status(200).json({estado: "Publicado!"});
     }
   })
 })
@@ -324,7 +324,7 @@ server.post("/login", (req, res) => {
       console.log(results[0][0].Validacion);
       if (results[0][0].Validacion == "Sesion iniciada") {
           try {
-              const token = jwt.sign({ username: results[0].username, id_user: results[0].id_user }, secret_jwt, { expiresIn: '1h' });
+              const token = jwt.sign({ username: username, id_user: results[0][0].id_user }, secret_jwt, { expiresIn: '1h' });
               res.cookie('access_token', token, {
                   httpOnly: true,
                   secure: false,
@@ -493,6 +493,7 @@ function setUser(req, res, next){
         if(error){
           throw error;
         } else {
+          console.log(results[0]);
           req.user = results[0];
           next();
         }

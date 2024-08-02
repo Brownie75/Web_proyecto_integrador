@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     try {
       const authResponse = await fetch("http://localhost:3000/autorizacion", {
           method: "GET",
-          credentials: 'include',
+          credentials: 'include'
       });
   
       if (authResponse.ok) {
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
   
               const userResponse = await fetch("http://localhost:3000/user-info", {
                   method: "GET",
-                  credentials: 'include',
+                  credentials: 'include'
               });
   
               if (userResponse.ok) {
@@ -25,23 +25,19 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                   const userNameElement = document.querySelector('.name_usr');
                   const userLevelElement = document.querySelector('#usr_level');
                   const userPubsElement = document.querySelector('#usr_pubs span');
-                  const userRatingElement = document.querySelector('#prom_usr');
                   const userDescElement = document.querySelector('.usr_desc p');
                   const userPfpElement = document.querySelector(".usr_img")
 
                   userPfpElement.src = (userResult.pfp != "") ? "/"+userResult.pfp : "/assets/pfp/generic-pfp.png"
   
                   if (userNameElement) {
-                      userNameElement.textContent = `${userResult.username}`;
+                      userNameElement.textContent = `${userResult.nombre} ${userResult.apellido}`;
                   }
                   if (userLevelElement) {
                       userLevelElement.textContent = `Nivel: ${userResult.nivel_cocina}`;
                   }
                   if (userPubsElement) {
                       userPubsElement.textContent = userResult.correo;
-                  }
-                  if (userRatingElement) {
-                      userRatingElement.textContent = "Rating Placeholder";  // Aquí se debería obtener el rating del usuario si está disponible
                   }
                   if (userDescElement) {
                       userDescElement.textContent = userResult.descripcion;
@@ -58,7 +54,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             credentials: 'include'
         }).then(response => response.json())
         .then(data => {
-            console.log(data.data);
             showUserPosts(data.data.payload.id_user);
             document.querySelector(".btn_create_post").addEventListener("click", (event) => {
                 makeEditablePost(data.data.payload.username)
@@ -137,7 +132,7 @@ function loadPost(d_id, d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_i
   var img_container = document.createElement("div");
   img_container.style = "display: flex; align-items: center";
   var img_a = document.createElement("a");
-  img_a.href = `/html/template.html?id_post=${d_id}`;
+  img_a.href = `/html/POSTS-1/publicado.html?id_post=${d_id}`;
   var post_img = document.createElement("img");
   post_img.className = "miniatura_post";
   if(d_p_img != null && d_p_img != "") post_img.src = d_p_img; else post_img.src = "/assets/pictures/example_pic.jpg";
@@ -153,7 +148,7 @@ function loadPost(d_id, d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_i
   var title_div = document.createElement("div");
   title_div.style = "display: flex; justify-content: space-around; align-content: center;";
   var title_a = document.createElement("a");
-  title_a.href = `/html/template.html?id_post=${d_id}`
+  title_a.href = `/html/POSTS-1/publicado.html?id_post=${d_id}`;
   var titulo = document.createElement("h4");
   titulo.className = "title_post"; titulo.innerText = (d_titulo != "") ? d_titulo : "Receta sin titulo";
   title_a.appendChild(titulo);

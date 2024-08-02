@@ -21,7 +21,9 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "username": "bayron",
-    "password_": "passpass",
-    "correo": "bayron@bay.com"
+    "nombre": "juan",
+    "apellido": "dice",
+    "username": "juandice",
+    "password_": "pass1234",
+    "correo": "juan@dice.com"
 }
