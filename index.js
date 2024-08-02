@@ -64,8 +64,8 @@ const connPool = db.createPool({
   password              : process.env.DB_PASSWORD || passwords[0],
   database              : process.env.DB_NAME || 'db_chefencasa',
   waitForConnections    : true,
-  connectionLimit       : 3,
-  maxIdle               : 3, // max idle connections, the default value is the same as `connectionLimit`
+  connectionLimit       : 10,
+  maxIdle               : 10, // max idle connections, the default value is the same as `connectionLimit`
   idleTimeout           : 60000, // idle connections timeout, in milliseconds, the default value 60000
   queueLimit            : 0,
   enableKeepAlive       : true,
@@ -295,7 +295,7 @@ server.post("/register", (req, res) => {
     } else {
       if (results[0][0].Validacion_user === 'Registrado!') {
         // Insercion de datos
-        connPool.query(`INSERT INTO usuarios (username, password_, correo, nombre, apellido) VALUES ('${username}','${password_}','${correo}','${nombre}','${apellido}')`, (error, results) => {
+        connPool.query(`INSERT INTO usuarios (username, password_, correo, nombre, apellido) VALUES ('${username}',aes_encrypt('${password_}','${process.env.DB_SECRET_KEY}'),'${correo}','${nombre}','${apellido}')`, (error, results) => {
           if (error) {
             res.status(500).send("Error inserting data");
           } else {
@@ -336,14 +336,14 @@ server.post("/login", (req, res) => {
       return res.status(400).send("Username y contraseña son requeridos");
   }
 
-  connPool.query("SELECT * FROM usuarios WHERE username = ?", [username], async (error, results) => {
+  connPool.query("CALL validar_usuario('?', '?')", [username, password_], async (error, results) => {
       if (error) {
           console.log("Error al consultar la base de datos", error);
           return res.status(500).send("Error al consultar la base de datos");
       } 
       console.log(results);
       if (results.length > 0) {
-          const storedPassword = results[0]['password_'];  // Usar el campo correcto para la contraseña
+          const storedPassword = results[0][0].id_user;  // Usar el campo correcto para la contraseña
           if (storedPassword !== password_) {  // Comparar contraseñas en texto plano
               console.log("Contraseña incorrecta");
               return res.status(401).json({ message: "Datos incorrectos" });
