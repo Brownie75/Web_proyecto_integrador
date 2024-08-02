@@ -33,7 +33,10 @@
                 </form>
                 <form action="" class="formulario-registro" onsubmit="return validateForm(event, 'formulario-registro')">
                     <h2>Registrarse</h2>
-                    <input type="text" placeholder="Nombre Completo" required name="nombre">
+                    <div style="display: flex; gap: 20px;">
+                        <input type="text" placeholder="Nombre" required name="nombre">
+                        <input type="text" placeholder="Apellido" required name="apellido">
+                    </div>
                     <input type="text" placeholder="Correo Electronico" required name="correo">
                     <input type="text" placeholder="Usuario" required name="username">
                     <input type="password" placeholder="Contraseña" required name="password_">

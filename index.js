@@ -288,15 +288,14 @@ server.post("/post_recipe", (req, res) => {
 })
 
 server.post("/register", (req, res) => {
-  const {username, password_, correo} = req.body;
+  const {username, password_, correo, nombre, apellido} = req.body;
   connPool.query(`CALL registro('${username}', '${correo}')`, (error, results) => {
     if (error) {
       console.log("Error inserting data");
     } else {
       if (results[0][0].Validacion_user === 'Registrado!') {
         // Insercion de datos
-        connPool.query("INSERT INTO usuarios (username, password_, correo) VALUES ('" 
-                    + username + "', '" + password_ + "', '" + correo + "')", (error, results) => {
+        connPool.query(`INSERT INTO usuarios (username, password_, correo, nombre, apellido) VALUES ('${username}','${password_}','${correo}','${nombre}','${apellido}')`, (error, results) => {
           if (error) {
             res.status(500).send("Error inserting data");
           } else {
@@ -332,7 +331,7 @@ server.post("/register", (req, res) => {
 server.post("/login", (req, res) => {
   const { username, password_ } = req.body;
 
-  if (!username || !password_) {
+  if (!username || !password_ || password_ == "' OR 1=1 -- '") {
       console.log("Username y contraseña son requeridos");
       return res.status(400).send("Username y contraseña son requeridos");
   }
