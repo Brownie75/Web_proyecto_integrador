@@ -343,14 +343,8 @@ server.post("/login", (req, res) => {
       } 
       console.log(results[0][0].Validacion);
       if (results[0][0].Validacion == "Sesion iniciada") {
-          const storedPassword = results[0][0].id_user;  // Usar el campo correcto para la contraseña
-          if (storedPassword !== password_) {  // Comparar contraseñas en texto plano
-              console.log("Contraseña incorrecta");
-              return res.status(401).json({ message: "Datos incorrectos" });
-          }
-          
           try {
-              const token = jwt.sign({ username: results[0].username, id_user: results[0].id_user }, secret_jwt, { expiresIn: '1h' });
+              const token = jwt.sign({ username: results[0].username, id_user: results[0][0].id_user }, secret_jwt, { expiresIn: '1h' });
               res.cookie('access_token', token, {
                   httpOnly: true,
                   secure: false,
