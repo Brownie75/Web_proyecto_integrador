@@ -341,8 +341,8 @@ server.post("/login", (req, res) => {
           console.log("Error al consultar la base de datos", error);
           return res.status(500).send("Error al consultar la base de datos");
       } 
-      console.log(results);
-      if (results.length > 0) {
+      console.log(results[0][0].Validacion);
+      if (results[0][0].Validacion == "Sesion iniciada") {
           const storedPassword = results[0][0].id_user;  // Usar el campo correcto para la contraseña
           if (storedPassword !== password_) {  // Comparar contraseñas en texto plano
               console.log("Contraseña incorrecta");
