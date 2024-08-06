@@ -45,7 +45,9 @@ server.use(cookieParser());
 
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
-server.use(cors());
+server.use(cors({
+  origin: "https://chefencasa.com" || "http://localhost:5501"
+}));
 //server.use(setUser);
 
 const passwords = ["EseKuEle","gato261261"]
