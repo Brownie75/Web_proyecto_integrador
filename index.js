@@ -333,7 +333,7 @@ server.post("/register", (req, res) => {
 server.post("/login", (req, res) => {
   const { username, password_ } = req.body;
 
-  if (!username || !password_ || password_ == "' OR 1=1 -- '") {
+  if (!username || !password_ || password_ === "' OR 1=1 -- '") {
       console.log("Username y contraseña son requeridos");
       return res.status(400).send("Username y contraseña son requeridos");
   }
