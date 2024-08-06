@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicado</title>
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+</head>
+<body>
+    <header class="banner">
+        <a href="/index.html" style="text-decoration: none;"><h1 class="logo-text">Chef en Casa</h1></a>
+        <nav class="btn_banner">
+            <ul class="nav_bar">
+                <li><a class="about_us" href="/html/about_us.html">Acerca de nosotros</a></li>
+                <li>
+                    <a href="#" class="menu">Opciones</a>
+                    <ul class="dropdown">
+                        <li><a href="/index.html">Inicio</a></li>
+                        <li><a href="../profile.html">Perfil</a></li>
+                        <li><a href="../Support-form/index.html">Contacto</a></li>
+                        <li><a href="../signup_Majo/index.html">Registro/Inicio de sesión</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="content">
+            <div id="recipe-title">
+                <img src="">
+            </div>
+            <div id="recipe-description"></div>
+            <div id="recipe-ingredients"></div>
+            <div id="recipe-steps"></div>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", async function() {
+
+            var id_post = new URLSearchParams(window.location.search).get('id_post');
+            var post_content = await fetch("http://localhost:3000/recipe/"+id_post)
+            .then(response => response.json())
+            .then(data => data[0]);
+
+            console.log(post_content)
+            var title = post_content.titulo
+            var description = post_content.descripcion;
+            var content = await fetch(post_content.contenido).then(response => response.text());
+            console.log(content);
+
+            var recipe_title = document.getElementById('recipe-title');
+            recipe_title.innerHTML += `<h1>${title}</h1>`;
+            recipe_title.querySelector("img").src = post_content.preview_image ? post_content.preview_image : "/assets/pictures/example_pic.jpg";
+            document.getElementById('recipe-description').innerHTML = `<h2>Descripción:</h2><p>${description}</p>`;
+
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(content, 'text/html');
+
+
+            var ingredients = doc.querySelector('ul');
+            var ingredientsHTML = ingredients ? ingredients.outerHTML : '';
+
+            var steps = doc.body.innerHTML.replace(ingredientsHTML, '');
+            
+            var titleHTML = `<h1>${title}</h1>`;
+            var stepsWithoutTitle = steps.replace(titleHTML, '');
+
+            document.getElementById('recipe-ingredients').innerHTML = `<h2>Ingredientes:</h2>${ingredientsHTML}`;
+            document.getElementById('recipe-steps').innerHTML = `<h2>Pasos:</h2>${stepsWithoutTitle}`;
+
+            localStorage.removeItem('recipeTitle');
+            localStorage.removeItem('recipeDescription');
+            localStorage.removeItem('recipeContent');
+        });
+    </script>
+</body>
+</html>
+
+
