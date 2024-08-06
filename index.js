@@ -354,6 +354,7 @@ server.post("/login", (req, res) => {
                   maxAge: 3600000, // 1 hora
                   path: '/'
               });
+              res.set("Access-Control-Allow-Credentials", true);
               return res.status(200).json({ message: "Inicio de sesión exitoso", token });
           } catch (tokenError) {
               console.log("Error al generar el token", tokenError);
