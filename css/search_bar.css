@@ -19,7 +19,7 @@ form{
 }
 .search_icon{
     position: absolute;
-    height: 4%;
+    height: 30px;
     margin-top: 9em;
     right: 25%;
     pointer-events: none;

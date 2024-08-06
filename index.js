@@ -425,10 +425,10 @@ server.get("/posts/:theme", (req, res) => {
   var query;
   switch (theme) {
     case "last_week":
-      query = "SELECT * FROM posts WHERE fecha BETWEEN date_sub(now(), interval 1 week) and now() LIMIT 3"
+      query = "SELECT * FROM posts WHERE fecha BETWEEN date_sub(now(), interval 1 week) and now() order by fecha desc LIMIT 3"
       break;
     case "daily":
-      query = "SELECT * FROM posts ORDER BY visitas LIMIT 1"
+      query = "SELECT * FROM posts WHERE date(fecha) = date(date_sub(now(), interval 1 day)) LIMIT 1"
       break;
     case "recent":
       query = "SELECT * FROM posts ORDER BY fecha LIMIT 3"

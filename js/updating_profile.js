@@ -34,7 +34,7 @@ edit_form.addEventListener("submit", (event) => {
             console.log(data);
             if(data == 'data updated successfully'){
                 alert("Informacion actualizada");
-                window.location.href = "/html/profile.html"
+                window.location.href = "/html/signup-Majo/index.js"
             }
         });
     })

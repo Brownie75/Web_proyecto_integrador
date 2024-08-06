@@ -35,7 +35,7 @@ function loadSearchResult(array){
     img_div.appendChild(redirect_img);
     
     let redirect_title = document.createElement("a");
-    redirect_title.href = "template.html?id_post="+array.id_post;
+    redirect_title.href = "POSTS-1/publicado.html?id_post="+array.id_post;
     let info_busqueda = document.createElement("div");
     info_busqueda.className = "info_busqueda";
     let titulo_busqueda = document.createElement("h3");

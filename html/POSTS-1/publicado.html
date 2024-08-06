@@ -9,10 +9,10 @@
 </head>
 <body>
     <header class="banner">
-        <h1 class="logo-text">Chef en Casa</h1>
+        <a href="/index.html" style="text-decoration: none;"><h1 class="logo-text">Chef en Casa</h1></a>
         <nav class="btn_banner">
             <ul class="nav_bar">
-                <li><a class="about_us" href="/V.01-formulario/about_us.html">Acerca de nosotros</a></li>
+                <li><a class="about_us" href="/html/about_us.html">Acerca de nosotros</a></li>
                 <li>
                     <a href="#" class="menu">Opciones</a>
                     <ul class="dropdown">
@@ -53,7 +53,7 @@
 
             var recipe_title = document.getElementById('recipe-title');
             recipe_title.innerHTML += `<h1>${title}</h1>`;
-            recipe_title.querySelector("img").src = post_content.preview_image;
+            recipe_title.querySelector("img").src = post_content.preview_image ? post_content.preview_image : "/assets/pictures/example_pic.jpg";
             document.getElementById('recipe-description').innerHTML = `<h2>Descripción:</h2><p>${description}</p>`;
 
             var parser = new DOMParser();
