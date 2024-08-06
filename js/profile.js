@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
                 if (response.ok) {
                     // Redirigir al usuario a la página de inicio de sesión después de cerrar sesión
-                    window.location.href = 'https://chefsencasa.com/html/signup_Majo/index.html'; // Asegúrate de que esta URL es la correcta
+                    window.location.href = '/html/signup_Majo/index.html'; // Asegúrate de que esta URL es la correcta
                 } else {
                     console.error('Error al cerrar sesión');
                 }
@@ -137,7 +137,7 @@ function loadPost(d_id, d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_i
   var img_container = document.createElement("div");
   img_container.style = "display: flex; align-items: center";
   var img_a = document.createElement("a");
-  img_a.href = `/html/template.html?id_post=${d_id}`;
+  img_a.href = `/html/POSTS-1/publicado.html?id_post=${d_id}`;
   var post_img = document.createElement("img");
   post_img.className = "miniatura_post";
   if(d_p_img != null && d_p_img != "") post_img.src = d_p_img; else post_img.src = "/assets/pictures/example_pic.jpg";
@@ -153,7 +153,7 @@ function loadPost(d_id, d_titulo, d_fecha, d_vistas, d_likes, d_categoria, d_p_i
   var title_div = document.createElement("div");
   title_div.style = "display: flex; justify-content: space-around; align-content: center;";
   var title_a = document.createElement("a");
-  title_a.href = `/html/template.html?id_post=${d_id}`
+  title_a.href = `/html/POSTS-1/publicado.html?id_post=${d_id}`
   var titulo = document.createElement("h4");
   titulo.className = "title_post"; titulo.innerText = (d_titulo != "") ? d_titulo : "Receta sin titulo";
   title_a.appendChild(titulo);

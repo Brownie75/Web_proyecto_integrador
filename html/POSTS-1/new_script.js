@@ -28,7 +28,7 @@ image_input.addEventListener("change", async (event) => {
     var form = new FormData();
     form.append('id_post', getCookie("id_post"));
     form.append('image', image_input.files[0]);
-    await fetch("http://localhost:3000/image", {
+    await fetch("https://web-proyecto-integrador.onrender.com/image", {
         method: "POST",
         body: form
     }).then(response => response.text())
@@ -75,7 +75,7 @@ function publish_post() {
         description: hiddenInput
     };
 
-    fetch("http://localhost:3000/post_recipe", {
+    fetch("https://web-proyecto-integrador.onrender.com/post_recipe", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -86,7 +86,7 @@ function publish_post() {
         console.log(data)
         if (data) {
             alert('Receta publicada!');
-            window.location.href = "/html/page_view_test/post_view_temp.html?id_post="+getCookie('id_post');
+            window.location.href = "/html/POSTS-1/publicado.html?id_post="+getCookie('id_post');
         } else {
             alert('Hubo un error al publicar la receta.');
         }

@@ -30,8 +30,8 @@ function loadThumbnail(element){
     ultimo_nodo.style.display = "block";
     if(element.preview_image)ultimo_nodo.querySelector("img").src = element.preview_image;
     ultimo_nodo.querySelector(".titulo").innerText = element.titulo;
-    ultimo_nodo.querySelector("#i_red").href = "/html/template.html?id_post="+element.id_post;
-    ultimo_nodo.querySelector("#t_red").href = "/html/template.html?id_post="+element.id_post;
+    ultimo_nodo.querySelector("#i_red").href = "/html/POSTS-1/publicado.html?id_post="+element.id_post;
+    ultimo_nodo.querySelector("#t_red").href = "/html/POSTS-1/posts.html?id_post="+element.id_post;
     ultimo_nodo.querySelector(".rating .rating_num").innerText = element.rating;
 }
 
@@ -47,5 +47,5 @@ function loadLongPost(element){
     ultimo_nodo.querySelectorAll(".about_post .post_info")[0].innerText = element.visitas + " visualizaciones";
     ultimo_nodo.querySelectorAll(".about_post .post_info")[1].innerText = "???" + " favoritos";
     ultimo_nodo.querySelectorAll(".about_post .post_info")[2].innerText = "Categoria: ???";
-    ultimo_nodo.querySelector("a").href = "/html/template.html?id_post="+element.id_post
+    ultimo_nodo.querySelector("a").href = "/html/POSTS-1/publicado.html.html?id_post="+element.id_post
 }

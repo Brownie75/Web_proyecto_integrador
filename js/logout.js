@@ -1,7 +1,7 @@
 
 console.log("ENTRE");
 document.getElementById("logout_button").addEventListener("click", async () => {
-    await fetch("http://localhost:3000/logout", {
+    await fetch("https://web-proyecto-integrador.onrender.com/logout", {
       method: "POST",
     })
       .then((res) => res.json())

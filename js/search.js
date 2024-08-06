@@ -26,7 +26,7 @@ function loadSearchResult(array){
     let rating_span = document.createElement("span");
 
     let redirect_img = document.createElement("a");
-    redirect_img.href = "template.html?id_post="+array.id_post;
+    redirect_img.href = "/html/POSTS-1/publicado.html?id_post="+array.id_post;
     let img_busqueda = document.createElement("img");
     img_busqueda.className = "img_busqueda";
     if(array.preview_image != null) img_busqueda.src = array.preview_image; 
@@ -35,7 +35,7 @@ function loadSearchResult(array){
     img_div.appendChild(redirect_img);
     
     let redirect_title = document.createElement("a");
-    redirect_title.href = "template.html?id_post="+array.id_post;
+    redirect_title.href = "/html/POSTS-1/publicado.html?id_post="+array.id_post;
     let info_busqueda = document.createElement("div");
     info_busqueda.className = "info_busqueda";
     let titulo_busqueda = document.createElement("h3");

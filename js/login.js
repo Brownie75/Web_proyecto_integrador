@@ -5,7 +5,7 @@ form.addEventListener("submit", async (event) => {
   const formData_ = new FormData(form);
   const data = Object.fromEntries(formData_);
 
-  await fetch("http://localhost:3000/login", {
+  await fetch("https://web-proyecto-integrador.onrender.com/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

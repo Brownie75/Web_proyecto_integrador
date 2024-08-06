@@ -60,7 +60,7 @@ function validateForm(event, formClass) {
 
 async function loginUser(fdata) {
     try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('https://web-proyecto-integrador.onrender.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ async function loginUser(fdata) {
 
 async function registerUser(fdata) {
     try {
-        const response = await fetch('http://localhost:3000/register', {
+        const response = await fetch('https://web-proyecto-integrador.onrender.com/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
