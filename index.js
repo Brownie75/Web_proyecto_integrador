@@ -46,7 +46,8 @@ server.use(cookieParser());
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use(cors({
-  origin: "https://chefsencasa.com" || "http://localhost:5501"
+  origin: "https://chefsencasa.com" || "http://localhost:5501",
+  credentials: true,
 }));
 //server.use(setUser);
 
