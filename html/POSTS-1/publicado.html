@@ -41,35 +41,42 @@
         document.addEventListener("DOMContentLoaded", async function() {
 
             var id_post = new URLSearchParams(window.location.search).get('id_post');
-            var post_content = await fetch("http://localhost:3000/recipe/"+id_post)
+            var post_content = await fetch("https://web-proyecto-integrador.onrender.com/recipe/"+id_post)
             .then(response => response.json())
             .then(data => data[0]);
 
-            console.log(post_content)
+            console.log(typeof post_content.contenido)
+            var content;
             var title = post_content.titulo
             var description = post_content.descripcion;
-            var content = await fetch(post_content.contenido).then(response => response.text());
-            console.log(content);
-
+            
             var recipe_title = document.getElementById('recipe-title');
             recipe_title.innerHTML += `<h1>${title}</h1>`;
             recipe_title.querySelector("img").src = post_content.preview_image ? post_content.preview_image : "/assets/pictures/example_pic.jpg";
             document.getElementById('recipe-description').innerHTML = `<h2>Descripción:</h2><p>${description}</p>`;
-
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(content, 'text/html');
-
-
-            var ingredients = doc.querySelector('ul');
-            var ingredientsHTML = ingredients ? ingredients.outerHTML : '';
-
-            var steps = doc.body.innerHTML.replace(ingredientsHTML, '');
-            
             var titleHTML = `<h1>${title}</h1>`;
-            var stepsWithoutTitle = steps.replace(titleHTML, '');
+            
+            if(post_content.contenido.includes(".html")) {
+                content = await fetch(post_content.contenido).then(response => response.text());
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(content, 'text/html');
+                
+                
+                var ingredients = doc.querySelector('ul');
+                var ingredientsHTML = ingredients ? ingredients.outerHTML : '';
+                
+                var steps = doc.body.innerHTML.replace(ingredientsHTML, '');
+                var stepsWithoutTitle = steps.replace(titleHTML, '');
+                document.getElementById('recipe-steps').innerHTML = `<h2>Pasos:</h2>${stepsWithoutTitle}`;
+                document.getElementById('recipe-ingredients').innerHTML = `<h2>Ingredientes:</h2>${ingredientsHTML}`;
+            } else {
+                content = post_content.contenido.toString().replaceAll('.',"<br>");
+                console.log(content);
+                document.getElementById('recipe-steps').innerHTML = `<h2>Pasos:</h2>${content}`;
+                
+                document.getElementById('recipe-ingredients').innerHTML = `<h2>Ingredientes:</h2><ul><li>${post_content.ingredientes.replaceAll(",","<li>")}`;
+            }
 
-            document.getElementById('recipe-ingredients').innerHTML = `<h2>Ingredientes:</h2>${ingredientsHTML}`;
-            document.getElementById('recipe-steps').innerHTML = `<h2>Pasos:</h2>${stepsWithoutTitle}`;
 
             localStorage.removeItem('recipeTitle');
             localStorage.removeItem('recipeDescription');
