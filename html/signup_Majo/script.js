@@ -66,7 +66,6 @@ async function loginUser(fdata) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(fdata),
-            credentials: 'include'
         });
 
         if (!response.ok) {
