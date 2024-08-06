@@ -67,7 +67,6 @@ async function loginUser(fdata) {
             },
             body: JSON.stringify(fdata),
             credentials: 'include',
-            mode: "no-cors"
         });
 
         if (!response.ok) {
